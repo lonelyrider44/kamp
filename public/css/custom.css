@@ -1,0 +1,56 @@
+.col-lg-2 {
+    flex: 0 0 20% !important;
+    max-width: 20.4%;
+}
+
+.col-half-offset{
+    margin-left: 0%;
+}
+
+.card-stats .card-body {
+    text-align: left;
+}
+
+.material-icons {
+    color: #999999;
+}
+
+.broj-smene {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    padding: 5px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(255, 152, 0, 0.4);
+    color: #fff;
+}
+
+.margin {
+    margin-bottom: 30px;
+}
+
+.btn-tertiary {
+    background-color: transparent;
+    color:#9c27b0
+}
+
+.edit-secondary {
+    border: 1px solid #f44336;
+    color: #f44336;
+}
+
+.edit-button {
+  color:  #f44336;
+}
+.card-footer {
+    background-color: #f4f4f4;
+}
+
+
+.center {
+    margin-right: auto !important;
+margin-left: auto !important;
+}
+::-webkit-date-edit-year-field:not([aria-valuenow]),
+::-webkit-date-edit-month-field:not([aria-valuenow]),
+::-webkit-date-edit-day-field:not([aria-valuenow]) {
+    color: transparent  !important;
+}
