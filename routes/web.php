@@ -17,49 +17,57 @@ Route::redirect('/','template/dashboard_admin');
 
 Route::prefix('template')->middleware([])->group(function(){
     /* ADMIN */
-    Route::view('/dashboard_admin','dashboard_admin')->name('dashboard_admin');
+    Route::view('/dashboard_admin','template.dashboard_admin')->name('dashboard_admin');
     
     /* Kamp */
-    Route::view('camp/list','camp/list')->name('camp/list');
-    Route::view('camp/view','camp/view')->name('camp/view');
-    Route::view('camp/edit','camp/edit')->name('camp/edit');
+    Route::view('camp/list','template.camp/list')->name('camp/list');
+    Route::view('camp/view','template.camp/view')->name('camp/view');
+    Route::view('camp/edit','template.camp/edit')->name('camp/edit');
     
     /* Učesnici kampa */
-    Route::view('participants/list','participants/list')->name('participants/list');
-    Route::view('participants/view','participants/view')->name('participants/view');
-    Route::view('participants/edit','participants/edit')->name('participants/edit');
+    Route::view('participants/list','template.participants/list')->name('participants/list');
+    Route::view('participants/view','template.participants/view')->name('participants/view');
+    Route::view('participants/edit','template.participants/edit')->name('participants/edit');
     
     
     /* Svi korisnici */
-    Route::view('users/list','users/list')->name('users/list');
-    Route::view('users/view','users/view')->name('users/view');
-    Route::view('users/edit','users/edit')->name('users/edit');
+    Route::view('users/list','template.users/list')->name('users/list');
+    Route::view('users/view','template.users/view')->name('users/view');
+    Route::view('users/edit','template.users/edit')->name('users/edit');
     
     /* Uplate */
-    Route::view('payments/list','payments/list')->name('payments/list');
-    Route::view('payments/view','payments/view')->name('payments/view');
-    Route::view('payments/edit','payments/edit')->name('payments/edit');
+    Route::view('payments/list','template.payments/list')->name('payments/list');
+    Route::view('payments/view','template.payments/view')->name('payments/view');
+    Route::view('payments/edit','template.payments/edit')->name('payments/edit');
     
     /* Prevoz */
-    Route::view('transport/list','transport/list')->name('transport/list');
-    Route::view('transport/view','transport/view')->name('transport/view');
-    Route::view('transport/edit','transport/edit')->name('transport/edit');
+    Route::view('transport/list','template.transport/list')->name('transport/list');
+    Route::view('transport/view','template.transport/view')->name('transport/view');
+    Route::view('transport/edit','template.transport/edit')->name('transport/edit');
     
     /* Oprema */
-    Route::view('equipment/list','equipment/list')->name('equipment/list');
-    Route::view('equipment/view','equipment/view')->name('equipment/view');
-    Route::view('equipment/edit','equipment/edit')->name('equipment/edit');
+    Route::view('equipment/list','template.equipment/list')->name('equipment/list');
+    Route::view('equipment/view','template.equipment/view')->name('equipment/view');
+    Route::view('equipment/edit','template.equipment/edit')->name('equipment/edit');
     
     /* Hotel */
-    Route::view('hotel/list','hotel/list')->name('hotel/list');
-    Route::view('hotel/view','hotel/view')->name('hotel/view');
-    Route::view('hotel/edit','hotel/edit')->name('hotel/edit');
+    Route::view('hotel/list','template.hotel/list')->name('hotel/list');
+    Route::view('hotel/view','template.hotel/view')->name('hotel/view');
+    Route::view('hotel/edit','template.hotel/edit')->name('hotel/edit');
     
     /* Izveštaji */
-    Route::view('reports/list','reports/list')->name('reports/list');
-    Route::view('reports/view','reports/view')->name('reports/view');
-    Route::view('reports/edit','reports/edit')->name('reports/edit');
+    Route::view('reports/list','template.reports/list')->name('reports/list');
+    Route::view('reports/view','template.reports/view')->name('reports/view');
+    Route::view('reports/edit','template.reports/edit')->name('reports/edit');
 
+    Route::view('login','template.login');
 });
 
-Route::view('/login','login')->name('login');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
