@@ -15,9 +15,9 @@ class CreateMestosTable extends Migration
     {
         Schema::create('mestos', function (Blueprint $table) {
             $table->id();
-            $table->string('naziv');
-            $table->string('ptt');
-            $table->string('opstina_id');
+            $table->string('naziv', 30);
+            $table->string('ptt', 5)->nullable();
+            $table->foreignId('id_opstine')->constrained('opstinas');
             $table->timestamps();
         });
     }
