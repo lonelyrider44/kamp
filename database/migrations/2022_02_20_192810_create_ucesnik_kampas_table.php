@@ -18,6 +18,7 @@ class CreateUcesnikKampasTable extends Migration
             $table->foreignId('ucesnik_id')->constrained('ucesniks');
             $table->foreignId('kamp_id')->constrained('kamps');
             $table->foreignId('trener_id')->constrained('treners');
+            $table->foreignId('user_id')->constrained('user_id');
             $table->enum('rezim', ['Individualni','Rehab','Video'])->nullable();
             $table->enum('status',['Prisutan','Otkazano','Nije se pojavio']);
             $table->boolean('gratis')->default(false);

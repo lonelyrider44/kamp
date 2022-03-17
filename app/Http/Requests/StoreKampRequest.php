@@ -13,7 +13,7 @@ class StoreKampRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreKampRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'lokacija_id' => 'required',
+            'naziv' => 'required',
+            'godina' => 'required',
+            'broj_prijava' => 'required',
+            'status' => 'required',
+            'cena' => 'required'
         ];
     }
 }

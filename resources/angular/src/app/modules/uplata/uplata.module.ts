@@ -5,6 +5,7 @@ import { UplataRoutingModule } from './uplata-routing.module';
 import { IndexComponent } from './index/index.component';
 import { FormComponent } from './form/form.component';
 import { DetailsComponent } from './details/details.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DetailsComponent } from './details/details.component';
   ],
   imports: [
     CommonModule,
-    UplataRoutingModule
+    UplataRoutingModule,
+    MaterialModule
   ]
 })
 export class UplataModule { }

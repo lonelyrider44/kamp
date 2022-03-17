@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'environments/environment';
 import { KampService } from '../kamp.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class IndexComponent implements OnInit {
 
   @ViewChild('dataTableKamp') table;
   dataTable: any;
+
 
   constructor(private router: Router, private kampService: KampService) { }
 
@@ -51,10 +53,10 @@ export class IndexComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
-        { title: 'Prezime i ime', data: 'full_name', name: 'full_name' },
-        { title: 'Korisničko ime', data: 'name', name: 'name' },
-        { title: 'E-mail adresa', data: 'email', name: 'email' },
-        { title: 'Tip', data: 'tip', name: 'tip' },
+        { title: 'Naziv', data: 'naziv', name: 'naziv' },
+        { title: 'Godina', data: 'godina', name: 'godina' },
+        { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
+        { title: 'Cena', data: 'cena', name: 'cena' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       "drawCallback": function () {

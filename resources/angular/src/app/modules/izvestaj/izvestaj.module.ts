@@ -5,6 +5,7 @@ import { IzvestajRoutingModule } from './izvestaj-routing.module';
 import { IndexComponent } from './index/index.component';
 import { FormComponent } from './form/form.component';
 import { DetailsComponent } from './details/details.component';
+import { MaterialModule } from '../material/material.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DetailsComponent } from './details/details.component';
   ],
   imports: [
     CommonModule,
-    IzvestajRoutingModule
+    IzvestajRoutingModule,
+    MaterialModule
   ]
 })
 export class IzvestajModule { }

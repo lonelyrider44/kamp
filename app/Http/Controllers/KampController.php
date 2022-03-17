@@ -8,6 +8,9 @@ use App\Http\Requests\UpdateKampRequest;
 
 class KampController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\Kamp::all())->make(true);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -36,7 +39,7 @@ class KampController extends Controller
      */
     public function store(StoreKampRequest $request)
     {
-        //
+        \App\Models\Kamp::create($request->all());
     }
 
     /**
