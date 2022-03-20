@@ -4,12 +4,13 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --configuration=dev -o",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && ng serve -o"
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && ng serve -o",
+    "build:prod": "ng build --configuration production && cp ../../public/assets/angular/index.html ../views/angular.blade.php"
   },
   "engines": {
     "node": "6.11.1",

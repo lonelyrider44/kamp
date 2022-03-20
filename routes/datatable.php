@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::post('kamp', [\App\Http\Controllers\KampController::class,'datatable']);
+Route::middleware(['jwt.auth'])->group(function () {
+    Route::post('kamp', [\App\Http\Controllers\KampController::class,'datatable']);
+});

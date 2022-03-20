@@ -14,8 +14,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::post('login', [\App\Http\Controllers\API\JwtAuthController::class, 'login']);
+// Route::post('refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);
 
 Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
+
+Route::middleware(['jwt.auth'])->group(function () {
+    Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);
+    Route::post('logout', [\App\Http\Controllers\API\JwtAuthController::class, 'logout']);
+    // Route::resource('racunari', \App\Http\Controllers\RacunarController::class);
+    // // Route::post('klijenti',[\App\Http\Controllers\KlijentController::class,'index']);
+    // Route::post('klijenti/search', [\App\Http\Controllers\KlijentController::class, 'search']);
+    // Route::resource('klijenti', \App\Http\Controllers\KlijentController::class);
+    // Route::post('domen/statistika',[\App\Http\Controllers\DomenController::class,'statistika']);
+    // Route::resource('domeni', \App\Http\Controllers\DomenController::class);
+    // Route::post('hosting/statistika',[\App\Http\Controllers\HostingController::class,'statistika']);
+    // Route::resource('hosting', \App\Http\Controllers\HostingController::class);
+    // Route::put('izvestaji/{izvestaj}/status', [\App\Http\Controllers\RiIzvestajController::class,'update_status'])->name('izvestaji.update_status');
+    // Route::resource('izvestaji', \App\Http\Controllers\RiIzvestajController::class);
+    // Route::resource('korisnici', \App\Http\Controllers\KorisnikController::class);
+    // Route::resource('paketi', \App\Http\Controllers\PaketController::class);
+    // Route::resource('statistika', \App\Http\Controllers\StatistikaController::class);
+
+    // Route::post('profile',[\App\Http\Controllers\AuthController::class,'profile']);
+    // Route::post('autocomplete/klijenti',[\App\Http\Controllers\KlijentController::class,'index']);
+    // Route::post('autocomplete/pu',[\App\Http\Controllers\RiPruzeneUslugeController::class,'autocomplete']);
+    // Route::post('autocomplete/materijal',[\App\Http\Controllers\RiUtrosenMaterijalController::class,'autocomplete']);
+    // Route::post('autocomplete/radni-nalog',[\App\Http\Controllers\RiIzvestajController::class,'autocomplete']);
+});

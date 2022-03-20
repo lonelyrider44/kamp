@@ -9,6 +9,7 @@ import { MapsComponent } from '../../maps/maps.component';
 import { NotificationsComponent } from '../../notifications/notifications.component';
 import { UpgradeComponent } from '../../upgrade/upgrade.component';
 import { NotFoundComponent } from 'app/components/not-found/not-found.component';
+import { AuthGuard } from 'app/guards/auth.guard';
 
 export const AdminLayoutRoutes: Routes = [
     // {
@@ -66,63 +67,72 @@ export const AdminLayoutRoutes: Routes = [
         children: [{
             path: 'kamp',
             loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'hotel',
+        path: '',
         children: [{
-            path: '',
+            path: 'hotel',
             loadChildren: () => import('../../modules/hotel/hotel.module').then(m => m.HotelModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'izvestaj',
+        path: '',
         children: [{
-            path: '',
+            path: 'izvestaj',
             loadChildren: () => import('../../modules/izvestaj/izvestaj.module').then(m => m.IzvestajModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'korisnik',
+        path: '',
         children: [{
-            path: '',
+            path: 'korisnik',
             loadChildren: () => import('../../modules/korisnik/korisnik.module').then(m => m.KorisnikModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'oprema',
+        path: '',
         children: [{
-            path: '',
+            path: 'oprema',
             loadChildren: () => import('../../modules/oprema/oprema.module').then(m => m.OpremaModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'prevoz',
+        path: '',
         children: [{
-            path: '',
+            path: 'prevoz',
             loadChildren: () => import('../../modules/prevoz/prevoz.module').then(m => m.PrevozModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'ucesnik',
+        path: '',
         children: [{
-            path: '',
+            path: 'ucesnik',
             loadChildren: () => import('../../modules/ucesnik/ucesnik.module').then(m => m.UcesnikModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'uplata',
+        path: '',
         children: [{
-            path: '',
+            path: 'uplata',
             loadChildren: () => import('../../modules/uplata/uplata.module').then(m => m.UplataModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     {
-        path: 'zahtev',
+        path: '',
         children: [{
-            path: '',
+            path: 'zahtev',
             loadChildren: () => import('../../modules/zahtev/zahtev.module').then(m => m.ZahtevModule)
-        }]
+        }],
+        canActivate: [AuthGuard]
     },
     { path: '**',             component: NotFoundComponent }
 ];

@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::redirect('/','template/dashboard_admin');
 
+
+
+Route::redirect('template/','template/dashboard_admin');
 Route::prefix('template')->middleware([])->group(function(){
     /* ADMIN */
     Route::view('/dashboard_admin','template.dashboard_admin')->name('dashboard_admin');
@@ -63,11 +65,8 @@ Route::prefix('template')->middleware([])->group(function(){
     Route::view('login','template.login');
 });
 
+Route::view('/{any?}', 'angular')->where('any','^(?!api).*&');
+// Auth::routes();
 
-Auth::routes();
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
