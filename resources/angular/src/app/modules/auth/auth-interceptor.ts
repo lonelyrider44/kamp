@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { catchError, map } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { AuthService } from "./auth.service";
+import { LoadingBarService } from "@ngx-loading-bar/core";
 // import { NgxSpinnerService } from "ngx-spinner";
 
 @Injectable()
@@ -16,12 +17,14 @@ export class AuthInterceptor implements HttpInterceptor {
         // private authStateService: AuthStateService,
         private router: Router,
         // private spinner: NgxSpinnerService
+        private loading: LoadingBarService
         ) 
         
     { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
         // this.spinner.show();
+        this.loading.start();
         const accessToken = this.authService.getToken();
         req = req.clone({
             setHeaders: {
@@ -32,11 +35,13 @@ export class AuthInterceptor implements HttpInterceptor {
             map(event => {
                 if (event instanceof HttpResponse) {
                 //    this.spinner.hide();
+                this.loading.stop();
                 }         
                 return event;
             }),
             catchError((err) => {
             // this.spinner.hide();
+            this.loading.stop();
             if (err.status === HttpStatusCode.Unauthorized) {
                 this.router.navigate(['login']); // go to login page, 401
             }

@@ -9,7 +9,9 @@ use App\Http\Requests\UpdateKampRequest;
 class KampController extends Controller
 {
     public function datatable(){
-        return datatables()->of(\App\Models\Kamp::all())->make(true);
+        return datatables()->of(\App\Models\Kamp::all())
+            ->addColumn('action','kamp.partials.dt_actions')
+        ->make(true);
     }
     /**
      * Display a listing of the resource.

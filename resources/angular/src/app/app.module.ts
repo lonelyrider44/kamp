@@ -23,6 +23,8 @@ import {
 } from '@agm/core';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { MaterialModule } from './modules/material/material.module';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
+
 
 @NgModule({
   imports: [
@@ -36,7 +38,8 @@ import { MaterialModule } from './modules/material/material.module';
     MaterialModule,
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
-    })
+    }),
+    LoadingBarModule
   ],
   declarations: [
     AppComponent,
