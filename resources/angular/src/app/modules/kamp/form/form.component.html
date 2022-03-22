@@ -1,58 +1,59 @@
 <div class="main-content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="offset-md-2 col-md-8">
-        <div class="card">
-          <div class="card-header card-header-danger">
-            <h4 class="card-title">Kamp</h4>
-            <p class="card-category">Complete your profile</p>
-          </div>
-          <div class="card-body">
-            <form [formGroup]="kampForm" (ngSubmit)="submitForm()" novalidate>
-              <div class="row">
-                <div class="col-md-5">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Naziv" formControlName="naziv" [errorStateMatcher]="matcher">
-                    <mat-error *ngIf="kampForm.get('naziv')?.errors?.serverError">
-                      {{ kampForm.get("naziv")?.errors?.serverError }}
-                    </mat-error>
-                  </mat-form-field>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-3 col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Kamp</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="kampForm" (ngSubmit)="submitForm()" novalidate>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Naziv" formControlName="naziv" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="kampForm.get('naziv')?.errors?.serverError">
+                                            {{ kampForm.get("naziv")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Godina" formControlName="godina" [errorStateMatcher]="matcher">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Broj prijava" formControlName="broj_prijava" type="text" [errorStateMatcher]="matcher">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cena" type="text" formControlName="cena" [errorStateMatcher]="matcher">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Lokacija" type="text" formControlName="lokacija_id" [errorStateMatcher]="matcher">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Status" type="text" formControlName="status" [errorStateMatcher]="matcher">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">Potvrdi</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Godina" formControlName="godina" [errorStateMatcher]="matcher">
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Broj prijava" formControlName="broj_prijava" type="text" [errorStateMatcher]="matcher">
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Lokacija" type="text" formControlName="lokacija_id" [errorStateMatcher]="matcher">
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Cena" type="text" formControlName="cena" [errorStateMatcher]="matcher">
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4">
-                  <mat-form-field class="example-full-width">
-                    <input matInput placeholder="Status" type="text" formControlName="status" [errorStateMatcher]="matcher">
-                  </mat-form-field>
-                </div>
-              </div>
-              <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">Update
-                Profile</button>
-              <div class="clearfix"></div>
-            </form>
-          </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>

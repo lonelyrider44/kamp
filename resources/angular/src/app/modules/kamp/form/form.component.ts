@@ -23,7 +23,6 @@ export class FormComponent implements OnInit {
     cena: ''
   };
   kampForm: FormGroup;
-  errors: any[] = [];
   action = "";
   isReadOnly: boolean = false;
   matcher = new MyErrorStateMatcher();
@@ -90,7 +89,7 @@ export class FormComponent implements OnInit {
     this.delete();
   }
   submitFormFailed(form: FormGroup, error: HttpErrorResponse) {
-    this.errors = error.error.errors;
+    // this.errors = error.error.errors;
     if (error.status === 422) {
       Object.keys(error.error.errors).forEach(prop => {
         const formControl = form.get(prop);

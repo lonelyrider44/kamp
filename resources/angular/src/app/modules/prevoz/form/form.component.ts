@@ -1,7 +1,8 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Prevoz } from '../prevoz';
 import { PrevozService } from '../prevoz.service';
@@ -22,9 +23,9 @@ export class FormComponent implements OnInit {
     // napomena: ''
   };
   prevozForm: FormGroup;
-  errors: any[] = [];
   action = "";
   isReadOnly: boolean = false;
+  matcher = new MyErrorStateMatcher();
 
 
   constructor(
@@ -81,7 +82,6 @@ export class FormComponent implements OnInit {
     this.delete();
   }
   submitFormFailed(form: FormGroup, error: HttpErrorResponse){
-    this.errors = error.error.errors;
     if (error.status === 422) {
       Object.keys(error.error.errors).forEach(prop => {
         const formControl = form.get(prop);
@@ -96,5 +96,12 @@ export class FormComponent implements OnInit {
   }
   goBack() {
     this._location.back();
+  }
+}
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return (control && control.invalid);
   }
 }

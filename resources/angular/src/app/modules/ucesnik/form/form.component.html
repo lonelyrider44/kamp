@@ -1,106 +1,146 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8">
+            <div class="offset-md-3 col-md-6">
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title">Učesnik</h4>
-                        <p class="card-category">Complete your profile</p>
+                        <p class="card-category">Podaci o učesniku</p>
                     </div>
                     <div class="card-body">
-                        <form>
+                        <form [formGroup]="ucesnikForm" (ngSubmit)="submitForm()" novalidate>
                             <div class="row">
-                                <div class="col-md-5">
-                                  <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Company (disabled)" disabled>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-3">
-                                    <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Username">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                    <mat-form-field class="example-full-width">
-                                      <input matInput placeholder="Email address" type="email">
-                                    </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
+                                <!-- IME -->
                                 <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Fist Name" type="text">
-                                  </mat-form-field>
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime" formControlName="ime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('ime')?.errors?.serverError">
+                                            {{ ucesnikForm.get("ime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- PREZIME -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prezime" formControlName="prezime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('prezime')?.errors?.serverError">
+                                            {{ ucesnikForm.get("prezime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- DATUM RODJENJA -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Datum rođenja" formControlName="datum_rodjenja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('datum_rodjenja')?.errors?.serverError">
+                                            {{ ucesnikForm.get("datum_rodjenja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- JMBG -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="JMBG" formControlName="jmbg" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('jmbg')?.errors?.serverError">
+                                            {{ ucesnikForm.get("jmbg")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- MESTO PREBIVALIŠTA -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Mesto prebivališta" formControlName="mesto_id" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('mesto_id')?.errors?.serverError">
+                                            {{ ucesnikForm.get("mesto_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- KAMP -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Kamp" formControlName="kamp_id" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('kamp_id')?.errors?.serverError">
+                                            {{ ucesnikForm.get("kamp_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- SMENE -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Smene" formControlName="smene_ids" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('smene_ids')?.errors?.serverError">
+                                            {{ ucesnikForm.get("smene_ids")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- TRENER -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Trener" formControlName="trener_id" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('trener_id')?.errors?.serverError">
+                                            {{ ucesnikForm.get("trener_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- STATUS -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime" formControlName="ime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('ime')?.errors?.serverError">
+                                            {{ ucesnikForm.get("ime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- RODITELJ, IME I PREZIME -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="JMBG roditelja" formControlName="roditelj_jmbg" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('roditelj_jmbg')?.errors?.serverError">
+                                            {{ ucesnikForm.get("roditelj_jmbg")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
                                 </div>
                                 <div class="col-md-6">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Last Name" type="text">
-                                  </mat-form-field>
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime roditelja" formControlName="roditelj_ime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('roditelj_ime')?.errors?.serverError">
+                                            {{ ucesnikForm.get("roditelj_ime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prezime roditelja" formControlName="roditelj_prezime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('roditelj_prezime')?.errors?.serverError">
+                                            {{ ucesnikForm.get("roditelj_prezime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- RODITELJ, TELEFON -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Telefon roditelja" formControlName="roditelj_telefon" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('roditelj_telefon')?.errors?.serverError">
+                                            {{ ucesnikForm.get("roditelj_telefon")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <!-- RODITELJ, EMAIL -->
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Email roditelja" formControlName="roditelj_email" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="ucesnikForm.get('roditelj_email')?.errors?.serverError">
+                                            {{ ucesnikForm.get("roditelj_email")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Adress" type="text">
-                                  </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="City" type="text">
-                                  </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Country" type="text">
-                                  </mat-form-field>
-                                </div>
-                                <div class="col-md-4">
-                                  <mat-form-field class="example-full-width">
-                                    <input matInput placeholder="Postal Code" type="text">
-                                  </mat-form-field>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                  <label>About Me</label>
-                                  <mat-form-field class="example-full-width">
-                                     <textarea matInput placeholder="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."></textarea>
-                                   </mat-form-field>
-                                    <!-- <div class="form-group">
-  
-                                        <div class="form-group">
-                                            <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                            <textarea class="form-control" rows="5"></textarea>
-                                        </div>
-                                    </div> -->
-                                </div>
-                            </div>
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Update Profile</button>
+                            <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">Potvrdi</button>
                             <div class="clearfix"></div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card card-profile">
-                    <div class="card-avatar">
-                        <a href="javascript:void(0)">
-                            <img class="img" src="./assets/img/faces/marc.jpg" />
-                        </a>
-                    </div>
-                    <div class="card-body">
-                        <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-                        <h4 class="card-title">Alec Thompson</h4>
-                        <p class="card-description">
-                            Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-                        </p>
-                        <a href="javascript:void(0)" class="btn btn-danger btn-round">Follow</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
-  </div>
-  
+</div>

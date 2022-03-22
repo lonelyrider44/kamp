@@ -6,6 +6,7 @@ import { IndexComponent } from './index/index.component';
 import { FormComponent } from './form/form.component';
 import { DetailsComponent } from './details/details.component';
 import { MaterialModule } from '../material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -17,7 +18,9 @@ import { MaterialModule } from '../material/material.module';
   imports: [
     CommonModule,
     PrevozRoutingModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PrevozModule { }
