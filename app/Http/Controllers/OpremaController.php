@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateOpremaRequest;
 
 class OpremaController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\Oprema::all())
+            ->addColumn('action','oprema.partials.dt_actions')
+        ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *

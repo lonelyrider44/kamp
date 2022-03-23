@@ -16,4 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['jwt.auth'])->group(function () {
     Route::post('kamp', [\App\Http\Controllers\KampController::class,'datatable']);
+    Route::post('ucesnici', [\App\Http\Controllers\UcesnikController::class,'datatable']);
+    Route::post('korisnici', [\App\Http\Controllers\KorisnikController::class,'datatable']);
+    Route::post('uplate', [\App\Http\Controllers\UplataController::class,'datatable']);
+    Route::post('prevoz', [\App\Http\Controllers\PrevozController::class,'datatable']);
+    Route::post('oprema', [\App\Http\Controllers\OpremaController::class,'datatable']);
+    Route::post('hoteli', [\App\Http\Controllers\HotelController::class,'datatable']);
+    Route::post('izvestaji', [\App\Http\Controllers\IzvestajController::class,'datatable']);
+    Route::post('zahtevi', [\App\Http\Controllers\ZahtevController::class,'datatable']);
 });

@@ -23,6 +23,8 @@ export class FormComponent implements OnInit {
     // napomena: ''
   };
   ucesnikForm: FormGroup;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
   action = "";
   isReadOnly: boolean = false;
   matcher = new MyErrorStateMatcher();
@@ -36,6 +38,25 @@ export class FormComponent implements OnInit {
     private _location: Location
   ) {
     this.ucesnikForm = this.fb.group({
+      ime: [''],
+      prezime: [''],
+      datum_rodjenja: [''],
+      mesto_id: [''],
+      jmbg: [''],
+      //roditelj
+      roditelj_jmbg: [''],
+      roditelj_ime: [''],
+      roditelj_prezime: [''],
+      roditelj_telefon: [''],
+      roditelj_email: [''],
+      kamp_id: [''],
+      trener_id: [''],
+      smene_ids: [''],
+      hotel_id: [''],
+      broj_sobe: [''],
+      napomena_smestaj: [''],
+      napomena_hrana: ['']
+
     })
   }
 

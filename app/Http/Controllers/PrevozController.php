@@ -8,6 +8,11 @@ use App\Http\Requests\UpdatePrevozRequest;
 
 class PrevozController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\Prevoz::all())
+            ->addColumn('action','prevoz.partials.dt_actions')
+        ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *

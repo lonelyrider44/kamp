@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateUplataRequest;
 
 class UplataController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\Uplata::all())
+            ->addColumn('action','uplata.partials.dt_actions')
+        ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *

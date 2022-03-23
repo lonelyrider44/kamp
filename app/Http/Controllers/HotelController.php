@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateHotelRequest;
 
 class HotelController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\Hotel::all())
+            ->addColumn('action','hotel.partials.dt_actions')
+        ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,6 @@ class HotelController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

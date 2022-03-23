@@ -8,6 +8,11 @@ use App\Http\Requests\UpdateUcesnikKampaSmenaRequest;
 
 class UcesnikKampaSmenaController extends Controller
 {
+    public function datatable(){
+        return datatables()->of(\App\Models\UcesnikKampaSmena::all())
+            ->addColumn('action','ucesnik_kampa_smena.partials.dt_actions')
+        ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *
