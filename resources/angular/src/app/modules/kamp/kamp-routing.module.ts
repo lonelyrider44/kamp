@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: 'unos', pathMatch: 'full', component: FormComponent},
     { path: ':kampId', component: DetailsComponent},
     { path: ':kampId/izmena', component: FormComponent},
+    { path: ':kampId/brisanje', component: FormComponent},
 ];
 
 @NgModule({

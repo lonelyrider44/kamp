@@ -36,6 +36,9 @@ export class FormComponent implements OnInit {
     private _location: Location
   ) {
     this.uplataForm = this.fb.group({
+      roditelj_id: [''],
+      dete_id: [''],
+      iznos: [''],
     })
   }
 

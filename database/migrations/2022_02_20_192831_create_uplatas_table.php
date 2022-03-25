@@ -15,6 +15,7 @@ class CreateUplatasTable extends Migration
     {
         Schema::create('uplatas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kamp_id')->constrained('kamps');
             $table->foreignId('ucesnik_kampa_id')->constrained('ucesnik_kampas');
             $table->date('datum');
             $table->decimal('iznos',11,2);

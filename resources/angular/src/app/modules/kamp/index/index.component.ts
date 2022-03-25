@@ -56,15 +56,19 @@ export class IndexComponent implements OnInit {
         { title: 'Naziv', data: 'naziv', name: 'naziv' },
         { title: 'Godina', data: 'godina', name: 'godina' },
         { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
+        { title: 'Smena', data: 'broj_smena', name: 'broj_smena' },
         { title: 'Cena', data: 'cena', name: 'cena' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       "drawCallback": function () {
-        $('.btnEditKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/update/${$(event.target).data('id')}`)
+        $('.btnShowKamp').on('click', function (event) {
+          that.router.navigateByUrl(`/kamp/${$(this).data('id')}`)
         })
-        $('.btnRemoveKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
+        $('.btnEditKamp').on('click', function (event) {
+          that.router.navigateByUrl(`/kamp/${$(this).data('id')}/izmena`)
+        })
+        $('.btnRemoveKamp').on('click', function (event) {
+          that.router.navigateByUrl(`/kamp/${$(this).data('id')}/brisanje`)
         })
       }
     })

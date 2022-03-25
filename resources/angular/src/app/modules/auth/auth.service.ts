@@ -40,10 +40,10 @@ export class AuthService {
     const token = this.getToken();
 
     if (token) {
-      console.log('token exits');
+      // console.log('token exits');
       const payload = this.payload(token);
       if (payload) {
-        return Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
+        return this.user && Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
       }
     } else {
       return false;
@@ -84,7 +84,7 @@ export class AuthService {
   }
   // Logout
   logout(): Observable<any> {
-    console.log('logout');
+    // console.log('logout');
     return this.http.post<any>(environment.api_url+'/logout',{});
   }
 }

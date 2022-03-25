@@ -2,18 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kamp;
-use App\Http\Requests\StoreKampRequest;
-use App\Http\Requests\UpdateKampRequest;
+use App\Models\Smena;
+use App\Http\Requests\StoreSmenaRequest;
+use App\Http\Requests\UpdateSmenaRequest;
 
-class KampController extends Controller
+class SmenaController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Kamp::all())
-            ->addColumn('broj_smena', '0')
-            ->addColumn('action','kamp.partials.dt_actions')
-        ->make(true);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -37,21 +31,21 @@ class KampController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreKampRequest  $request
+     * @param  \App\Http\Requests\StoreSmenaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreKampRequest $request)
+    public function store(StoreSmenaRequest $request)
     {
-        \App\Models\Kamp::create($request->all());
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Kamp  $kamp
+     * @param  \App\Models\Smena  $smena
      * @return \Illuminate\Http\Response
      */
-    public function show(Kamp $kamp)
+    public function show(Smena $smena)
     {
         //
     }
@@ -59,10 +53,10 @@ class KampController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Kamp  $kamp
+     * @param  \App\Models\Smena  $smena
      * @return \Illuminate\Http\Response
      */
-    public function edit(Kamp $kamp)
+    public function edit(Smena $smena)
     {
         //
     }
@@ -70,11 +64,11 @@ class KampController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateKampRequest  $request
-     * @param  \App\Models\Kamp  $kamp
+     * @param  \App\Http\Requests\UpdateSmenaRequest  $request
+     * @param  \App\Models\Smena  $smena
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateKampRequest $request, Kamp $kamp)
+    public function update(UpdateSmenaRequest $request, Smena $smena)
     {
         //
     }
@@ -82,10 +76,10 @@ class KampController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Kamp  $kamp
+     * @param  \App\Models\Smena  $smena
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Kamp $kamp)
+    public function destroy(Smena $smena)
     {
         //
     }

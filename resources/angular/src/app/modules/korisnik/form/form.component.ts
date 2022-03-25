@@ -36,6 +36,11 @@ export class FormComponent implements OnInit {
     private _location: Location
   ) {
     this.korisnikForm = this.fb.group({
+      ime: [''],
+      prezime: [''],
+      role_id: [''],
+      email: [''],
+      telefon: [''],
     })
   }
 

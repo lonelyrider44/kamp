@@ -28,6 +28,7 @@ export class FormComponent implements OnInit {
   action = "";
   isReadOnly: boolean = false;
   matcher = new MyErrorStateMatcher();
+  velicine = ['8','10','12','14','16','S','M','L','XL','2XL','3XL'];
 
 
   constructor(
@@ -55,17 +56,22 @@ export class FormComponent implements OnInit {
       hotel_id: [''],
       broj_sobe: [''],
       napomena_smestaj: [''],
-      napomena_hrana: ['']
+      napomena_hrana: [''],
+      sorc: [''],
+      duks: [''],
+      trenerka: [''],
+      majica: [''],
+      status: ['']
 
     })
   }
 
 
   ngOnInit(): void {
-    this.action = this.activatedRoute.snapshot.url[1].path;
+    this.action = this.activatedRoute.snapshot.url[0].path;
     this.isReadOnly = this.action == "delete";
     if (this.activatedRoute.snapshot.url[2]) {
-      this.ucesnikService.find(this.activatedRoute.snapshot.url[2].path).subscribe(res => {
+      this.ucesnikService.find(this.activatedRoute.snapshot.url[1].path).subscribe(res => {
         this.ucesnik = res
       })
     }

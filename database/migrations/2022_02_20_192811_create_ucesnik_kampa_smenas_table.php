@@ -16,7 +16,7 @@ class CreateUcesnikKampaSmenasTable extends Migration
         Schema::create('ucesnik_kampa_smenas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ucesnik_kampa_id')->constrained('ucesnik_kampas');
-            $table->enum('smena',['I smena','II smena', 'III smena']);
+            $table->foreignId('smena_id')->constrained('smenas');
             $table->timestamps();
         });
     }

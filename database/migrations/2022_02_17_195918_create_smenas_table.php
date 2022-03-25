@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateKampsTable extends Migration
+class CreateSmenasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,12 @@ class CreateKampsTable extends Migration
      */
     public function up()
     {
-        Schema::create('kamps', function (Blueprint $table) {
+        Schema::create('smenas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lokacija_id')->nullable()->constrained('mestos');
             $table->string('naziv');
-            $table->string('godina');
             $table->date('datum_od');
             $table->date('datum_do');
-            $table->unsignedInteger('broj_prijava');
-            $table->enum('status', ['Aktivan', 'Završen']);
-            $table->decimal('cena', 11, 2);
+            $table->foreignId('kamp_id')->constrained('kamps');
             $table->timestamps();
         });
     }
@@ -34,6 +30,6 @@ class CreateKampsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kamps');
+        Schema::dropIfExists('smenas');
     }
 }
