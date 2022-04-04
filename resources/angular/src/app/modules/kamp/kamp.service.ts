@@ -28,7 +28,7 @@ export class KampService {
     return this.httpClient.post<Kamp>(`${environment.api_url}/kamp`, JSON.stringify(kamp), this.httpOptions)
   }
   update(id:any, kamp): Observable<Kamp> {
-    return this.httpClient.put<Kamp>(`${environment.api_url}/kamp/id`, JSON.stringify(kamp), this.httpOptions)
+    return this.httpClient.put<Kamp>(`${environment.api_url}/kamp/${id}`, JSON.stringify(kamp), this.httpOptions)
   }
   delete(id:any){
     return this.httpClient.delete<Kamp>(`${environment.api_url}/kamp/${id}`, this.httpOptions)

@@ -22,11 +22,19 @@ class CreateUcesniksTable extends Migration
             $table->string('pasos')->unique()->nullable();
             $table->string('email')->nullable();
             $table->string('telefon')->nullable();
-            $table->foreignId('mesto_id')->constrained('mestos');
+            $table->string('adresa')->nullable();
+            $table->string('grad')->nullable();
+            $table->string('drzava')->nullable();
+            $table->enum('pol',[1,2])->nullable();
+
+            $table->foreignId('mesto_id')->nullable()->constrained('mestos');
 
             $table->string('prezime_roditelja');
             $table->string('ime_roditelja');
             $table->string('telefon_roditelja');
+            $table->string('email_roditelja');
+
+            $table->foreignId('roditelj_id')->nullable()->constrained('roditeljs');
             
             $table->timestamps();
         });

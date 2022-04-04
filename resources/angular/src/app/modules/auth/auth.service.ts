@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Korisnik } from 'app/modules/korisnik/korisnik';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,8 @@ export class AuthService {
     login: environment.api_url + '/login',
     register: environment.api_url + '/register'
     }
+    console.log('Service construct start')
+    console.log('Service construct end')
   }
 
   handleData(data:any) {
@@ -43,7 +46,7 @@ export class AuthService {
       // console.log('token exits');
       const payload = this.payload(token);
       if (payload) {
-        return this.user && Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
+        return Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
       }
     } else {
       return false;
@@ -78,9 +81,32 @@ export class AuthService {
     return this.http.post<any>(environment.api_url+'/login', user);
   }
 
+  async loadUser(){
+
+    return await this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
+      this.user = user;
+      console.log('User loaded')
+      return user;
+    })).toPromise();
+  }
   // Access user profile
   profileUser(): Observable<Korisnik> {
-    return this.http.post<Korisnik>(environment.api_url+'/api/profile',{});
+  // profileUser(): any {
+
+    return this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
+      this.user = user;
+      return user;
+    }));
+    // this.user = this.http.post<Korisnik>(environment.api_url+'/api/profile',{});
+    // .subscribe({
+    //   then(res){
+    //     console.log(res);
+    //     this.user = res;
+    //   },
+    //   error(err){
+
+    //   })
+    // });
   }
   // Logout
   logout(): Observable<any> {

@@ -10,6 +10,18 @@ class Kamp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lokacija_id','naziv','godina','broj_prijava','status', 'cena'
+        'lokacija_id','naziv','broj_prijava','status', 'cena','datum_od','datum_do'
     ];
+
+    // protected $casts = [
+    //     'datum_od' => 'date',
+    //     'datum_do' => 'date'
+    // ];
+
+    public function setDatumOdAttribute($value){
+        $this->attributes['datum_od'] = \Carbon\Carbon::parse($value);
+    }
+    public function setDatumDoAttribute($value){
+        $this->attributes['datum_do'] = \Carbon\Carbon::parse($value);
+    }
 }

@@ -24,6 +24,8 @@ import {
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { MaterialModule } from './modules/material/material.module';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
+import { CustomDateFormat1Directive } from './directives/custom-date-format1.directive';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 
 @NgModule({
@@ -39,11 +41,13 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
     AgmCoreModule.forRoot({
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     }),
-    LoadingBarModule
+    LoadingBarModule,
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
+    CustomDateFormat1Directive,
 
   ],
   providers: [],

@@ -13,7 +13,7 @@
                                 <mat-step label="Osnovni podaci">
                                     <div class="row">
                                         <!-- IME -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Ime" formControlName="ime" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('ime')?.errors?.serverError">
@@ -22,7 +22,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- PREZIME -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Prezime" formControlName="prezime" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('prezime')?.errors?.serverError">
@@ -31,7 +31,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- DATUM RODJENJA -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Datum rođenja" formControlName="datum_rodjenja" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('datum_rodjenja')?.errors?.serverError">
@@ -40,21 +40,43 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- POL -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
-                                                <input matInput placeholder="Pol">
                                                 <mat-label>Pol</mat-label>
                                                 <mat-select formControlName="pol" [errorStateMatcher]="matcher">
                                                     <mat-option [value]="1">Muški</mat-option>
-                                                    <mat-option [value]="1">Ženski</mat-option>
+                                                    <mat-option [value]="2">Ženski</mat-option>
                                                 </mat-select>
                                                 <mat-error *ngIf="ucesnikForm.get('pol')?.errors?.serverError">
                                                     {{ ucesnikForm.get("pol")?.errors?.serverError }}
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
+
+
+
+                                    </div>
+                                    <div class="row">
+                                        <!-- Email -->
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Email adresa" formControlName="email" [errorStateMatcher]="matcher">
+                                                <mat-error *ngIf="ucesnikForm.get('email')?.errors?.serverError">
+                                                    {{ ucesnikForm.get("email")?.errors?.serverError }}
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <!-- Telefon -->
+                                        <div class="col-md-3">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput placeholder="Broj telefona" formControlName="telefon" [errorStateMatcher]="matcher">
+                                                <mat-error *ngIf="ucesnikForm.get('telefon')?.errors?.serverError">
+                                                    {{ ucesnikForm.get("telefon")?.errors?.serverError }}
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
                                         <!-- JMBG -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="JMBG" formControlName="jmbg" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('jmbg')?.errors?.serverError">
@@ -63,7 +85,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- PASOŠ -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Pasoš" formControlName="pasos" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('pasos')?.errors?.serverError">
@@ -71,6 +93,8 @@
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <!-- Adresa -->
                                         <div class="col-md-4">
                                             <mat-form-field class="example-full-width">
@@ -98,8 +122,10 @@
                                                 </mat-error>
                                             </mat-form-field>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <!-- Visina -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Visina" formControlName="visina" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('visina')?.errors?.serverError">
@@ -108,7 +134,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- Težina -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Težina" formControlName="tezina" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('tezina')?.errors?.serverError">
@@ -117,7 +143,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- Alergije -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Alergije" formControlName="alergije" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('alergije')?.errors?.serverError">
@@ -126,7 +152,7 @@
                                             </mat-form-field>
                                         </div>
                                         <!-- Zdravstveni problem -->
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <mat-form-field class="example-full-width">
                                                 <input matInput placeholder="Zdravstveni problem" formControlName="zdravstveni_problem" [errorStateMatcher]="matcher">
                                                 <mat-error *ngIf="ucesnikForm.get('zdravstveni_problem')?.errors?.serverError">

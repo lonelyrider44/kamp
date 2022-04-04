@@ -3,8 +3,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Kamp } from '../kamp';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { Kamp, kampFormGroup, newKamp } from '../kamp';
 import { KampService } from '../kamp.service';
 
 @Component({
@@ -13,19 +13,13 @@ import { KampService } from '../kamp.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  kamp: Kamp = {
-    id: -1,
-    lokacija_id: '',
-    naziv: '',
-    godina: '',
-    broj_prijava: '',
-    status: '',
-    cena: ''
-  };
-  kampForm: FormGroup;
-  action = "";
-  isReadOnly: boolean = false;
   matcher = new MyErrorStateMatcher();
+
+  kamp: Kamp = newKamp();
+  kampForm: FormGroup;
+  action_create: boolean = false;
+  action_update: boolean = false;
+  action_delete: boolean = false;
 
   constructor(
     public fb: FormBuilder,
@@ -34,32 +28,18 @@ export class FormComponent implements OnInit {
     public kampService: KampService,
     private _location: Location
   ) {
-    this.kampForm = this.fb.group({
-      lokacija_id: [''],
-      naziv: [''],
-      godina: [''],
-      broj_prijava: [''],
-      status: [''],
-      cena: ['']
-    })
+    this.kampForm = kampFormGroup(this.fb, this.kamp);
   }
 
-
-  ngOnInit(): void {
-    
-    this.action = this.activatedRoute.snapshot.url[0].path;
-    // console.log(this.activatedRoute.snapshot);
-    this.isReadOnly = this.action == "delete";
-    if (this.activatedRoute.snapshot.url[1]) {
-      this.kampService.find(this.activatedRoute.snapshot.url[2].path).subscribe(res => {
-        this.kamp = res
-      })
-    }
+  ngOnInit(): void { 
+    this.loadFromUrl();
   }
 
   store() {
-    if (this.action != "unos") return;
+    if (!this.action_create) return;
 
+    console.log(this.kampForm.getRawValue());
+    // return;
     this.kampService.store(this.kampForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/kamp') },
@@ -68,7 +48,7 @@ export class FormComponent implements OnInit {
     )
   }
   update() {
-    if (this.action != "izmena") return;
+    if (!this.action_update) return;
     this.kampService.update(this.kamp.id, this.kampForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/kamp') },
@@ -77,7 +57,7 @@ export class FormComponent implements OnInit {
     )
   }
   delete() {
-    if (this.action != "brisanje") return;
+    if (!this.action_delete) return;
     this.kampService.delete(this.kamp.id).subscribe({
       next: res => { this.router.navigateByUrl('/kamp') },
       error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
@@ -88,6 +68,7 @@ export class FormComponent implements OnInit {
     this.update();
     this.delete();
   }
+
   submitFormFailed(form: FormGroup, error: HttpErrorResponse) {
     // this.errors = error.error.errors;
     if (error.status === 422) {
@@ -104,6 +85,27 @@ export class FormComponent implements OnInit {
   }
   goBack() {
     this._location.back();
+  }
+  loadFromUrl(){
+    this.action_create = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
+      return value.path;
+    }).includes('unos');
+    this.action_update = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
+      return value.path;
+    }).includes('izmena');
+    this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
+      return value.path;
+    }).includes('brisanje');
+    if (this.activatedRoute.snapshot.params?.kampId) {
+      this.kampService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+        this.kamp = res
+      })
+    }
+    // console.log(this.action_create, this.action_update, this.action_delete);
+    // this.action = this.activatedRoute.snapshot.url[1]?.path;
+    
+    // console.log(this.activatedRoute.snapshot.params?.kampId);
+    // this.isReadOnly = this.action == "delete";
   }
 }
 

@@ -84,8 +84,6 @@ class JwtAuthController extends Controller
     }
     public function profile(){
         // sleep(30);
-        return response()->json(
-            auth()->user()
-        );
+        return response()->json(auth()->user());
     }
 }

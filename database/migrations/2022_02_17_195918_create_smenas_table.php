@@ -15,10 +15,10 @@ class CreateSmenasTable extends Migration
     {
         Schema::create('smenas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('kamp_id')->constrained('kamps');
             $table->string('naziv');
             $table->date('datum_od');
             $table->date('datum_do');
-            $table->foreignId('kamp_id')->constrained('kamps');
             $table->timestamps();
         });
     }

@@ -42,6 +42,7 @@ class KampController extends Controller
      */
     public function store(StoreKampRequest $request)
     {
+        // return response()->json($request->all(),500);
         \App\Models\Kamp::create($request->all());
     }
 
@@ -53,7 +54,7 @@ class KampController extends Controller
      */
     public function show(Kamp $kamp)
     {
-        //
+        return $kamp;
     }
 
     /**

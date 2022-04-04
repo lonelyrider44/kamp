@@ -21,6 +21,7 @@ Route::post('login', [\App\Http\Controllers\API\JwtAuthController::class, 'login
 Route::middleware(['jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
+    Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);
     Route::post('logout', [\App\Http\Controllers\API\JwtAuthController::class, 'logout']);
     // Route::resource('racunari', \App\Http\Controllers\RacunarController::class);
@@ -37,7 +38,7 @@ Route::middleware(['jwt.auth'])->group(function () {
     // Route::resource('paketi', \App\Http\Controllers\PaketController::class);
     // Route::resource('statistika', \App\Http\Controllers\StatistikaController::class);
 
-    // Route::post('profile',[\App\Http\Controllers\AuthController::class,'profile']);
+    Route::post('profile',[\App\Http\Controllers\API\JwtAuthController::class,'profile']);
     // Route::post('autocomplete/klijenti',[\App\Http\Controllers\KlijentController::class,'index']);
     // Route::post('autocomplete/pu',[\App\Http\Controllers\RiPruzeneUslugeController::class,'autocomplete']);
     // Route::post('autocomplete/materijal',[\App\Http\Controllers\RiUtrosenMaterijalController::class,'autocomplete']);

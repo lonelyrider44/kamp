@@ -8,10 +8,45 @@ use App\Http\Requests\UpdateUcesnikRequest;
 
 class UcesnikController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Ucesnik::all())
-            ->addColumn('action','kamp.partials.dt_actions')
-        ->make(true);
+    public function datatable()
+    {
+        return datatables()->of(\App\Models\Ucesnik::select(
+            'ucesniks.id',
+            'ucesniks.ime',
+            'ucesniks.prezime',
+            'ucesniks.email',
+            'ucesniks.telefon',
+            'ucesniks.adresa',
+            'ucesniks.grad',
+            'ucesniks.drzava',
+            'ucesniks.ime_roditelja',
+            'ucesniks.prezime_roditelja',
+            'ucesniks.email_roditelja',
+            'ucesniks.telefon_roditelja',
+            \DB::raw('COUNT(ucesnik_kampas.id) as broj_kampova')
+        )
+            ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.ucesnik_id', 'ucesniks.id')
+            ->groupBy(
+                'ucesniks.id',
+                'ucesniks.ime',
+                'ucesniks.prezime',
+                'ucesniks.email',
+                'ucesniks.telefon',
+                'ucesniks.adresa',
+                'ucesniks.grad',
+                'ucesniks.drzava',
+                'ucesniks.ime_roditelja',
+                'ucesniks.prezime_roditelja',
+                'ucesniks.email_roditelja',
+                'ucesniks.telefon_roditelja',
+            )
+            ->toBase()->get())
+            ->addColumn('action', 'ucesnik.partials.dt_actions')
+            ->addColumn('ucesnik', 'ucesnik.partials.dt_ucesnik')
+            ->addColumn('puna_adresa', 'ucesnik.partials.dt_puna_adresa')
+            ->addColumn('roditelj', 'ucesnik.partials.dt_roditelj')
+            ->rawColumns(['action', 'ucesnik', 'puna_adresa', 'roditelj'])
+            ->make(true);
     }
     /**
      * Display a listing of the resource.

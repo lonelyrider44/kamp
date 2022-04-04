@@ -41,7 +41,16 @@ class UcesnikKampaController extends Controller
      */
     public function store(StoreUcesnikKampaRequest $request)
     {
-        //
+        try{
+            \DB::beginTransaction();
+            \App\Models\UcesnikKampa::create($request->all());
+            \DB::commit();
+        }catch(\Exception $e){
+            \DB::rollback();
+            return response()->json([
+                'message' => $e->getMessage()
+            ],500);
+        }
     }
 
     /**

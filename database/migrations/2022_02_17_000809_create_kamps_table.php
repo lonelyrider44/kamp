@@ -17,11 +17,11 @@ class CreateKampsTable extends Migration
             $table->id();
             $table->foreignId('lokacija_id')->nullable()->constrained('mestos');
             $table->string('naziv');
-            $table->string('godina');
+            // $table->string('godina');
             $table->date('datum_od');
             $table->date('datum_do');
             $table->unsignedInteger('broj_prijava');
-            $table->enum('status', ['Aktivan', 'Završen']);
+            $table->enum('status', ['U pripremi', 'Aktivan', 'Završen'])->default('U pripremi');
             $table->decimal('cena', 11, 2);
             $table->timestamps();
         });

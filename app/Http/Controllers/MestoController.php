@@ -15,7 +15,7 @@ class MestoController extends Controller
      */
     public function index()
     {
-        //
+        return \App\Models\Mesto::all();
     }
 
     /**

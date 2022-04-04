@@ -54,11 +54,12 @@ export class IndexComponent implements OnInit {
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
         { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Godina', data: 'godina', name: 'godina' },
+        { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
+        { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
         { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
         { title: 'Smena', data: 'broj_smena', name: 'broj_smena' },
         { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
       ],
       "drawCallback": function () {
         $('.btnShowKamp').on('click', function (event) {

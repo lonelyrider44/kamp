@@ -26,9 +26,11 @@ class StoreKampRequest extends FormRequest
         return [
             'lokacija_id' => 'required',
             'naziv' => 'required',
-            'godina' => 'required',
+            // 'godina' => 'required',
+            'datum_od' => 'required',
+            'datum_do' => 'required',
             'broj_prijava' => 'required',
-            'status' => 'required',
+            // 'status' => 'required',
             'cena' => 'required'
         ];
     }

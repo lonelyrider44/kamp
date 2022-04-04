@@ -17,31 +17,34 @@ class CreateUcesnikKampasTable extends Migration
             $table->id();
             $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
             $table->foreignId('kamp_id')->constrained('kamps');
-            $table->foreignId('trener_id')->constrained('treners');
-            $table->foreignId('user_id')->constrained('users');
+            // $table->foreignId('trener_id')->constrained('treners');
+            $table->foreignId('user_id')->nullable()->constrained('users');
 
-            $table->string('ime');
-            $table->string('prezime');
-            $table->string('email');
-            $table->string('telefon');
-            $table->enum('Pol',['Muški','Ženski']);
-            $table->date('datum_rodjenja');
-            $table->string('jmbg')->nullable();
-            $table->string('pasos')->nullable();
-            $table->string('adresa');
-            $table->string('mesto');
-            $table->string('država');
+            // $table->string('ime');
+            // $table->string('prezime');
+            // $table->string('email');
+            // $table->string('telefon');
+            // $table->enum('Pol',['Muški','Ženski']);
+            // $table->date('datum_rodjenja');
+            // $table->string('jmbg')->nullable();
+            // $table->string('pasos')->nullable();
+            // $table->string('adresa');
+            // $table->string('mesto');
+            // $table->string('država');
 
-            $table->string('ime_roditelja');
-            $table->string('prezime_roditelja');
-            $table->string('email_roditelja')->nullable();
-            $table->string('telefon_roditelja')->nullable();
+            // $table->string('ime_roditelja');
+            // $table->string('prezime_roditelja');
+            // $table->string('email_roditelja')->nullable();
+            // $table->string('telefon_roditelja')->nullable();
 
             $table->unsignedInteger('visina');
             $table->decimal('tezina', 6, 2);
             $table->boolean('alergije')->default(false);
-            $table->boolean('zdravstveni_problem')->default(false);
+            $table->boolean('alergija_polen')->default(false);
+            $table->text('zdravstveni_problem')->nullable();
             $table->text('napomena_hrana')->nullable();
+
+
             
             $table->boolean('trenira_odbojku')->default(false);
             
@@ -52,7 +55,8 @@ class CreateUcesnikKampasTable extends Migration
             
             $table->foreignId('hotel_id')->nullable()->constrained('hotels');
             $table->string('broj_sobe')->nullable();
-            $table->enum('prevoz',['samostalni','organizovani']);
+            // $table->enum('prevoz',['samostalni','organizovani']);
+            $table->string('prevoz')->nullable();
             $table->text('napomena_smestaj')->nullable();
             
             $table->enum('rezim', ['Individualni','Rehab','Video'])->nullable();
