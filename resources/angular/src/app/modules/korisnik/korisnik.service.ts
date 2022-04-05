@@ -16,21 +16,21 @@ export class KorisnikService {
   constructor(private httpClient: HttpClient) { }
 
   datatable(dtParams:any): Observable<Korisnik[]> {
-    return this.httpClient.post<Korisnik[]>(`${environment.api_url}/datatable/hotel`,dtParams)
+    return this.httpClient.post<Korisnik[]>(`${environment.api_url}/datatable/korisnik`,dtParams)
   }
   all(): Observable<Korisnik[]> {
-    return this.httpClient.get<Korisnik[]>(`${environment.api_url}/hotel`);
+    return this.httpClient.get<Korisnik[]>(`${environment.api_url}/korisnik`);
   }
   find(id:any): Observable<Korisnik> {
-    return this.httpClient.get<Korisnik>(`${environment.api_url}/hotel/${id}`)
+    return this.httpClient.get<Korisnik>(`${environment.api_url}/korisnik/${id}`)
   }
-  store(hotel): Observable<Korisnik> {
-    return this.httpClient.post<Korisnik>(`${environment.api_url}/hotel`, JSON.stringify(hotel), this.httpOptions)
+  store(korisnik): Observable<Korisnik> {
+    return this.httpClient.post<Korisnik>(`${environment.api_url}/korisnik`, JSON.stringify(korisnik), this.httpOptions)
   }
-  update(id:any, hotel): Observable<Korisnik> {
-    return this.httpClient.put<Korisnik>(`${environment.api_url}/hotel/id`, JSON.stringify(hotel), this.httpOptions)
+  update(id:any, korisnik): Observable<Korisnik> {
+    return this.httpClient.put<Korisnik>(`${environment.api_url}/korisnik/id`, JSON.stringify(korisnik), this.httpOptions)
   }
   delete(id:any){
-    return this.httpClient.delete<Korisnik>(`${environment.api_url}/hotel/${id}`, this.httpOptions)
+    return this.httpClient.delete<Korisnik>(`${environment.api_url}/korisnik/${id}`, this.httpOptions)
   }
 }

@@ -22,6 +22,9 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);
+    Route::apiResource('korisnik', \App\Http\Controllers\KorisnikController::class);
+    Route::apiResource('uplata', \App\Http\Controllers\UplataController::class);
+    
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);
     Route::post('logout', [\App\Http\Controllers\API\JwtAuthController::class, 'logout']);
     // Route::resource('racunari', \App\Http\Controllers\RacunarController::class);

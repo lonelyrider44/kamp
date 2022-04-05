@@ -8,11 +8,34 @@ use App\Http\Requests\UpdateKampRequest;
 
 class KampController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Kamp::all())
-            ->addColumn('broj_smena', '0')
-            ->addColumn('action','kamp.partials.dt_actions')
-        ->make(true);
+    public function datatable()
+    {
+        return datatables()->of(\App\Models\Kamp::select(
+            'kamps.id',
+            'kamps.naziv',
+            'kamps.datum_od',
+            'kamps.datum_do',
+            'kamps.cena',
+            \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
+            \DB::raw('COUNT(smenas.id) as broj_smena'),
+            \DB::raw('SUM(uplatas.iznos)+ucesnik_kampas.depozit as uplaceno')
+        )->leftJoin('ucesnik_kampas', 'ucesnik_kampas.kamp_id', 'kamps.id')
+        ->leftJoin('smenas','smenas.kamp_id','kamps.id')
+        ->leftJoin('uplatas','uplatas.ucesnik_kampa_id','ucesnik_kampas.id')
+            ->groupBy(
+                'kamps.id',
+                'kamps.naziv',
+                'kamps.datum_od',
+                'kamps.datum_do',
+                'kamps.cena',
+                'ucesnik_kampas.depozit'
+            )
+            ->toBase())
+            // ->addColumn('broj_smena', '0')
+            ->addColumn('action', 'kamp.partials.dt_actions')
+            ->addColumn('period', 'kamp.partials.dt_period')
+            ->rawColumns(['period', 'action'])
+            ->make(true);
     }
     /**
      * Display a listing of the resource.

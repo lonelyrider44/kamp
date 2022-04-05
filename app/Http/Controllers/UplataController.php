@@ -8,10 +8,19 @@ use App\Http\Requests\UpdateUplataRequest;
 
 class UplataController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Uplata::all())
-            ->addColumn('action','uplata.partials.dt_actions')
-        ->make(true);
+    public function datatable()
+    {
+        return datatables()->of(
+            \App\Models\Uplata::select(
+                'uplatas.*',
+                'kamps.naziv as kamp',
+                \DB::raw('CONCAT(ucesniks.prezime," ", ucesniks.ime) as ucesnik')
+            )->join('kamps', 'kamps.id', 'uplatas.kamp_id')
+                ->join('ucesnik_kampas', 'ucesnik_kampas.id', 'uplatas.ucesnik_kampa_id')
+                ->join('ucesniks', 'ucesniks.id', 'ucesnik_kampas.ucesnik_id')->toBase()
+        )
+            ->addColumn('action', 'uplata.partials.dt_actions')
+            ->make(true);
     }
     /**
      * Display a listing of the resource.

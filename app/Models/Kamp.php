@@ -24,4 +24,8 @@ class Kamp extends Model
     public function setDatumDoAttribute($value){
         $this->attributes['datum_do'] = \Carbon\Carbon::parse($value);
     }
+
+    public function ucesnici_kampa(){
+        return $this->hasMany(\App\Models\UcesnikKampa::class,'kamp_id','id');
+    }
 }

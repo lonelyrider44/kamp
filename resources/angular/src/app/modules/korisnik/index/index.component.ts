@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { KorisnikService } from '../korisnik.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-index',
@@ -50,18 +51,15 @@ export class IndexComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
-        { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Godina', data: 'godina', name: 'godina' },
-        { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
+        { title: 'Email', data: 'email', name: 'email' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       "drawCallback": function () {
         $('.btnEditKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/update/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/korisnici/update/${$(this).data('id')}`)
         })
         $('.btnRemoveKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/korisnici/delete/${$(this).data('id')}`)
         })
       }
     })

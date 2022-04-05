@@ -62,6 +62,7 @@ class CreateUcesnikKampasTable extends Migration
             $table->enum('rezim', ['Individualni','Rehab','Video'])->nullable();
             $table->enum('status',['Prisutan','Otkazano','Nije se pojavio']);
             $table->boolean('gratis')->default(false);
+            $table->decimal('depozit',11,2)->default(0);
 
             $table->timestamps();
         });

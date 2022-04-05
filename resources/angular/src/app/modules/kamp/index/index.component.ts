@@ -54,11 +54,11 @@ export class IndexComponent implements OnInit {
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
         { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
-        { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
-        { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
-        { title: 'Smena', data: 'broj_smena', name: 'broj_smena' },
+        { title: 'Period', data: 'period', name: 'period' },
         { title: 'Cena', data: 'cena', name: 'cena' },
+        { title: 'Smena', data: 'broj_smena', name: 'broj_smena' },
+        { title: 'Učesnici', data: 'broj_ucesnika', name: 'broj_ucesnika' },
+        { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
         { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
       ],
       "drawCallback": function () {

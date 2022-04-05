@@ -51,18 +51,18 @@ export class IndexComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
-        { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Godina', data: 'godina', name: 'godina' },
-        { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
+        { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
+        { title: 'Učesnik', data: 'ucesnik', name: 'ucesniks.puno_ime' },
+        { title: 'Datum', data: 'datum', name: 'datum' },
+        { title: 'Iznos', data: 'iznos', name: 'iznos' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       "drawCallback": function () {
         $('.btnEditKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/update/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/uplata/update/${$(this).data('id')}`)
         })
         $('.btnRemoveKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/uplata/delete/${$(this).data('id')}`)
         })
       }
     })
