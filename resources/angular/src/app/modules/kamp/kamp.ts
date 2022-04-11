@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export interface Kamp {
     id: any
@@ -9,7 +9,8 @@ export interface Kamp {
     datum_do: any,
     broj_prijava: any,
     status: any, 
-    cena: any
+    cena: any,
+    broj_smena: any
 }
 
 export function newKamp(): Kamp{
@@ -21,7 +22,8 @@ export function newKamp(): Kamp{
         datum_do: '',
         broj_prijava: '',
         status: '',
-        cena: ''
+        cena: '',
+        broj_smena: ''
       };
 }
 export function kampFormGroup(fb: FormBuilder, kamp: Kamp): FormGroup{
@@ -32,7 +34,8 @@ export function kampFormGroup(fb: FormBuilder, kamp: Kamp): FormGroup{
         datum_do: [kamp.datum_do],
         broj_prijava: [kamp.broj_prijava],
         // status: [kamp.status],
-        cena: [kamp.cena]
+        cena: [kamp.cena],
+        broj_smena: ''
       })
     
 }

@@ -17,6 +17,9 @@ class CreateUcesnikKampaSmenasTable extends Migration
             $table->id();
             $table->foreignId('ucesnik_kampa_id')->constrained('ucesnik_kampas');
             $table->foreignId('smena_id')->constrained('smenas');
+            $table->string('prevoz')->nullable();
+            $table->date('polazak')->nullable();
+            $table->date('povratak')->nullable();
             $table->timestamps();
         });
     }

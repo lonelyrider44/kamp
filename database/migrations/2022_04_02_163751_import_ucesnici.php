@@ -15,15 +15,34 @@ class ImportUcesnici extends Migration
     {
         if(Schema::hasTable('ucesnici')){
             \DB::beginTransaction();
+            \DB::table('ucesnik_kampas')->delete();
+            \DB::table('smenas')->delete();
+            \DB::table('kamps')->delete();
             $kamp = \App\Models\Kamp::create([
                 'naziv' => 'Valjevo 2022',
                 'datum_od' => '2022-01-01',
                 'datum_do' => '2022-12-31',
                 'lokacija_id' => 1,
                 'broj_prijava' => 500,
-                'cena' => 500
+                'cena_smene' => 500
             ]);
-            $ucesnici = \DB::table('ucesnici')->get()->map(function($ucesnik)use($kamp){
+            $prva_smena = \App\Models\Smena::create([
+                'naziv' => 'Smena I',
+                'datum_od' => '2022-01-01',
+                'datum_do' => '2022-01-07',
+                'broj_prijava' => 500,
+                'cena' => 500,
+                'kamp_id' => $kamp->id
+            ]);
+            $druga_smena = \App\Models\Smena::create([
+                'naziv' => 'Smena II',
+                'datum_od' => '2022-01-08',
+                'datum_do' => '2022-01-14',
+                'broj_prijava' => 500,
+                'cena' => 500,
+                'kamp_id' => $kamp->id
+            ]);
+            $ucesnici = \DB::table('ucesnici')->get()->map(function($ucesnik)use($kamp,$prva_smena, $druga_smena){
                 $ucesnik->ime_i_prezime = explode(' ', $ucesnik->ime_i_prezime);
                 $ucesnik_ime = (count($ucesnik->ime_i_prezime)>0)?$ucesnik->ime_i_prezime[0]:'';
                 $ucesnik_prezime = (count($ucesnik->ime_i_prezime)>1)?$ucesnik->ime_i_prezime[1]:'';
@@ -63,7 +82,8 @@ class ImportUcesnici extends Migration
                     'napomena_hrana' => $ucesnik->napomena_hrana,
                     'napomena_smestaj' => $ucesnik->napomena_smestaj,
                     'interna_napomena' => $ucesnik->interna_napomena,
-                    'kamp_id' => $kamp->id
+                    'kamp_id' => $kamp->id,
+                    'smena_id' => ($ucesnik->smena=="I smena")?$prva_smena->id:$druga_smena->id
                 ];
             })->each(function($ucesnik, $key){
                 $u= \App\Models\Ucesnik::where('jmbg', $ucesnik['jmbg'])->first();

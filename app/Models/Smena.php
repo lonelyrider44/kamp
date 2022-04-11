@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Smena extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'naziv','kamp_id','datum_od','datum_do','cena'
+    ];
 }

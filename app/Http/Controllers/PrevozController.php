@@ -9,7 +9,9 @@ use App\Http\Requests\UpdatePrevozRequest;
 class PrevozController extends Controller
 {
     public function datatable(){
-        return datatables()->of(\App\Models\Prevoz::all())
+        return datatables()->of(\App\Models\UcesnikKampaSmena::all())
+            ->addColumn('ucesnik','prevoz.partials.dt_actions')
+            ->addColumn('roditelj','prevoz.partials.dt_actions')
             ->addColumn('action','prevoz.partials.dt_actions')
         ->make(true);
     }

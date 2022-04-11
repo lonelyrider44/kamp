@@ -10,7 +10,7 @@ class Kamp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lokacija_id','naziv','broj_prijava','status', 'cena','datum_od','datum_do'
+        'lokacija_id','naziv','broj_prijava','status', 'cena_smene','datum_od','datum_do'
     ];
 
     // protected $casts = [

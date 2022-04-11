@@ -19,6 +19,7 @@ class CreateSmenasTable extends Migration
             $table->string('naziv');
             $table->date('datum_od');
             $table->date('datum_do');
+            $table->decimal('cena', 11, 2);
             $table->timestamps();
         });
     }

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { KorisnikService } from '../korisnik.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-index',

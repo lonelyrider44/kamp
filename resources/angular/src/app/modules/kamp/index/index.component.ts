@@ -35,28 +35,28 @@ export class IndexComponent implements OnInit {
       "responsive": true,
       // "lengthChange": false, 
       "autoWidth": false,
-      "buttons": {
-        "buttons": [{
-          "text": '<i class="fas fa-plus"></i>',
-          "action": function (e, dt, node, config) {
-            that.router.navigateByUrl(`/korisnici/create`)
-          },
-          "className": "btn btn-primary"
-        } ],
-        dom: {
-          button: {
-            className: 'btn'
-          }
-        }
-      },
+      // "buttons": {
+      //   "buttons": [{
+      //     "text": '<i class="fas fa-plus"></i>',
+      //     "action": function (e, dt, node, config) {
+      //       that.router.navigateByUrl(`/korisnici/create`)
+      //     },
+      //     "className": "btn btn-primary"
+      //   } ],
+      //   dom: {
+      //     button: {
+      //       className: 'btn'
+      //     }
+      //   }
+      // },
 
-      // "dom": 'Blfrtip',
+      "dom": 'lfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
         { title: 'Naziv', data: 'naziv', name: 'naziv' },
         { title: 'Period', data: 'period', name: 'period' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Smena', data: 'broj_smena', name: 'broj_smena' },
+        { title: 'Cena', data: 'cena_smene', name: 'cena_smene' },
+        { title: 'Broj smena', data: 'broj_smena', name: 'broj_smena' },
         { title: 'Učesnici', data: 'broj_ucesnika', name: 'broj_ucesnika' },
         { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
         { title: 'Akcije', data: 'action', name: 'action', width: "120px" },

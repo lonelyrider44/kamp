@@ -38,7 +38,7 @@ export class FormComponent implements OnInit {
   store() {
     if (!this.action_create) return;
 
-    console.log(this.kampForm.getRawValue());
+    // console.log(this.kampForm.getRawValue());
     // return;
     this.kampService.store(this.kampForm.value).subscribe(
       {

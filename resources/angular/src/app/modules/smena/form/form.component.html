@@ -1,0 +1,81 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-3 col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Smena</h4>
+                        <p class="card-category" *ngIf="action_create">Novi unos</p>
+                        <p class="card-category" *ngIf="action_update">Izmena</p>
+                        <p class="card-category" *ngIf="action_delete">Brisanje</p>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="smenaForm" (ngSubmit)="submitForm()" novalidate>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Kamp" formControlName="kamp_id" [ngModel]="smena.kamp_id" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="smenaForm.get('kamp_id')?.errors?.serverError">
+                                            {{ smenaForm.get("kamp_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Naziv" formControlName="naziv" [ngModel]="smena.naziv" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="smenaForm.get('naziv')?.errors?.serverError">
+                                            {{ smenaForm.get("naziv")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width" appCustomDateFormat1>
+                                        <mat-label>Datum od</mat-label>
+                                        <input matInput [matDatepicker]="datum_od_picker" formControlName="datum_od" [ngModel]="smena.datum_od" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-datepicker-toggle matSuffix [for]="datum_od_picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datum_od_picker></mat-datepicker>
+                                        <mat-error *ngIf="smenaForm.get('datum_od')?.errors?.serverError">
+                                            {{ smenaForm.get("datum_od")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Datum do</mat-label>
+                                        <input matInput [matDatepicker]="datum_do_picker" formControlName="datum_do" [ngModel]="smena.datum_do" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-datepicker-toggle matSuffix [for]="datum_do_picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #datum_do_picker></mat-datepicker>
+                                        <mat-error *ngIf="smenaForm.get('datum_do')?.errors?.serverError">
+                                            {{ smenaForm.get("datum_do")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput type="number" placeholder="Broj prijava" formControlName="broj_prijava" [ngModel]="smena.broj_prijava" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="smenaForm.get('broj_prijava')?.errors?.serverError">
+                                            {{ smenaForm.get("broj_prijava")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Cena" formControlName="cena" [ngModel]="smena.cena" [readonly]="action_delete" [errorStateMatcher]="matcher">
+                                        <mat-icon matSuffix>euro_symbol</mat-icon>
+                                        <mat-error *ngIf="smenaForm.get('cena')?.errors?.serverError">
+                                            {{ smenaForm.get("cena")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">Potvrdi</button>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

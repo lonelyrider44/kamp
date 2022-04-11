@@ -14,6 +14,7 @@ class UcesnikKampa extends Model
         'kamp_id',
         'trener_id',
         'user_id',
+        'smena_id',
 
         // 'ime',
         // 'prezime',

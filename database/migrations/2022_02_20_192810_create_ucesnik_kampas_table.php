@@ -17,6 +17,7 @@ class CreateUcesnikKampasTable extends Migration
             $table->id();
             $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
             $table->foreignId('kamp_id')->constrained('kamps');
+            $table->foreignId('smena_id')->constrained('smenas');
             // $table->foreignId('trener_id')->constrained('treners');
             $table->foreignId('user_id')->nullable()->constrained('users');
 
@@ -57,6 +58,7 @@ class CreateUcesnikKampasTable extends Migration
             $table->string('broj_sobe')->nullable();
             // $table->enum('prevoz',['samostalni','organizovani']);
             $table->string('prevoz')->nullable();
+            
             $table->text('napomena_smestaj')->nullable();
             
             $table->enum('rezim', ['Individualni','Rehab','Video'])->nullable();

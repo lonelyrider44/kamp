@@ -22,7 +22,7 @@ class CreateKampsTable extends Migration
             $table->date('datum_do');
             $table->unsignedInteger('broj_prijava');
             $table->enum('status', ['U pripremi', 'Aktivan', 'Završen'])->default('U pripremi');
-            $table->decimal('cena', 11, 2);
+            $table->decimal('cena_smene', 11, 2);
             $table->timestamps();
         });
     }

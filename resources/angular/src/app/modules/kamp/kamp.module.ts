@@ -5,17 +5,21 @@ import { KampRoutingModule } from './kamp-routing.module';
 import { IndexComponent } from './index/index.component';
 import { MaterialModule } from '../material/material.module';
 import { FormComponent } from './form/form.component';
-import { DetailsComponent } from './details/details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { CustomDateAdapter } from '../material/custom-date-adapter';
+import { DetailsBasicComponent } from './details-basic/details-basic.component';
+import { DetailsLayoutComponentComponent } from './details-layout-component/details-layout-component.component';
+import { KampDatatableComponent } from './kamp-datatable/kamp-datatable.component';
 
 
 @NgModule({
   declarations: [
     IndexComponent,
     FormComponent,
-    DetailsComponent
+    DetailsBasicComponent,
+    DetailsLayoutComponentComponent,
+    KampDatatableComponent
   ],
   imports: [
     CommonModule,

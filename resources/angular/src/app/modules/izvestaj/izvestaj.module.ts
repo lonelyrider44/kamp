@@ -7,13 +7,15 @@ import { FormComponent } from './form/form.component';
 import { DetailsComponent } from './details/details.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { IzvestajDatatableComponent } from './izvestaj-datatable/izvestaj-datatable.component';
 
 
 @NgModule({
   declarations: [
     IndexComponent,
     FormComponent,
-    DetailsComponent
+    DetailsComponent,
+    IzvestajDatatableComponent
   ],
   imports: [
     CommonModule,

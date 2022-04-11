@@ -19,7 +19,6 @@ class CreateRoditeljsTable extends Migration
             $table->string('telefon')->unique()->nullable();
             $table->string('ime');
             $table->string('prezime');
-
             $table->timestamps();
         });
     }

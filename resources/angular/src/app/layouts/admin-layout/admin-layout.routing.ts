@@ -73,6 +73,14 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: '',
         children: [{
+            path: 'smena',
+            loadChildren: () => import('../../modules/smena/smena.module').then(m => m.SmenaModule)
+        }],
+        canActivate: [AuthGuard]
+    },
+    {
+        path: '',
+        children: [{
             path: 'hotel',
             loadChildren: () => import('../../modules/hotel/hotel.module').then(m => m.HotelModule)
         }],

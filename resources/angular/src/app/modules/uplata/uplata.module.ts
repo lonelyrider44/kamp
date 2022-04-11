@@ -7,13 +7,15 @@ import { FormComponent } from './form/form.component';
 import { DetailsComponent } from './details/details.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UplataDatatableComponent } from './uplata-datatable/uplata-datatable.component';
 
 
 @NgModule({
   declarations: [
     IndexComponent,
     FormComponent,
-    DetailsComponent
+    DetailsComponent,
+    UplataDatatableComponent
   ],
   imports: [
     CommonModule,
