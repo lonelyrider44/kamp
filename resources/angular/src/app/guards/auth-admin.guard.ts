@@ -7,24 +7,28 @@ import { map, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class AuthAdminGuard implements CanActivate {
 
   constructor(private router: Router, private auth: AuthService) { }
+
+
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): boolean | Observable<boolean> {
-    return this.auth.signin()
-      .pipe(
-        map((e) => {
-          this.auth.handleData(e);
-          if (e) {
-            return true;
-          }
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+      return this.auth.signin()
+        .pipe(
+          map((e) => {
+            this.auth.handleData(e);
+            if (e) {
+              return this.auth.getUser().user_type=="admin";
+            }
         }),
         catchError((err) => {
           this.router.navigate(['/login']);
           return of(false);
         }));
+    return true;
   }
+  
 }

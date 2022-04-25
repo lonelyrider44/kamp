@@ -18,7 +18,8 @@ Route::post('login', [\App\Http\Controllers\API\JwtAuthController::class, 'login
 // Route::post('refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);
 
 
-Route::middleware(['jwt.auth'])->group(function () {
+// Route::middleware(['assign.guard:roditelj','jwt.auth'])->group(function () {
+Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);

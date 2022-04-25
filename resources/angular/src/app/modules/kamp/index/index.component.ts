@@ -63,13 +63,13 @@ export class IndexComponent implements OnInit {
       ],
       "drawCallback": function () {
         $('.btnShowKamp').on('click', function (event) {
-          that.router.navigateByUrl(`/kamp/${$(this).data('id')}`)
+          that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}`)
         })
         $('.btnEditKamp').on('click', function (event) {
-          that.router.navigateByUrl(`/kamp/${$(this).data('id')}/izmena`)
+          that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}/izmena`)
         })
         $('.btnRemoveKamp').on('click', function (event) {
-          that.router.navigateByUrl(`/kamp/${$(this).data('id')}/brisanje`)
+          that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}/brisanje`)
         })
       }
     })

@@ -10,7 +10,8 @@ class Kamp extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lokacija_id','naziv','broj_prijava','status', 'cena_smene','datum_od','datum_do'
+        'lokacija_id','naziv','broj_prijava',
+        // 'status', 'cena_smene','datum_od','datum_do'
     ];
 
     // protected $casts = [
@@ -27,5 +28,8 @@ class Kamp extends Model
 
     public function ucesnici_kampa(){
         return $this->hasMany(\App\Models\UcesnikKampa::class,'kamp_id','id');
+    }
+    public function smene(){
+        return $this->hasMany(\App\Models\Smena::class,'kamp_id','id');
     }
 }

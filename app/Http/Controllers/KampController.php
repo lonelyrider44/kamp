@@ -15,7 +15,7 @@ class KampController extends Controller
             'kamps.naziv',
             'kamps.datum_od',
             'kamps.datum_do',
-            'kamps.cena_smene',
+            // 'kamps.cena_smene',
             \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
             \DB::raw('COUNT(smenas.id) as broj_smena'),
             \DB::raw('COALESCE(SUM(uplatas.iznos)+ucesnik_kampas.depozit) as uplaceno')
@@ -28,7 +28,7 @@ class KampController extends Controller
                 'kamps.naziv',
                 'kamps.datum_od',
                 'kamps.datum_do',
-                'kamps.cena_smene',
+                // 'kamps.cena_smene',
                 'ucesnik_kampas.depozit'
             )
             ->toBase())
@@ -69,7 +69,10 @@ class KampController extends Controller
         try {
             \DB::beginTransaction();
             $kamp = \App\Models\Kamp::create($request->all());
-            $this->store_smene($kamp, $request->broj_smena);
+            foreach($request->smene as $smena){
+                $kamp->smene()->save(new \App\Models\Smena($smena));
+            }
+            // $this->store_smene($kamp, $request->broj_smena);
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();

@@ -1,3 +1,5 @@
 export interface Korisnik {
-    id: any
+    id?: number,
+    email: any,
+    user_type: any
 }

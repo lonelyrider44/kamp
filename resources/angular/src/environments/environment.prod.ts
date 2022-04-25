@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  api_url: 'http://local.kamp/api'
+  api_url: '',
+  asset_root: '/assets/angular',
 };

@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Kamp, kampFormGroup, newKamp } from '../kamp';
@@ -20,6 +20,7 @@ export class FormComponent implements OnInit {
   action_create: boolean = false;
   action_update: boolean = false;
   action_delete: boolean = false;
+  rimski_brojevi = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
 
   constructor(
     public fb: FormBuilder,
@@ -32,7 +33,15 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void { 
+    // console.log('init')
     this.loadFromUrl();
+  }
+  ngAfterViewInit(){
+    // console.log('after view init')
+    if (this.action_create){
+      this.add_smena();
+      this.add_cena();
+    }
   }
 
   store() {
@@ -106,6 +115,100 @@ export class FormComponent implements OnInit {
     
     // console.log(this.activatedRoute.snapshot.params?.kampId);
     // this.isReadOnly = this.action == "delete";
+  }
+
+  get smene(){
+    return this.kampForm.get('smene') as FormArray;
+  }
+  add_smena(index:any = null){
+    if(!index){
+      index = this.smene.length+1;
+    }
+    this.smene.push(this.fb.group({
+      naziv: 'Smena '+this.rimski_brojevi[index-1],
+      datum_od: '',
+      datum_do: '',
+      broj_prijava: ''
+    }))
+  }
+  broj_smena_change(){
+    let n = this.kampForm.get('broj_smena')?.value;
+    if (n == 1) {
+      n = 0;
+    }
+    for (let i = this.smene.length + 1; i <= n; i++) {
+      this.add_smena(i);
+    }
+
+    for (let i = this.smene.length; i > n; i--) {
+      this.smene.removeAt(i - 1);
+    }
+
+    // if (n > 1) {
+    //   this.update_ukupno_vreme();
+    // }
+
+  }
+  get cene(){
+    return this.kampForm.get('cene') as FormArray;
+  }
+  add_cena(index:any = null){
+    if(!index){
+      index = this.smene.length+1;
+    }
+    this.cene.push(this.fb.group({
+      naziv: '',
+      iznos_rsd: '',
+      iznos_eur: '',
+    }))
+  }
+  broj_cena_change(){
+    let n = this.kampForm.get('broj_cena')?.value;
+    if (n == 1) {
+      n = 0;
+    }
+    for (let i = this.cene.length + 1; i <= n; i++) {
+      this.add_cena(i);
+    }
+
+    for (let i = this.cene.length; i > n; i--) {
+      this.cene.removeAt(i - 1);
+    }
+
+    // if (n > 1) {
+    //   this.update_ukupno_vreme();
+    // }
+
+  }
+
+  get dodatni_paketi(){
+    return this.kampForm.get('dodatni_paketi') as FormArray;
+  }
+  add_dodatni_paket(index:any = null){
+    this.dodatni_paketi.push(this.fb.group({
+      naziv: '',
+      opis: '',
+      iznos_rsd: '',
+      iznos_eur: '',
+    }))
+  }
+  broj_dodatnih_paketa_change(){
+    let n = this.kampForm.get('broj_dodatnih_paketa')?.value;
+    if (n == 1) {
+      n = 0;
+    }
+    for (let i = this.dodatni_paketi.length + 1; i <= n; i++) {
+      this.add_dodatni_paket(i);
+    }
+
+    for (let i = this.dodatni_paketi.length; i > n; i--) {
+      this.dodatni_paketi.removeAt(i - 1);
+    }
+
+    // if (n > 1) {
+    //   this.update_ukupno_vreme();
+    // }
+
   }
 }
 

@@ -46,7 +46,19 @@ export class LoginComponent implements OnInit {
     this.authService.signin(this.loginForm.value).subscribe(
       (result) => {
         this.authService.handleData(result);
-        this.router.navigate(['kamp']);
+        let user = this.authService.getUser();
+        if(user.user_type=="admin"){
+          this.router.navigate(['/admin/kamp']);
+        }
+        if(user.user_type=="roditelj"){
+          this.router.navigate(['/roditelj']);
+        }
+        if(user.user_type=="ucesnik"){
+          this.router.navigate(['/ucesnik']);
+        }
+
+        // if(result.user_type=='admin'){
+        // }
       },
       (error) => {
         // this.authState.setAuthState(false);

@@ -1,89 +1,166 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="offset-md-3 col-md-6">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Kamp</h4>
-                        <p class="card-category" *ngIf="action_create">Novi unos</p>
-                        <p class="card-category" *ngIf="action_update">Izmena</p>
-                        <p class="card-category" *ngIf="action_delete">Brisanje</p>
-                    </div>
-                    <div class="card-body">
-                        <form [formGroup]="kampForm" (ngSubmit)="submitForm()" novalidate>
+        <form [formGroup]="kampForm" (ngSubmit)="submitForm()" novalidate>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h4 class="card-title">Kamp</h4>
+                            <p class="card-category" *ngIf="action_create">Novi unos</p>
+                            <p class="card-category" *ngIf="action_update">Izmena</p>
+                            <p class="card-category" *ngIf="action_delete">Brisanje</p>
+                        </div>
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Naziv" formControlName="naziv" [ngModel]="kamp.naziv" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="kampForm.get('naziv')?.errors?.serverError">
-                                            {{ kampForm.get("naziv")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
+                                <mat-form-field class="example-full-width col-md-3">
+                                    <input matInput placeholder="Naziv" formControlName="naziv" [ngModel]="kamp.naziv" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                    <mat-error *ngIf="kampForm.get('naziv')?.errors?.serverError">
+                                        {{ kampForm.get("naziv")?.errors?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width col-md-3">
+                                    <input matInput placeholder="Lokacija" formControlName="lokacija_id" [ngModel]="kamp.lokacija_id" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                    <mat-error *ngIf="kampForm.get('lokacija_id')?.errors?.serverError">
+                                        {{ kampForm.get("lokacija_id")?.errors ?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width col-md-3">
+                                    <!-- <input matInput placeholder="Broj smena" formControlName="broj_smena" [readonly]="action_delete"> -->
+                                    <mat-select placeholder="Broj smena" formControlName="broj_smena" [disabled]="action_delete" [errorStateMatcher]="matcher" (selectionChange)="broj_smena_change()">
+                                        <mat-option [value]="1">1</mat-option>
+                                        <mat-option [value]="2">2</mat-option>
+                                        <mat-option [value]="3">3</mat-option>
+                                        <mat-option [value]="4">4</mat-option>
+                                        <mat-option [value]="5">5</mat-option>
+                                        <mat-option [value]="6">6</mat-option>
+                                        <mat-option [value]="7">7</mat-option>
+                                        <mat-option [value]="8">8</mat-option>
+                                        <mat-option [value]="9">9</mat-option>
+                                        <mat-option [value]="10">10</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="kampForm.get('broj_smena')?.errors?.serverError">
+                                        {{ kampForm.get("broj_smena")?.errors ?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width col-md-3">
+                                    <input matInput type="number" placeholder="Broj prijava po smeni" formControlName="broj_prijava" [ngModel]="kamp.broj_prijava" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                    <mat-error *ngIf="kampForm.get('broj_prijava')?.errors?.serverError">
+                                        {{ kampForm.get("broj_prijava")?.errors ?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row mt-3">
+                                <div formArrayName="smene" class="col-md-5">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="border-bottom">Smene</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button mat-mini-fab type="button" class="pull-right btnPlus" (click)="add_smena()">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngFor="let smena of smene.controls; let i = index" [formGroupName]="i">
+                                        <mat-form-field class="col-md-4">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="Naziv" formControlName="naziv" [value]="'Smena ' + rimski_brojevi[i]" />
+                                        </mat-form-field>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width" appCustomDateFormat1>
+                                                <mat-label>Datum od</mat-label>
+                                                <input matInput [matDatepicker]="datum_od_picker_i" formControlName="datum_od" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                                <mat-datepicker-toggle matSuffix [for]="datum_od_picker_i"></mat-datepicker-toggle>
+                                                <mat-datepicker #datum_od_picker_i></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Datum do</mat-label>
+                                                <input matInput [matDatepicker]="datum_do_picker_i" formControlName="datum_do" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                                <mat-datepicker-toggle matSuffix [for]="datum_do_picker_i"></mat-datepicker-toggle>
+                                                <mat-datepicker #datum_do_picker_i></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width" appCustomDateFormat1>
-                                        <mat-label>Datum od</mat-label>
-                                        <input matInput [matDatepicker]="datum_od_picker" formControlName="datum_od" [ngModel]="kamp.datum_od" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-datepicker-toggle matSuffix [for]="datum_od_picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #datum_od_picker></mat-datepicker>
-                                        <mat-error *ngIf="kampForm.get('datum_od')?.errors?.serverError">
-                                            {{ kampForm.get("datum_od")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <mat-label>Datum do</mat-label>
-                                        <input matInput [matDatepicker]="datum_do_picker" formControlName="datum_do" [ngModel]="kamp.datum_do" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-datepicker-toggle matSuffix [for]="datum_do_picker"></mat-datepicker-toggle>
-                                        <mat-datepicker #datum_do_picker></mat-datepicker>
-                                        <mat-error *ngIf="kampForm.get('datum_do')?.errors?.serverError">
-                                            {{ kampForm.get("datum_do")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
+                                <div formArrayName="cene" class="offset-md-2 col-md-5 ">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5 class="border-bottom">Cenovnik</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button mat-mini-fab type="button" color="primary" class="pull-right btnPlus" (click)="add_cena()">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngFor="
+                                            let cena of cene.controls;
+                                            let i = index
+                                        " [formGroupName]="i">
+                                        <mat-form-field class="col-md-4">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="Naziv" formControlName="naziv" [value]="" />
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-4">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="" formControlName="iznos_rsd" [value]="" />
+                                            <span matSuffix>RSD</span>
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-4">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="" formControlName="iznos_eur" [value]="" />
+                                            <mat-icon matSuffix>euro_symbol</mat-icon>
+                                        </mat-form-field>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput type="number" placeholder="Broj prijava po smeni" formControlName="broj_prijava" [ngModel]="kamp.broj_prijava" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="kampForm.get('broj_prijava')?.errors?.serverError">
-                                            {{ kampForm.get("broj_prijava")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Cena po smeni" formControlName="cena" [ngModel]="kamp.cena" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-icon matSuffix>euro_symbol</mat-icon>
-                                        <mat-error *ngIf="kampForm.get('cena')?.errors?.serverError">
-                                            {{ kampForm.get("cena")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Lokacija" formControlName="lokacija_id" [ngModel]="kamp.lokacija_id" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="kampForm.get('lokacija_id')?.errors?.serverError">
-                                            {{ kampForm.get("lokacija_id")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-md-12">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Broj smena" formControlName="broj_smena" [readonly]="action_delete" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="kampForm.get('broj_smena')?.errors?.serverError">
-                                            {{ kampForm.get("broj_smena")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
+                            <div class="row mt-3">
+                                <div formArrayName="dodatni_paketi" class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h5>Dodatni paketi</h5>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <button mat-mini-fab type="button" class="pull-right btnPlus" (click)="add_dodatni_paket()">
+                                                <mat-icon>add</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row border-bottom" *ngFor="let dodatni_paket of dodatni_paketi.controls;let i = index" [formGroupName]="i">
+                                        <mat-form-field class="col-md-7">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="Naziv" formControlName="naziv" [value]="" />
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-2">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="" formControlName="iznos_rsd" [value]="" />
+                                            <span matSuffix>RSD</span>
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-2">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <input matInput placeholder="" formControlName="iznos_eur" [value]="" />
+                                            <mat-icon matSuffix>euro_symbol</mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field class="col-md-12">
+                                            <!-- <mat-label>Naziv</mat-label> -->
+                                            <textarea matInput placeholder="Opis" formControlName="opis"></textarea>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row border-bottom">
+                                    </div>
                                 </div>
                             </div>
-                            <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">Potvrdi</button>
+
+                            <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                                Potvrdi
+                            </button>
                             <div class="clearfix"></div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>

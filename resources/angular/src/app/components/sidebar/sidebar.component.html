@@ -1,7 +1,7 @@
 <div class="logo">
     <a href="https://www.creative-tim.com" class="simple-text">
         <div class="logo-img">
-            <img src="/assets/angular/assets/img/vg_logo.png" alt="VG" />
+            <img [src]="asset_root + '/assets/img/vg_logo.png'" alt="VG" />
         </div>
     </a>
 </div>
@@ -62,7 +62,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" (click)="logout()">
+            <a class="nav-link" (click)="logout()" style="cursor: pointer">
                 <i class="material-icons">logout</i>
                 <p>Logout</p>
             </a>

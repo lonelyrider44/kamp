@@ -30,11 +30,11 @@ class StoreKampRequest extends FormRequest
             'lokacija_id' => 'required',
             'naziv' => 'required',
             // 'godina' => 'required',
-            'datum_od' => 'required',
-            'datum_do' => 'required',
+            // 'datum_od' => 'required',
+            // 'datum_do' => 'required',
             'broj_prijava' => 'required',
             // 'status' => 'required',
-            'cena' => 'required'
+            // 'cena' => 'required'
         ];
     }
 }

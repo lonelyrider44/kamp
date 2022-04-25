@@ -13,10 +13,10 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    this.ngxService.show();
-    this.authService.profileUser().subscribe(res => {
-      this.ngxService.hide();
-    })
+    // this.ngxService.show();
+    // this.authService.profileUser().subscribe(res => {
+    //   this.ngxService.hide();
+    // })
   }
 
 }

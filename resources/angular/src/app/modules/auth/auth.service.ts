@@ -18,8 +18,8 @@ export class AuthService {
     login: environment.api_url + '/login',
     register: environment.api_url + '/register'
     }
-    console.log('Service construct start')
-    console.log('Service construct end')
+    // console.log('Service construct start')
+    // console.log('Service construct end')
   }
 
   handleData(data:any) {
@@ -32,6 +32,8 @@ export class AuthService {
     return localStorage.getItem('auth_token');
   }
   getUser(){
+    // console.log('Get user');
+    // console.log(this.user);
     if( !this.isValidToken()){
       this.user = null;
     }
@@ -64,6 +66,9 @@ export class AuthService {
   isLoggedIn() {
     return this.isValidToken();
   }
+  isAdmin(){
+    return this.user && this.user.user_type=="admin";
+  }
 
   // Remove token
   removeToken() {
@@ -77,37 +82,51 @@ export class AuthService {
   }
 
   // Login
-  signin(user: Korisnik): Observable<any> {
+  signin(user: Korisnik = null): Observable<any> {
+    // console.log('Signing in...')
     return this.http.post<any>(environment.api_url+'/login', user);
+    // .pipe(
+    // map(res => {
+    //   console.log('mapping user');
+    //   console.log(res);
+    //   this.handleData(res);
+    //   return res;
+    // }));
+
+      // .subscribe(res => {
+      //   this.handleData(res);
+      //   return res;
+      // });
+    // );
   }
 
   async loadUser(){
 
     return await this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
       this.user = user;
-      console.log('User loaded')
+      // console.log('User loaded')
       return user;
     })).toPromise();
   }
   // Access user profile
-  profileUser(): Observable<Korisnik> {
-  // profileUser(): any {
+  // profileUser(): Observable<Korisnik> {
+  // // profileUser(): any {
 
-    return this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
-      this.user = user;
-      return user;
-    }));
-    // this.user = this.http.post<Korisnik>(environment.api_url+'/api/profile',{});
-    // .subscribe({
-    //   then(res){
-    //     console.log(res);
-    //     this.user = res;
-    //   },
-    //   error(err){
+  //   return this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
+  //     this.user = user;
+  //     return user;
+  //   }));
+  //   // this.user = this.http.post<Korisnik>(environment.api_url+'/api/profile',{});
+  //   // .subscribe({
+  //   //   then(res){
+  //   //     console.log(res);
+  //   //     this.user = res;
+  //   //   },
+  //   //   error(err){
 
-    //   })
-    // });
-  }
+  //   //   })
+  //   // });
+  // }
   // Logout
   logout(): Observable<any> {
     // console.log('logout');

@@ -14,7 +14,8 @@ import { KorisnikService } from '../korisnik.service';
 })
 export class FormComponent implements OnInit {
   korisnik: Korisnik = {
-    id: -1,
+    email: null,
+    user_type: null
     // id_klijenta: null,
     // id_korisnika: -1,
     // domen: '', 

@@ -5,5 +5,7 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://local.kamp/api'
+  api_url: 'http://local.kamp/api',
+  api_calls: '',
+  asset_root: '',
 };

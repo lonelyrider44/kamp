@@ -24,14 +24,33 @@ class JwtAuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['email', 'password']);
-
-        // return auth()->attempt($credentials);
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized','message' => 'Login failed'], 401);
+        if (!empty(auth()->user())) {
+            return $this->respondWithToken(
+                str_replace('Bearer ', '', request()->header('Authorization')),
+                auth()->user()
+            );
         }
 
-        return $this->respondWithToken($token);
+        $credentials = request(['email', 'password']);
+
+        $guards = ['admin', 'roditelj', 'ucesnik'];
+
+
+        foreach ($guards as $guard) {
+            if ($token = auth($guard)->attempt($credentials)) {
+                return $this->respondWithToken($token, auth($guard)->user());
+            }
+        }
+        // return response()->json(auth()->guard());
+        return response()->json(['error' => 'Unauthorized', 'message' => 'Login failed'], 401);
+        // return auth()->attempt($credentials);
+        // if (! $token = auth()->guard('roditelj')->attempt($credentials)) {
+        // if (! $token = auth()->guard('admin')->attempt($credentials)) {
+        //     // return response()->json(['error' => 'Unauthorized','message' => 'Login failed'], 401);
+        // }
+
+
+
     }
 
     /**
@@ -63,7 +82,7 @@ class JwtAuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        // return $this->respondWithToken(auth()->refresh());
     }
 
     /**
@@ -73,17 +92,21 @@ class JwtAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken($token, $user)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            // 'user' => auth($guard)->user()->toArray() + ['user_type' => $guard]
+            'user' => $user->toArray() + $user->getJWTCustomClaims()
+            // 'user' => \JWTAuth::toUser($token)
         ]);
     }
-    public function profile(){
+    public function profile()
+    {
         // sleep(30);
+        return $this->respondWithToken(request()->header('Authorization'), auth()->user());
         return response()->json(auth()->user());
     }
 }

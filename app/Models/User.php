@@ -60,6 +60,7 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTIdentifier()
     {
         return $this->getKey();
+        return "admin-{$this->getKey()}";
     }
 
     /**
@@ -69,6 +70,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function getJWTCustomClaims()
     {
-        return [];
+        return ['role' => 'admin','user_type' => 'admin'];
     }
 }

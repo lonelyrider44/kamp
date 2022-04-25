@@ -26,6 +26,7 @@ import { MaterialModule } from './modules/material/material.module';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { CustomDateFormat1Directive } from './directives/custom-date-format1.directive';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AppComponent,
     AdminLayoutComponent,
     CustomDateFormat1Directive,
+    ParentLayoutComponent,
 
   ],
   providers: [],

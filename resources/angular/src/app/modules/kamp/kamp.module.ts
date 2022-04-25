@@ -11,6 +11,7 @@ import { CustomDateAdapter } from '../material/custom-date-adapter';
 import { DetailsBasicComponent } from './details-basic/details-basic.component';
 import { DetailsLayoutComponentComponent } from './details-layout-component/details-layout-component.component';
 import { KampDatatableComponent } from './kamp-datatable/kamp-datatable.component';
+import { PrijavaComponent } from './prijava/prijava.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { KampDatatableComponent } from './kamp-datatable/kamp-datatable.componen
     FormComponent,
     DetailsBasicComponent,
     DetailsLayoutComponentComponent,
-    KampDatatableComponent
+    KampDatatableComponent,
+    PrijavaComponent
   ],
   imports: [
     CommonModule,

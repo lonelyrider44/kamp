@@ -68,7 +68,7 @@ export const AdminLayoutRoutes: Routes = [
             path: 'kamp',
             loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
         }],
-        canActivate: [AuthGuard]
+        
     },
     {
         path: '',
@@ -76,7 +76,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'smena',
             loadChildren: () => import('../../modules/smena/smena.module').then(m => m.SmenaModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -84,7 +83,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'hotel',
             loadChildren: () => import('../../modules/hotel/hotel.module').then(m => m.HotelModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -92,7 +90,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'izvestaj',
             loadChildren: () => import('../../modules/izvestaj/izvestaj.module').then(m => m.IzvestajModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -100,7 +97,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'korisnik',
             loadChildren: () => import('../../modules/korisnik/korisnik.module').then(m => m.KorisnikModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -108,7 +104,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'oprema',
             loadChildren: () => import('../../modules/oprema/oprema.module').then(m => m.OpremaModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -116,7 +111,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'prevoz',
             loadChildren: () => import('../../modules/prevoz/prevoz.module').then(m => m.PrevozModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -124,7 +118,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'ucesnik',
             loadChildren: () => import('../../modules/ucesnik/ucesnik.module').then(m => m.UcesnikModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -132,7 +125,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'uplata',
             loadChildren: () => import('../../modules/uplata/uplata.module').then(m => m.UplataModule)
         }],
-        canActivate: [AuthGuard]
     },
     {
         path: '',
@@ -140,7 +132,6 @@ export const AdminLayoutRoutes: Routes = [
             path: 'zahtev',
             loadChildren: () => import('../../modules/zahtev/zahtev.module').then(m => m.ZahtevModule)
         }],
-        canActivate: [AuthGuard]
     },
     { path: '**',             component: NotFoundComponent }
 ];

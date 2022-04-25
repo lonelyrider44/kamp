@@ -1,7 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 export interface Kamp {
-    id: any
+    id?: number,
 
     lokacija_id: any,
     naziv: any,
@@ -10,20 +10,26 @@ export interface Kamp {
     broj_prijava: any,
     status: any, 
     cena: any,
-    broj_smena: any
+    broj_smena: any,
+    smene: any,
+    cene: any,
+    dodatni_paketi: any
 }
 
 export function newKamp(): Kamp{
     return {
-        id: '',
+        // id: '',
         lokacija_id: '',
-        naziv: '',
+        naziv: '',  
         datum_od: '',
         datum_do: '',
         broj_prijava: '',
         status: '',
         cena: '',
-        broj_smena: ''
+        broj_smena: '',
+        smene: [],
+        cene: [],
+        dodatni_paketi: []
       };
 }
 export function kampFormGroup(fb: FormBuilder, kamp: Kamp): FormGroup{
@@ -35,7 +41,9 @@ export function kampFormGroup(fb: FormBuilder, kamp: Kamp): FormGroup{
         broj_prijava: [kamp.broj_prijava],
         // status: [kamp.status],
         cena: [kamp.cena],
-        broj_smena: ''
+        broj_smena: '',
+        smene: fb.array([]),
+        cene: fb.array([]),
+        dodatni_paketi: fb.array([])
       })
-    
 }

@@ -44,6 +44,19 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+
+        'admin' => [
+            'driver' => 'jwt',
+            'provider' => 'users'
+        ],
+        'roditelj' => [
+            'driver' => 'jwt',
+            'provider' => 'roditelji'
+        ],
+        'ucesnik' => [
+            'driver' => 'jwt',
+            'provider' => 'ucesnici'
+        ],
     ],
 
     /*
@@ -67,6 +80,14 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+        'roditelji' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Roditelj::class,
+        ],
+        'ucesnici' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Ucesnik::class,
         ],
 
         // 'users' => [

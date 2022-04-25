@@ -7,11 +7,14 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './modules/auth/auth-interceptor';
+import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.component';
+import { AuthGuard } from './guards/auth.guard';
+import { AuthAdminGuard } from './guards/auth-admin.guard';
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'admin/dashboard',
     pathMatch: 'full',
   },
   {
@@ -22,12 +25,24 @@ const routes: Routes =[
     }]
   },
   {
-    path: '',
+    path: 'admin',
     component: AdminLayoutComponent,
     children: [{
       path: '',
       loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-    }]
+    }],
+    // resolve: {
+    //   data: ResolveUserGuard
+    // },
+    canActivate: [AuthAdminGuard]
+  },
+  {
+    path: 'roditelj',
+    component: ParentLayoutComponent,
+    // children: [{
+    //   path: '',
+    //   loadChildren: () => import('./layouts/parent-layout/parent-layout.module').then(m => m.ParentLayoutModule)
+    // }]
   },
 ];
 
@@ -35,9 +50,8 @@ const routes: Routes =[
   imports: [
     CommonModule,
     BrowserModule,
-    RouterModule.forRoot(routes,{
-       useHash: true
-    })
+    // RouterModule.forRoot(routes,{ useHash: true })
+    RouterModule.forRoot(routes)
   ],
   exports: [
   ],
