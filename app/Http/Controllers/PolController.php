@@ -15,7 +15,7 @@ class PolController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(\App\Models\Pol::toBase()->get());
     }
 
     /**

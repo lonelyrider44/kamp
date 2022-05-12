@@ -40,18 +40,16 @@ export class FormComponent implements OnInit {
     // console.log('after view init')
     if (this.action_create){
       this.add_smena();
-      this.add_cena();
+      // this.add_cena();
     }
   }
 
   store() {
     if (!this.action_create) return;
 
-    // console.log(this.kampForm.getRawValue());
-    // return;
     this.kampService.store(this.kampForm.value).subscribe(
       {
-        next: res => { this.router.navigateByUrl('/kamp') },
+        next: res => { this.router.navigateByUrl('/admin/kamp') },
         error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
       }
     )
@@ -60,7 +58,7 @@ export class FormComponent implements OnInit {
     if (!this.action_update) return;
     this.kampService.update(this.kamp.id, this.kampForm.value).subscribe(
       {
-        next: res => { this.router.navigateByUrl('/kamp') },
+        next: res => { this.router.navigateByUrl('/admin/kamp') },
         error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
       }
     )
@@ -68,7 +66,7 @@ export class FormComponent implements OnInit {
   delete() {
     if (!this.action_delete) return;
     this.kampService.delete(this.kamp.id).subscribe({
-      next: res => { this.router.navigateByUrl('/kamp') },
+      next: res => { this.router.navigateByUrl('/admin/kamp') },
       error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
     })
   }
@@ -192,23 +190,17 @@ export class FormComponent implements OnInit {
       iznos_eur: '',
     }))
   }
-  broj_dodatnih_paketa_change(){
-    let n = this.kampForm.get('broj_dodatnih_paketa')?.value;
-    if (n == 1) {
-      n = 0;
-    }
-    for (let i = this.dodatni_paketi.length + 1; i <= n; i++) {
-      this.add_dodatni_paket(i);
-    }
 
-    for (let i = this.dodatni_paketi.length; i > n; i--) {
-      this.dodatni_paketi.removeAt(i - 1);
-    }
-
-    // if (n > 1) {
-    //   this.update_ukupno_vreme();
-    // }
-
+  get organizovani_prevoz(){
+    return this.kampForm.get('organizovani_prevoz') as FormArray;
+  }
+  add_organizovani_prevoz(index:any = null){
+    this.organizovani_prevoz.push(this.fb.group({
+      naziv: '',
+      opis: '',
+      cena_rsd: '',
+      cena_eur: '',
+    }))
   }
 }
 

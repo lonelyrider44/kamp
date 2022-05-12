@@ -70,7 +70,7 @@ export class SidebarComponent implements OnInit {
       return true;
   };
   logout(){
-    console.log('logout click');
+    // console.log('logout click');
     this.authService.logout().subscribe(res => {
       this.authService.removeToken();
       this.router.navigate(['login']);

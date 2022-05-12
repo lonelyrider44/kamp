@@ -10,12 +10,17 @@ import { AuthInterceptor } from './modules/auth/auth-interceptor';
 import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
+import { FormComponent } from './modules/prijava/form/form.component';
 
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'admin/dashboard',
+    redirectTo: 'prijava',
     pathMatch: 'full',
+  },
+  {
+    path: 'prijava',
+    component: FormComponent
   },
   {
     path: '',
@@ -39,10 +44,10 @@ const routes: Routes =[
   {
     path: 'roditelj',
     component: ParentLayoutComponent,
-    // children: [{
-    //   path: '',
-    //   loadChildren: () => import('./layouts/parent-layout/parent-layout.module').then(m => m.ParentLayoutModule)
-    // }]
+    children: [{
+      path: '',
+      loadChildren: () => import('./layouts/parent-layout/parent-layout.module').then(m => m.ParentLayoutModule)
+    }]
   },
 ];
 

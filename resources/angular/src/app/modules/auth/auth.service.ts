@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Korisnik } from 'app/modules/korisnik/korisnik';
@@ -13,16 +14,27 @@ export class AuthService {
   private issuer = {}
   private user: Korisnik = null;
 
-  constructor(private http: HttpClient) {
-    this.issuer = {
-    login: environment.api_url + '/login',
-    register: environment.api_url + '/register'
+  constructor(private http: HttpClient, private location: Location) {
+
+    if (environment.production) {
+      this.issuer = {
+        login: window.location.protocol + "//" + window.location.hostname + environment.api_url + '/login',
+        register: environment.api_url + '/register'
+      }
+
+    } else {
+      this.issuer = {
+        login: environment.api_url + '/login',
+        register: environment.api_url + '/register'
+      }
+
     }
+
     // console.log('Service construct start')
     // console.log('Service construct end')
   }
 
-  handleData(data:any) {
+  handleData(data: any) {
     // console.log(data.access_token);
     this.user = data.user;
     localStorage.setItem('auth_token', data.access_token);
@@ -31,10 +43,10 @@ export class AuthService {
   getToken() {
     return localStorage.getItem('auth_token');
   }
-  getUser(){
+  getUser() {
     // console.log('Get user');
     // console.log(this.user);
-    if( !this.isValidToken()){
+    if (!this.isValidToken()) {
       this.user = null;
     }
     return this.user;
@@ -46,7 +58,10 @@ export class AuthService {
 
     if (token) {
       // console.log('token exits');
+      console.log(this.issuer)
       const payload = this.payload(token);
+      console.log(payload.iss);
+      console.log(Object.values(this.issuer).indexOf(payload.iss));
       if (payload) {
         return Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
       }
@@ -56,7 +71,7 @@ export class AuthService {
     return false;
   }
 
-  payload(token:any) {
+  payload(token: any) {
     const jwtPayload = token.split('.')[1];
     return JSON.parse(window.atob(jwtPayload));
     // return JSON.parse(new Buffer(jwtPayload, 'base64').toString('binary'));
@@ -66,8 +81,8 @@ export class AuthService {
   isLoggedIn() {
     return this.isValidToken();
   }
-  isAdmin(){
-    return this.user && this.user.user_type=="admin";
+  isAdmin() {
+    return this.user && this.user.user_type == "admin";
   }
 
   // Remove token
@@ -84,7 +99,7 @@ export class AuthService {
   // Login
   signin(user: Korisnik = null): Observable<any> {
     // console.log('Signing in...')
-    return this.http.post<any>(environment.api_url+'/login', user);
+    return this.http.post<any>(environment.api_url + '/login', user);
     // .pipe(
     // map(res => {
     //   console.log('mapping user');
@@ -93,16 +108,16 @@ export class AuthService {
     //   return res;
     // }));
 
-      // .subscribe(res => {
-      //   this.handleData(res);
-      //   return res;
-      // });
+    // .subscribe(res => {
+    //   this.handleData(res);
+    //   return res;
+    // });
     // );
   }
 
-  async loadUser(){
+  async loadUser() {
 
-    return await this.http.post<Korisnik>(environment.api_url+'/profile',{}).pipe(map(user=> {
+    return await this.http.post<Korisnik>(environment.api_url + '/profile', {}).pipe(map(user => {
       this.user = user;
       // console.log('User loaded')
       return user;
@@ -130,6 +145,6 @@ export class AuthService {
   // Logout
   logout(): Observable<any> {
     // console.log('logout');
-    return this.http.post<any>(environment.api_url+'/logout',{});
+    return this.http.post<any>(environment.api_url + '/logout', {});
   }
 }

@@ -17,14 +17,15 @@
 -->
 <!doctype html>
 <html>
+
 <head><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <base href="/assets/angular/">
+    <base href="/">
     <meta charset="utf-8"/>
     <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png"/>
     <link rel="icon" type="image/png" href="./assets/img/favicon.png"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 
-    <title>Material Dashboard Angular by Creative Tim</title>
+    <title>VG kamp</title>
 
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
     <meta name="viewport" content="width=device-width"/>
@@ -36,7 +37,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v126/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/materialicons/v128/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
 }
 /* cyrillic-ext */
 @font-face {
@@ -225,16 +226,17 @@
 </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR-KEY-HERE"></script>
 
-<link rel="stylesheet" href="styles.5b456a194f4b1493.css"></head>
+<link rel="stylesheet" href="/assets/angular/styles.5b456a194f4b1493.css"></head>
+
 <body>
-  <app-root>
-    <div class="loader">
-      <svg class="circular" viewBox="25 25 50 50">
+    <app-root>
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
           <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
       </svg>
-    </div>
-  </app-root>
-<script src="runtime.862e84621a67e7c2.js" type="module"></script><script src="polyfills.74a16d6a00ed014e.js" type="module"></script><script src="scripts.469d63c76c523417.js" defer=""></script><script src="main.6232921e176c632c.js" type="module"></script></body>
+        </div>
+    </app-root>
+<script src="/assets/angular/runtime.f4bb417ea52c40d8.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.469d63c76c523417.js" defer=""></script><script src="/assets/angular/main.0748bc8fc620c713.js" type="module"></script></body>
 
 
 </html>

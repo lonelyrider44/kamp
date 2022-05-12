@@ -57,6 +57,7 @@ export class IndexComponent implements OnInit {
         { title: 'Period', data: 'period', name: 'period' },
         { title: 'Cena', data: 'cena_smene', name: 'cena_smene' },
         { title: 'Broj smena', data: 'broj_smena', name: 'broj_smena' },
+        { title: 'Dodatni paketi', data: 'broj_paketa', name: 'broj_paketa' },
         { title: 'Učesnici', data: 'broj_ucesnika', name: 'broj_ucesnika' },
         { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
         { title: 'Akcije', data: 'action', name: 'action', width: "120px" },

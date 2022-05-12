@@ -24,6 +24,9 @@ export class KampService {
   find(id:any): Observable<Kamp> {
     return this.httpClient.get<Kamp>(`${environment.api_url}/kamp/${id}`)
   }
+  getAktivniKamp(): Observable<Kamp> {
+    return this.httpClient.post<Kamp>(`${environment.api_url}/kamp/aktivni`,{})
+  }
   store(kamp): Observable<Kamp> {
     return this.httpClient.post<Kamp>(`${environment.api_url}/kamp`, JSON.stringify(kamp), this.httpOptions)
   }

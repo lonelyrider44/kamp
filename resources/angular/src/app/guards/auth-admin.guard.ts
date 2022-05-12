@@ -20,7 +20,10 @@ export class AuthAdminGuard implements CanActivate {
         .pipe(
           map((e) => {
             this.auth.handleData(e);
-            if (e) {
+            let user = this.auth.getUser();
+            if (user) {
+              console.log('auth guard')
+              console.log(this.auth.getUser().user_type)
               return this.auth.getUser().user_type=="admin";
             }
         }),

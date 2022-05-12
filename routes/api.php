@@ -15,16 +15,22 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [\App\Http\Controllers\API\JwtAuthController::class, 'login']);
+Route::post('/kamp/aktivni',[\App\Http\Controllers\KampController::class,'aktivni']);
+Route::post('/prijava',[\App\Http\Controllers\PrijavaController::class,'store']);
+Route::apiResource('velicina', \App\Http\Controllers\VelicinaController::class);
+Route::apiResource('pol', \App\Http\Controllers\PolController::class);
 // Route::post('refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);
 
 
 // Route::middleware(['assign.guard:roditelj','jwt.auth'])->group(function () {
 Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
+    Route::apiResource('prijava', \App\Http\Controllers\PrijavaController::class)->except(['store']);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);
     Route::apiResource('korisnik', \App\Http\Controllers\KorisnikController::class);
     Route::apiResource('uplata', \App\Http\Controllers\UplataController::class);
+    
     
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);
     Route::post('logout', [\App\Http\Controllers\API\JwtAuthController::class, 'logout']);

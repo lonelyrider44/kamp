@@ -1,0 +1,1 @@
+{{ $cena_smene_eur }}eur ({{ $cena_smene_rsd }}RSD)

@@ -19,6 +19,7 @@ class CreateVelicinasTable extends Migration
             $table->timestamps();
         });
 
+        \App\Models\Velicina::create(['naziv' => '6']);
         \App\Models\Velicina::create(['naziv' => '8']);
         \App\Models\Velicina::create(['naziv' => '10']);
         \App\Models\Velicina::create(['naziv' => '12']);

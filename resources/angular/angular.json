@@ -72,7 +72,8 @@
                                 "replace": "src/environments/environment.ts",
                                 "with": "src/environments/environment.prod.ts"
                             }],
-                            "outputPath": "../../public/assets/angular"
+                            "outputPath": "../../public/assets/angular",
+                            "deployUrl": "/assets/angular/"
                         },
                         "development": {
                             "buildOptimizer": false,

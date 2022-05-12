@@ -10,6 +10,8 @@ import { SmenaDatatableComponent } from '../smena/smena-datatable/smena-datatabl
 import { UcesnikDatatableComponent } from '../ucesnik/ucesnik-datatable/ucesnik-datatable.component';
 import { UplataDatatableComponent } from '../uplata/uplata-datatable/uplata-datatable.component';
 import { OpremaDatatableComponent } from '../oprema/oprema-datatable/oprema-datatable.component';
+import { PrijavaDatatableComponent } from '../prijava/prijava-datatable/prijava-datatable.component';
+import { DodatniPaketDatatableComponent } from '../dodatni-paket/dodatni-paket-datatable/dodatni-paket-datatable.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },
@@ -29,6 +31,16 @@ const routes: Routes = [
     {
       path: 'smene',
       component: SmenaDatatableComponent
+      // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
+    },
+    {
+      path: 'dodatni-paketi',
+      component: DodatniPaketDatatableComponent
+      // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
+    },
+    {
+      path: 'prijave',
+      component: PrijavaDatatableComponent
       // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
     },
     {

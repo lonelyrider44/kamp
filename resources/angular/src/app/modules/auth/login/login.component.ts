@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
   ).subscribe((event: NavigationEnd) => {
-    console.log(this.currentUrl);
+    // console.log(this.currentUrl);
      this.previousUrl = this.currentUrl;
      this.currentUrl = event.url;
   });
@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
       (result) => {
         this.authService.handleData(result);
         let user = this.authService.getUser();
+        console.log(user.user_type);
         if(user.user_type=="admin"){
           this.router.navigate(['/admin/kamp']);
         }

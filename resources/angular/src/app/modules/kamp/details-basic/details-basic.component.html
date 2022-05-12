@@ -1,1 +1,58 @@
-<p>details-basic works!</p>{{kampId}}
+<div class="row">
+    <div class="col-md-12">
+        <h4>{{ kamp?.naziv }}</h4>
+        <p>{{ kamp?.datum_od }} - {{ kamp?.datum_od }}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <th>Smena</th>
+                    <th>Datum od</th>
+                    <th>Datum do</th>
+                    <th>Prijave</th>
+                    <th>Dečaci</th>
+                    <th>Devojčice</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let smena of kamp?.smene">
+                        <td>{{smena.naziv}}</td>
+                        <td>{{smena.datum_od | date:'d.MM.Y.'}}</td>
+                        <td>{{smena.datum_do | date:'d.MM.Y.'}}</td>
+                        <td class="text-primary">78</td>
+                        <td class="text-primary">40</td>
+                        <td class="text-primary">38</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class=" text-primary">
+                    <th>Paket</th>
+                    <th>Cena (RSD)</th>
+                    <th>Cena (EUR)</th>
+                    <th>Prijave</th>
+                    <th>Dečaci</th>
+                    <th>Devojčice</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let dp of kamp?.dodatni_paketi">
+                        <td>{{dp.naziv}}</td>
+                        <td>{{dp.iznos_rsd}} RSD</td>
+                        <td>{{dp.iznos_eur}} EUR</td>
+                        <td class="text-primary">78</td>
+                        <td class="text-primary">40</td>
+                        <td class="text-primary">38</td>
+                    </tr>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

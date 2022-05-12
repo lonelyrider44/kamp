@@ -9,26 +9,37 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SmenaController extends Controller
 {
-    public function datatable(Request $request){
+    public function datatable(Request $request)
+    {
         return datatables()->of(\App\Models\Smena::select(
-            'smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena',
-                'kamps.naziv as kamp',
-                \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
-                \DB::raw('COUNT(IF(ucesniks.pol=1,1,NULL)) as broj_muskih_ucesnika'),
-                \DB::raw('COUNT(IF(ucesniks.pol=2,1,NULL)) as broj_zenskih_ucesnika'),
-                )
-            ->join('kamps','kamps.id','smenas.kamp_id')
-            ->leftJoin('ucesnik_kampas','ucesnik_kampas.smena_id','smenas.id')
-            ->leftJoin('ucesniks', 'ucesniks.id','ucesnik_kampas.ucesnik_id')
-            ->when(!empty($request->kamp_id), function($query)use($request){
-                return $query->where('smenas.kamp_id',$request->kamp_id);
+            'smenas.id',
+            'smenas.naziv',
+            'smenas.datum_od',
+            'smenas.datum_do',
+            'kamps.cena_smene_rsd',
+            'kamps.cena_smene_eur',
+            'kamps.naziv as kamp',
+            \DB::raw('COUNT(prijava_smenas.id) as broj_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.pol_id=1, prijava_smenas.id, NULL)) as broj_muskih_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.pol_id=2, prijava_smenas.id, NULL)) as broj_zenskih_ucesnika'),
+            // \DB::raw('COUNT(IF(prijavas.Pol=1,1,NULL)) as broj_muskih_ucesnika'),
+            // \DB::raw('COUNT(IF(prijavas.Pol=2,1,NULL)) as broj_zenskih_ucesnika'),
+        )
+            ->leftJoin('kamps', 'kamps.id', 'smenas.kamp_id')
+            ->leftJoin('prijava_smenas','prijava_smenas.smena_id','smenas.id')
+            ->leftJoin('prijavas','prijavas.id','prijava_smenas.prijava_id')
+            // ->leftJoin('ucesnik_kampas','ucesnik_kampas.smena_id','smenas.id')
+            // ->leftJoin('ucesniks', 'ucesniks.id', 'ucesnik_kampas.ucesnik_id')
+            ->when(!empty($request->kamp_id), function ($query) use ($request) {
+                return $query->where('smenas.kamp_id', $request->kamp_id);
             })
-            ->groupBy('smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena','kamps.naziv')
+            ->groupBy('smenas.id', 'smenas.naziv', 'smenas.datum_od', 'smenas.datum_do', 'kamps.cena_smene_rsd', 'kamps.cena_smene_eur','kamps.naziv')
             ->toBase())
-            ->addColumn('action','smena.partials.dt_actions')
-            ->addColumn('period','smena.partials.dt_period')
+            ->addColumn('cena', 'smena.partials.dt_cena')
+            ->addColumn('action', 'smena.partials.dt_actions')
+            ->addColumn('period', 'smena.partials.dt_period')
             ->with('kamp_id', $request->kamp_id)
-            ->rawColumns(['action','period'])
+            ->rawColumns(['action', 'period','cena'])
             ->make(true);
     }
     /**

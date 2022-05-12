@@ -15,7 +15,7 @@ class VelicinaController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(\App\Models\Velicina::all());
     }
 
     /**

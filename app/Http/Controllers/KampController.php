@@ -15,20 +15,22 @@ class KampController extends Controller
             'kamps.naziv',
             'kamps.datum_od',
             'kamps.datum_do',
-            // 'kamps.cena_smene',
-            \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
-            \DB::raw('COUNT(smenas.id) as broj_smena'),
+            'kamps.cena_smene',
+            \DB::raw('COUNT(DISTINCT ucesnik_kampas.id) as broj_ucesnika'),
+            \DB::raw('COUNT(DISTINCT smenas.id) as broj_smena'),
+            \DB::raw('COUNT(DISTINCT dodatni_pakets.id) as broj_paketa'),
             \DB::raw('COALESCE(SUM(uplatas.iznos)+ucesnik_kampas.depozit) as uplaceno')
         )
-            ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.kamp_id', 'kamps.id')
-            ->leftJoin('smenas', 'smenas.kamp_id', 'kamps.id')
-            ->leftJoin('uplatas', 'uplatas.ucesnik_kampa_id', 'ucesnik_kampas.id')
+        ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.kamp_id', 'kamps.id')
+        ->leftJoin('smenas', 'smenas.kamp_id', 'kamps.id')
+        ->leftJoin('uplatas', 'uplatas.ucesnik_kampa_id', 'ucesnik_kampas.id')
+        ->leftJoin('dodatni_pakets', 'dodatni_pakets.kamp_id', 'kamps.id')
             ->groupBy(
                 'kamps.id',
                 'kamps.naziv',
                 'kamps.datum_od',
                 'kamps.datum_do',
-                // 'kamps.cena_smene',
+                'kamps.cena_smene',
                 'ucesnik_kampas.depozit'
             )
             ->toBase())
@@ -69,8 +71,14 @@ class KampController extends Controller
         try {
             \DB::beginTransaction();
             $kamp = \App\Models\Kamp::create($request->all());
-            foreach($request->smene as $smena){
+            foreach ($request->smene as $smena) {
                 $kamp->smene()->save(new \App\Models\Smena($smena));
+            }
+            foreach ($request->dodatni_paketi as $dodatni_paket) {
+                $kamp->dodatni_paketi()->save(new \App\Models\DodatniPaket($dodatni_paket));
+            }
+            foreach ($request->organizovani_prevoz as $org_prevoz) {
+                $kamp->organizovani_prevoz()->save(new \App\Models\OrganizovaniPrevoz($org_prevoz));
             }
             // $this->store_smene($kamp, $request->broj_smena);
             \DB::commit();
@@ -208,5 +216,8 @@ class KampController extends Controller
 
         // The Roman numeral should be built, return it
         return $result;
+    }
+    public function aktivni(){
+        return response()->json(\App\Models\Kamp::aktivni()->first());
     }
 }
