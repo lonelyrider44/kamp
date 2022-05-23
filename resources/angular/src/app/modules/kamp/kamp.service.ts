@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
-import { Kamp } from './kamp';
+import { Kamp, KampStatus } from './kamp';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +27,13 @@ export class KampService {
   getAktivniKamp(): Observable<Kamp> {
     return this.httpClient.post<Kamp>(`${environment.api_url}/kamp/aktivni`,{})
   }
+  aktivni(): Observable<Kamp[]> {
+    return this.httpClient.post<Kamp[]>(`${environment.api_url}/kamp/aktivni2`,{})
+  }
+  statusi(): Observable<KampStatus[]> {
+    return this.httpClient.post<KampStatus[]>(`${environment.api_url}/kamp/statusi`,{})
+  }
+
   store(kamp): Observable<Kamp> {
     return this.httpClient.post<Kamp>(`${environment.api_url}/kamp`, JSON.stringify(kamp), this.httpOptions)
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 
@@ -22,7 +23,8 @@ export class LoginComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private spinner: NgxSpinnerService
   ) {
     this.loginForm = this.fb.group({
       email: [''],
@@ -31,6 +33,36 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.spinner.show();
+    this.authService.signin().subscribe(
+      (result) => {
+        this.authService.handleData(result);
+        let user = this.authService.getUser();
+        // console.log(user.user_type);
+        if(user.user_type=="admin"){
+          this.router.navigate(['/admin/kamp']);
+        }
+        if(user.user_type=="roditelj"){
+          this.router.navigate(['/roditelj']);
+        }
+        if(user.user_type=="ucesnik"){
+          this.router.navigate(['/ucesnik']);
+        }
+        
+        // this.spinner.hide();
+        // if(result.user_type=='admin'){
+        // }
+      },
+      (error) => {
+        this.spinner.hide();
+        // this.authState.setAuthState(false);
+        // this.spinner.hide();
+        // console.log(error);
+        // this.loginInvalid = true;
+
+      }
+    );
     
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd)
@@ -47,7 +79,7 @@ export class LoginComponent implements OnInit {
       (result) => {
         this.authService.handleData(result);
         let user = this.authService.getUser();
-        console.log(user.user_type);
+        // console.log(user.user_type);
         if(user.user_type=="admin"){
           this.router.navigate(['/admin/kamp']);
         }

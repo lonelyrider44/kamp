@@ -11,6 +11,8 @@ import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.com
 import { AuthGuard } from './guards/auth.guard';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
 import { FormComponent } from './modules/prijava/form/form.component';
+import { UcesnikLayoutComponent } from './layouts/ucesnik-layout/ucesnik-layout.component';
+import { GuestFormComponent } from './modules/prijava/guest-form/guest-form.component';
 
 const routes: Routes =[
   {
@@ -20,7 +22,7 @@ const routes: Routes =[
   },
   {
     path: 'prijava',
-    component: FormComponent
+    component: GuestFormComponent
   },
   {
     path: '',
@@ -47,6 +49,14 @@ const routes: Routes =[
     children: [{
       path: '',
       loadChildren: () => import('./layouts/parent-layout/parent-layout.module').then(m => m.ParentLayoutModule)
+    }]
+  },
+  {
+    path: 'ucesnik',
+    component: UcesnikLayoutComponent,
+    children: [{
+      path: '',
+      loadChildren: () => import('./layouts/ucesnik-layout/ucesnik-layout.module').then(m => m.UcesnikLayoutModule)
     }]
   },
 ];

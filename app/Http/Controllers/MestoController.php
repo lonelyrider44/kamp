@@ -83,4 +83,16 @@ class MestoController extends Controller
     {
         //
     }
+
+    public function autocomplete(\Illuminate\Http\Request $request)
+    {
+        $query_str = is_object($request->ac)||is_array($request->ac)?'':$request->ac;
+        return response()->json(\App\Models\Mesto::select('id', 'naziv')
+            ->when(strlen($query_str) < 3, function ($query) {
+                return $query->where('id', '-1');
+            })
+            ->when(strlen($query_str)>=3, function($query)use($query_str){
+                return $query->where('naziv', 'like', "$query_str%" );
+            })->get());
+    }
 }

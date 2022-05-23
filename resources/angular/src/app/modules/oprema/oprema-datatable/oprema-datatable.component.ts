@@ -62,8 +62,8 @@ export class OpremaDatatableComponent implements OnInit {
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       initComplete: function (settings, json) {
-        console.log('init complete');
-        console.log(json)
+        // console.log('init complete');
+        // console.log(json)
         that.dataTable.DataTable().columns(0).visible(json.kamp_id==null);
       },
       "drawCallback": function () {

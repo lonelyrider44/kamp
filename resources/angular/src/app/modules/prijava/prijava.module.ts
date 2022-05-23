@@ -8,6 +8,7 @@ import { DetailsComponent } from './details/details.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material/material.module';
 import { PrijavaDatatableComponent } from './prijava-datatable/prijava-datatable.component';
+import { GuestFormComponent } from './guest-form/guest-form.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { PrijavaDatatableComponent } from './prijava-datatable/prijava-datatable
     IndexComponent,
     FormComponent,
     DetailsComponent,
-    PrijavaDatatableComponent
+    PrijavaDatatableComponent,
+    GuestFormComponent
   ],
   imports: [
     CommonModule,

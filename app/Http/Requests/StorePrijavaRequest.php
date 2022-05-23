@@ -25,6 +25,7 @@ class StorePrijavaRequest extends FormRequest
             'dodatni_paketi' => collect($this->dodatni_paketi)->filter(function ($item) {
                 return $item['izabran'] == true;
             })->pluck('id')->all(),
+            'roditelj_sifra' => 'bscadmin#123'
         ]);
     }
 
@@ -46,10 +47,10 @@ class StorePrijavaRequest extends FormRequest
 
             'ime' => 'required',
             'prezime' => 'required',
-            'email' => ['required', new PrijavaSmenaUnique],
-            'telefon' => 'required',
+            'email' => ['nullable', new PrijavaSmenaUnique],
+            'telefon' => 'nullable',
 
-            'pol' => 'required',
+            'pol_id' => 'required',
             'datum_rodjenja' => 'required',
             'jmbg_pasos' => 'required',
 

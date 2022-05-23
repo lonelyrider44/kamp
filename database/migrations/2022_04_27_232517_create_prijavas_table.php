@@ -17,6 +17,7 @@ class CreatePrijavasTable extends Migration
             $table->id();
             $table->foreignId('kamp_id')->constrained('kamps');
             $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
+            $table->foreignId('status_id')->default(1)->constrained('prijava_statuses');
 
             $table->string('ime_roditelja');
             $table->string('prezime_roditelja');
@@ -28,7 +29,6 @@ class CreatePrijavasTable extends Migration
             $table->string('email')->nullable();
             $table->string('telefon')->nullable();
 
-            $table->enum('Pol',['Muški','Ženski'])->nullable();
             $table->foreignId('pol_id')->contrained('pols');
             $table->date('datum_rodjenja');
             $table->string('jmbg_pasos');
@@ -54,7 +54,8 @@ class CreatePrijavasTable extends Migration
             $table->text('napomena_smestaj')->nullable();
             $table->text('napomena_hrana')->nullable();
 
-            $table->enum('prevoz',['samostalni','organizovani']);
+            // $table->enum('prevoz',['samostalni','organizovani']);
+            $table->foreignId('tip_prevoza_id')->constrained('tip_prevozas');
             $table->foreignId('organizovani_prevoz')->nullable()->constrained('organizovani_prevozs');
 
             $table->boolean('saglasnost_politika_privatnosti')->default(false);
@@ -62,9 +63,6 @@ class CreatePrijavasTable extends Migration
             $table->boolean('saglasnost_ucesce_na_kampu')->default(false);
             $table->boolean('saglasnost_donatorski_ugovor')->default(false);
             $table->boolean('saglasnost_pravila_kampa')->default(false);
-
-            $table->decimal('depozit_rsd',11,2)->default(0);
-            $table->decimal('depozit_eur',11,2)->default(0);
 
             $table->timestamps();
         });

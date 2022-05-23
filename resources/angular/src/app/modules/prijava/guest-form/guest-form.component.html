@@ -1,0 +1,344 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-1 col-md-10">
+
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4 class="card-title">
+                                    Prijava za kamp: {{ kamp?.naziv }}
+                                </h4>
+
+                            </div>
+                            <div class="col-md-2 text-right">
+                                <a routerLink="/login">
+                                    <span class="material-icons">login</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <p class="card-category"></p> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-success" *ngIf="prijava_success">
+                            <span>Prijava uspešno podneta. Broj prijave: {{ prijava.id }}</span>
+                        </div>
+                        <div class="alert alert-success" *ngIf="kampovi.length == 0">
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <span>Trenutno nema aktivnih kampova</span>
+                                </div>
+                            </div>
+                        </div>
+                        <form [formGroup]="prijavaForm" (ngSubmit)="submitForm()" (keyup.enter)="submitForm()" novalidate *ngIf="!prijava_success && kampovi.length > 0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <!-- <input matInput placeholder="Šorc" formControlName="sorc" [errorStateMatcher]="matcher"> -->
+                                        <mat-select placeholder="Izaberite kamp" formControlName="kamp_id" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let k of kampovi" [value]="k.id">{{k.naziv}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('kamp_id')?.errors?.serverError">
+                                            {{ prijavaForm.get("kamp_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <h3>Podaci o roditelju</h3>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime roditelja" formControlName="ime_roditelja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('ime_roditelja')?.errors?.serverError">
+                                            {{ prijavaForm.get("ime_roditelja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prezime roditelja" formControlName="prezime_roditelja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('prezime_roditelja')?.errors?.serverError">
+                                            {{ prijavaForm.get("prezime_roditelja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Email roditelja" formControlName="email_roditelja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('email_roditelja')?.errors?.serverError">
+                                            {{ prijavaForm.get("email_roditelja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Telefon roditelja" formControlName="telefon_roditelja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('telefon_roditelja')?.errors?.serverError">
+                                            {{ prijavaForm.get("telefon_roditelja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <h3>Podaci o detetu</h3>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime" formControlName="ime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('ime')?.errors?.serverError">
+                                            {{ prijavaForm.get("ime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prezime" formControlName="prezime" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('prezime')?.errors?.serverError">
+                                            {{ prijavaForm.get("prezime")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Email" formControlName="email" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('email')?.errors?.serverError">
+                                            {{ prijavaForm.get("email")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Telefon" formControlName="telefon" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('telefon')?.errors?.serverError">
+                                            {{ prijavaForm.get("telefon")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="JMBG ili broj pasoša" formControlName="jmbg_pasos" [errorStateMatcher]="matcher" (keyup)="jmbg_parse()">
+                                        <mat-error *ngIf="prijavaForm.get('jmbg_pasos')?.errors?.serverError">
+                                            {{ prijavaForm.get("jmbg_pasos")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="offset-md-1 col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Datum rođenja" formControlName="datum_rodjenja" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('datum_rodjenja')?.errors?.serverError">
+                                            {{ prijavaForm.get("datum_rodjenja")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3 offset-md-1">
+                                    <mat-form-field class="example-full-width">
+                                        <!-- <input matInput placeholder="Pol" formControlName="pol" [errorStateMatcher]="matcher"> -->
+                                        <mat-select placeholder="Pol" formControlName="pol_id" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let p of pol" [value]="p.id">{{p.naziv}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('pol_id')?.errors?.serverError">
+                                            {{ prijavaForm.get("pol_id")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Adresa" formControlName="adresa" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('adresa')?.errors?.serverError">
+                                            {{ prijavaForm.get("adresa")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="offset-md-1 col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Mesto" formControlName="mesto" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('mesto')?.errors?.serverError">
+                                            {{ prijavaForm.get("mesto")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="offset-md-1 col-md-3">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Država" formControlName="drzava" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('drzava')?.errors?.serverError">
+                                            {{ prijavaForm.get("drzava")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Visina" formControlName="visina" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('visina')?.errors?.serverError">
+                                            {{ prijavaForm.get("visina")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Težina" formControlName="tezina" [errorStateMatcher]="matcher">
+                                        <mat-error *ngIf="prijavaForm.get('tezina')?.errors?.serverError">
+                                            {{ prijavaForm.get("tezina")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="offset-md-2 col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <!-- <input matInput placeholder="Majica" formControlName="majica" [errorStateMatcher]="matcher"> -->
+                                        <mat-select formControlName="majica" placeholder="Majica" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let v of velicine" [value]="v.id">{{v.naziv}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('majica')?.errors?.serverError">
+                                            {{ prijavaForm.get("majica")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <!-- <input matInput placeholder="Šorc" formControlName="sorc" [errorStateMatcher]="matcher"> -->
+                                        <mat-select placeholder="Šorc" formControlName="sorc" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let v of velicine" [value]="v.id">{{v.naziv}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('sorc')?.errors?.serverError">
+                                            {{ prijavaForm.get("sorc")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <!-- <input matInput placeholder="Duks" formControlName="duks" [errorStateMatcher]="matcher"> -->
+                                        <mat-select placeholder="Duks" formControlName="duks" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let v of velicine" [value]="v.id">{{v.naziv}}</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('duks')?.errors?.serverError">
+                                            {{ prijavaForm.get("duks")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Alergije" #alergije formControlName="alergije" [errorStateMatcher]="matcher">
+                                            <mat-option [value]="false">NE</mat-option>
+                                            <mat-option [value]="true">DA</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('alergije')?.errors?.serverError">
+                                            {{ prijavaForm.get("alergije")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="example-full-width" *ngIf="alergije.value">
+                                        <textarea formControlName="napomena_alergije" matInput placeholder="Navedite alergije" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaForm.get('napomena_alergije')?.errors?.serverError">
+                                            {{ prijavaForm.get("napomena_alergije")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Zdravstveni problemi" #zdravstveni_problemi formControlName="zdravstveni_problem" [errorStateMatcher]="matcher">
+                                            <mat-option [value]="false">NE</mat-option>
+                                            <mat-option [value]="true">DA</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('zdravstveni_problem')?.errors?.serverError">
+                                            {{ prijavaForm.get("zdravstveni_problem")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="example-full-width" *ngIf="zdravstveni_problemi.value">
+                                        <textarea formControlName="napomena_zdravstveni_problemi" matInput placeholder="Navedite zdravstvene probleme" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaForm.get('napomena_zdravstveni_problemi')?.errors?.serverError">
+                                            {{ prijavaForm.get("napomena_zdravstveni_problemi")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" formArrayName="smene">
+                                    <h3>Smene</h3>
+                                    <div class="row" *ngFor="let smena of smene.controls; let i=index;" [formGroupName]="i">
+                                        <div class="col-md-12">
+                                            <mat-checkbox formControlName="izabrana" [errorStateMatcher]="matcher" (change)="chkSmenaChange($event)">{{ smena.value.naziv }}, {{smena.value.datum_od |date:"dd.MM.YYYY."}} - {{smena.value.datum_do |date:"dd.MM.YYYY."}}</mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3>Prevoz</h3>
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Kako dolazite na kamp?" formControlName="prevoz" #prevoz [errorStateMatcher]="matcher">
+                                            <mat-option [value]="0">Samostalno - u pratnji roditelja / staratelja</mat-option>
+                                            <mat-option [value]="1">Organizovanim prevozom</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('prevoz')?.errors?.serverError">
+                                            {{ prijavaForm.get("prevoz")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="example-full-width" *ngIf="prevoz.value==1">
+                                        <mat-select placeholder="Kako dolazite na kamp?" formControlName="organizovani_prevoz" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let op of kamp.organizovani_prevoz" [value]="op.id">{{op.naziv}}, ({{op.cena_rsd}} RSD)</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaForm.get('organizovani_prevoz')?.errors?.serverError">
+                                            {{ prijavaForm.get("organizovani_prevoz")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                .
+                            </div>
+                            <h3>Dodatni paketi</h3>
+                            <div class="row" formArrayName="dodatni_paketi">
+                                <div class="col-md-12" *ngFor="let dp of dodatni_paketi.controls; let i=index;" [formGroupName]="i">
+                                    <mat-checkbox formControlName="izabran" [errorStateMatcher]="matcher">{{ dp.value.naziv }} ({{dp.value.iznos_eur|number:'1.0-0'}}eur)</mat-checkbox>
+                                    <p>{{dp.value.opis}}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea formControlName="napomena_smestaj" matInput placeholder="Napomena vezana za smeštaj u hotelu ( ukoliko želite da budete sa nekim u sobi napišite....)" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaForm.get('napomena_smestaj')?.errors?.serverError">
+                                            {{ prijavaForm.get("napomena_smestaj")?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <mat-checkbox #chk1 formControlName="saglasnost_politika_privatnosti" [errorStateMatcher]="matcher">Pročitao/la sam i slažem se sa `Politikom privatnosti`</mat-checkbox>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-checkbox #chk2 formControlName="saglasnost_obrada_podataka" [errorStateMatcher]="matcher">Pročitao/la sam i slažem se sa `Saglasnost za obradu podataka`</mat-checkbox>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-checkbox #chk3 formControlName="saglasnost_ucesce_na_kampu" [errorStateMatcher]="matcher">Pročitao/la sam i slažem se sa `Saglasnost za učešće na kampu`</mat-checkbox>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-checkbox #chk4 formControlName="saglasnost_donatorski_ugovor" [errorStateMatcher]="matcher">Pročitao/la sam i saglasan sam sa `Donatorskim ugovorom`</mat-checkbox>
+                                </div>
+                                <div class="col-md-12">
+                                    <mat-checkbox #chk5 formControlName="saglasnost_pravila_kampa" [errorStateMatcher]="matcher">Pročitao/la sam i saglasan sam sa `Pravilima kampa`</mat-checkbox>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button mat-raised-button type="button" class="btn" (click)="submitForm()" *ngIf="chk1.checked && chk2.checked && chk3.checked && chk4.checked && chk5.checked">
+                                        Podnesi prijavu
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

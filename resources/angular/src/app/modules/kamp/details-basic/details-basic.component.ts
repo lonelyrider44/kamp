@@ -19,7 +19,7 @@ export class DetailsBasicComponent implements OnInit {
     this.kampId = this.activatedRoute.snapshot.parent.params?.kampId
     if( this.kampId ){
       this.kampService.find(this.kampId).subscribe(kamp => {
-        console.log(kamp);
+        // console.log(kamp);
         this.kamp = kamp;
       })
     }

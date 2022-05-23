@@ -25,7 +25,10 @@
                             "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
                             "src/assets/scss/material-dashboard.scss",
                             "src/assets/css/demo.css",
-                            "node_modules/ngx-spinner/animations/ball-scale-multiple.css"
+                            "node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+                            "node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css",
+                            "node_modules/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css",
+                            "node_modules/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css"
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Observers\RoditeljObserver;
+use App\Observers\UcesnikObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +20,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+    ];
+
+    protected $observers = [
+        Ucesnik::class => [UcesnikObserver::class],
+        Roditelj::class => [RoditeljObserver::class]
     ];
 
     /**

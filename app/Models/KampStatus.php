@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class KampStatus extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['naziv'];
 }

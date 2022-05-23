@@ -19,9 +19,10 @@ class SmenaController extends Controller
             'kamps.cena_smene_rsd',
             'kamps.cena_smene_eur',
             'kamps.naziv as kamp',
-            \DB::raw('COUNT(prijava_smenas.id) as broj_ucesnika'),
-            \DB::raw('COUNT(IF(prijavas.pol_id=1, prijava_smenas.id, NULL)) as broj_muskih_ucesnika'),
-            \DB::raw('COUNT(IF(prijavas.pol_id=2, prijava_smenas.id, NULL)) as broj_zenskih_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.status_id=1, prijava_smenas.id, NULL)) as broj_prijava'),
+            \DB::raw('COUNT(IF(prijavas.status_id!=1, prijava_smenas.id, NULL)) as broj_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.status_id!=1 and prijavas.pol_id=1, prijava_smenas.id, NULL)) as broj_muskih_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.status_id!=1 and prijavas.pol_id=2, prijava_smenas.id, NULL)) as broj_zenskih_ucesnika'),
             // \DB::raw('COUNT(IF(prijavas.Pol=1,1,NULL)) as broj_muskih_ucesnika'),
             // \DB::raw('COUNT(IF(prijavas.Pol=2,1,NULL)) as broj_zenskih_ucesnika'),
         )
@@ -33,7 +34,7 @@ class SmenaController extends Controller
             ->when(!empty($request->kamp_id), function ($query) use ($request) {
                 return $query->where('smenas.kamp_id', $request->kamp_id);
             })
-            ->groupBy('smenas.id', 'smenas.naziv', 'smenas.datum_od', 'smenas.datum_do', 'kamps.cena_smene_rsd', 'kamps.cena_smene_eur','kamps.naziv')
+            ->groupBy('smenas.id')
             ->toBase())
             ->addColumn('cena', 'smena.partials.dt_cena')
             ->addColumn('action', 'smena.partials.dt_actions')

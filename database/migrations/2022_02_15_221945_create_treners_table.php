@@ -20,8 +20,25 @@ class CreateTrenersTable extends Migration
             $table->string('ime');
             $table->string('email')->unique();
             $table->string('telefon')->nullable();
+            $table->string('password');
+
+            $table->foreignId('majica')->constrained('velicinas');
+            $table->foreignId('sorc')->constrained('velicinas');
+            $table->foreignId('duks')->constrained('velicinas');
+            $table->foreignId('trenerka')->constrained('velicinas');
             $table->timestamps();
         });
+
+        \App\Models\Trener::create([
+            'name' => 'Vanja',
+            'prezime' => 'Grbić',
+            'email' => 'vanjagrbic@gmail.com',
+            'majica' => 11,
+            'sorc' => 11, 
+            'duks' => 11,
+            'trenerka' => 11,
+            'password' => 'valjevo2022'
+        ]);
     }
 
     /**

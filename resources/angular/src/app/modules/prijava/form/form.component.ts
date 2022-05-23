@@ -11,6 +11,8 @@ import { KampService } from 'app/modules/kamp/kamp.service';
 import { OrganizovaniPrevoz } from 'app/modules/organizovani-prevoz/organizovani-prevoz';
 import { Pol } from 'app/modules/pol/pol';
 import { PolService } from 'app/modules/pol/pol.service';
+import { Trener } from 'app/modules/trener/trener';
+import { TrenerService } from 'app/modules/trener/trener.service';
 import { Velicina } from 'app/modules/velicina/velicina';
 import { VelicinaService } from 'app/modules/velicina/velicina.service';
 import { newPrijava, Prijava, prijavaFormGroup } from '../prijava';
@@ -24,9 +26,11 @@ import { PrijavaService } from '../prijava.service';
 export class FormComponent implements OnInit {
   prijava: Prijava = newPrijava();
   kamp: Kamp = newKamp();
+  kampovi: [];
   velicine: Velicina[] = [];
   organizovani_prevoz: OrganizovaniPrevoz[] = [];
   pol: Pol[] = [];
+  treneri: Trener[] = [];
   prijavaForm: FormGroup;
   action_create: boolean = false;
   action_update: boolean = false;
@@ -47,6 +51,7 @@ export class FormComponent implements OnInit {
     private kampService: KampService,
     private velicinaService: VelicinaService,
     private polService: PolService,
+    private trenerService: TrenerService,
     private _location: Location,
     private _snackBar: MatSnackBar
   ) {
@@ -54,59 +59,16 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.kampService.getAktivniKamp().subscribe(res => {
-      console.log(res);
+    this.velicinaService.all().subscribe(res => this.velicine = res);
+    this.polService.all().subscribe(res => this.pol = res );
+    this.trenerService.all().subscribe( res => this.treneri = res );
 
-      if(res.id){
-        this.kamp = res;
-        this.prijavaForm.get('kamp_id').setValue(this.kamp.id);
-        this.kamp.smene.forEach(smena => {
-          this.smene.push(
-            this.fb.group({
-              naziv: smena.naziv,
-              id: smena.id,
-              datum_od: smena.datum_od,
-              datum_do: smena.datum_do,
-              izabrana: false
-            }));
-          // console.log(smena); 
-        })
-        this.polService.all().subscribe(res=>{
-          this.pol = res;
-        })
-      }else{
-        this.nema_kampa = true;
-      }
-      this.kamp.dodatni_paketi.forEach(dt => {
-        this.dodatni_paketi.push(
-          this.fb.group({
-            opis: dt.opis,
-            naziv: dt.naziv,
-            id: dt.id,
-            iznos_eur: dt.iznos_eur,
-            izabran: false
-          }));
-        // console.log(smena); 
-      })
-      // this.kamp.organizovani_prevoz.forEach(dt => {
-        
-      //   this.organizovani_prevoz.push(
-      //     this.fb.group({
-      //       id: dt.id,
-      //       naziv: dt.naziv,
-      //       cena_rsd: dt.cena_rsd,
-      //       cena_eur: dt.cena_eur,
-      //     }));
-      //   // console.log(smena); 
-      // })
-      this.velicinaService.all().subscribe(res => this.velicine = res);
-    })
+    this.loadFromUrl();
   }
 
   store() {
     // if (!this.action_create) return;
 
-    // console-
     this.prijavaService.store(this.prijavaForm.value).subscribe(
       {
         next: res => {
@@ -174,9 +136,36 @@ export class FormComponent implements OnInit {
     this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index: number, array: UrlSegment[]) => {
       return value.path;
     }).includes('brisanje');
-    if (this.activatedRoute.snapshot.params?.kampId) {
-      this.prijavaService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+    console.log(this.activatedRoute.snapshot.params?.prijavaId)
+    if (this.activatedRoute.snapshot.params?.prijavaId) {
+      this.prijavaService.find(this.activatedRoute.snapshot.params?.prijavaId).subscribe(res => {
+        console.log(res)
         this.prijava = res
+
+        if(this.prijava.kamp){
+          this.prijava.kamp.smene.forEach(smena => {
+            this.smene.push(
+              this.fb.group({
+                naziv: smena.naziv,
+                id: smena.id,
+                datum_od: smena.datum_od,
+                datum_do: smena.datum_do,
+                izabrana: this.prijava.smene.find( s => s.id==smena.id)
+              }));
+            // console.log(smena); 
+          })
+          this.prijava.kamp.dodatni_paketi.forEach(dt => {
+            this.dodatni_paketi.push(
+              this.fb.group({
+                opis: dt.opis,
+                naziv: dt.naziv,
+                id: dt.id,
+                iznos_eur: dt.iznos_eur,
+                izabran: this.prijava.dodatni_paketi.find(dp => dp.id==dt.id )
+              }));
+            // console.log(smena); 
+          })
+        }
       })
     }
     // console.log(this.action_create, this.action_update, this.action_delete);
@@ -225,8 +214,8 @@ export class FormComponent implements OnInit {
         ggg = (ggg < 100) ? ("2" + ggg) : ("1" + ggg)
         this.prijavaForm.get('datum_rodjenja').setValue(dd + "." + mm + "." + ggg + ".");
 
-        let pol = (bbb < 500) ? 'Muško' : 'Žensko';
-        this.prijavaForm.get('pol').setValue(pol)
+        let pol = (bbb < 500) ? 1 : 2;
+        this.prijavaForm.get('pol_id').setValue(pol)
       }
     }
   }

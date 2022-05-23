@@ -15,29 +15,34 @@ class KampController extends Controller
             'kamps.naziv',
             'kamps.datum_od',
             'kamps.datum_do',
-            'kamps.cena_smene',
-            \DB::raw('COUNT(DISTINCT ucesnik_kampas.id) as broj_ucesnika'),
+            'kamps.cena_smene_rsd',
+            'kamps.cena_smene_eur',
+            'kamps.status_id',
+            'mestos.naziv as lokacija',
+            'kamp_statuses.naziv as status',
+            // \DB::raw('COUNT(DISTINCT prijavas.id) as broj_prijava'),
+            \DB::raw('CONCAT(COUNT(DISTINCT prijava_smenas.id),"/",COUNT(DISTINCT smenas.id)*kamps.broj_prijava) as broj_prijava'),
+            // \DB::raw('COUNT(DISTINCT smenas.id)*kamps.broj_prijava as ukupno_mesta'),
             \DB::raw('COUNT(DISTINCT smenas.id) as broj_smena'),
             \DB::raw('COUNT(DISTINCT dodatni_pakets.id) as broj_paketa'),
-            \DB::raw('COALESCE(SUM(uplatas.iznos)+ucesnik_kampas.depozit) as uplaceno')
+            // \DB::raw('COALESCE(SUM(uplatas.iznos)+ucesnik_kampas.depozit) as uplaceno')
         )
-        ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.kamp_id', 'kamps.id')
+        ->join('mestos','mestos.id','kamps.lokacija_id')
+        ->join('kamp_statuses','kamp_statuses.id','kamps.status_id')
+        // ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.kamp_id', 'kamps.id')
         ->leftJoin('smenas', 'smenas.kamp_id', 'kamps.id')
-        ->leftJoin('uplatas', 'uplatas.ucesnik_kampa_id', 'ucesnik_kampas.id')
+        // ->leftJoin('uplatas', 'uplatas.ucesnik_kampa_id', 'ucesnik_kampas.id')
         ->leftJoin('dodatni_pakets', 'dodatni_pakets.kamp_id', 'kamps.id')
-            ->groupBy(
-                'kamps.id',
-                'kamps.naziv',
-                'kamps.datum_od',
-                'kamps.datum_do',
-                'kamps.cena_smene',
-                'ucesnik_kampas.depozit'
-            )
+        ->leftJoin('prijavas','prijavas.kamp_id','kamps.id')
+        ->leftJoin('prijava_smenas', 'prijava_smenas.prijava_id','prijavas.id')
+        
+            ->groupBy('kamps.id')
             ->toBase())
             // ->addColumn('broj_smena', '0')
+            ->addColumn('cena', 'kamp.partials.dt_cena')
             ->addColumn('action', 'kamp.partials.dt_actions')
             ->addColumn('period', 'kamp.partials.dt_period')
-            ->rawColumns(['period', 'action'])
+            ->rawColumns(['period', 'action', 'cena'])
             ->make(true);
     }
     /**
@@ -71,16 +76,13 @@ class KampController extends Controller
         try {
             \DB::beginTransaction();
             $kamp = \App\Models\Kamp::create($request->all());
-            foreach ($request->smene as $smena) {
-                $kamp->smene()->save(new \App\Models\Smena($smena));
-            }
-            foreach ($request->dodatni_paketi as $dodatni_paket) {
-                $kamp->dodatni_paketi()->save(new \App\Models\DodatniPaket($dodatni_paket));
-            }
-            foreach ($request->organizovani_prevoz as $org_prevoz) {
-                $kamp->organizovani_prevoz()->save(new \App\Models\OrganizovaniPrevoz($org_prevoz));
-            }
-            // $this->store_smene($kamp, $request->broj_smena);
+
+            $kamp->smene()->upsert($request->smene,['id'],['naziv','datum_od','datum_do']);
+
+            $kamp->dodatni_paketi()->upsert($request->dodatni_paketi, ['id'],['naziv','opis','iznos_rsd','iznos_eur']);
+
+            $kamp->organizovani_prevoz()->upsert($request->organizovani_prevoz, ['id'],['naziv','cena_rsd','cena_eur']);
+
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();
@@ -120,11 +122,21 @@ class KampController extends Controller
      * @param  \App\Models\Kamp  $kamp
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateKampRequest $request, Kamp $kamp)
+    public function update(StoreKampRequest $request, Kamp $kamp)
     {
         try {
             \DB::beginTransaction();
             $kamp->update($request->all());
+
+            $kamp->smene()->whereNotIn('id',collect($request->smene)->pluck('id'))->delete();
+            $kamp->smene()->upsert($request->smene,['id'],['naziv','datum_od','datum_do']);
+
+            $kamp->dodatni_paketi()->whereNotIn('id', collect($request->dodatni_paketi)->pluck('id'))->delete();
+            $kamp->dodatni_paketi()->upsert($request->dodatni_paketi, ['id'],['naziv','opis','iznos_rsd','iznos_eur']);
+
+            $kamp->organizovani_prevoz()->whereNotIn('id', collect($request->organizovani_prevoz)->pluck('id'))->delete();
+            $kamp->organizovani_prevoz()->upsert($request->organizovani_prevoz, ['id'],['naziv','cena_rsd','cena_eur']);
+
             \DB::commit();
         } catch (\Exception $e) {
             \DB::rollback();
@@ -142,82 +154,27 @@ class KampController extends Controller
      */
     public function destroy(Kamp $kamp)
     {
-        //
-    }
+        try {
+            \DB::beginTransaction();
 
-    public function store_smene(\App\Models\Kamp $kamp, $broj_smena)
-    {
-        if (!empty($broj_smena)) {
-            if (!empty($kamp->datum_od) && !empty($kamp->datum_do)) {
-                $datum_od = \Carbon\Carbon::parse($kamp->datum_od);
-                $datum_do = \Carbon\Carbon::parse($kamp->datum_do);
-
-                $broj_dana = $datum_do->diffInDays($datum_od);
-                $broj_dana_po_smeni = intdiv($broj_dana, $broj_smena);
-
-                $datum_od_c = $datum_od->clone();
-                $datum_do_c = null;
-                for ($c = 1; $c <= $broj_smena; $c++) {
-                    if (!empty($datum_do_c)) {
-                        $datum_od_c = $datum_do_c->clone()->addDay();
-                    }
-                    $datum_do_c = $datum_od_c->clone()->addDays($broj_dana_po_smeni);
-                    if ($c == $broj_smena && $datum_do_c > $datum_do) {
-                        $datum_do_c = $datum_do;
-                    }
-                    \App\Models\Smena::create([
-                        'kamp_id' => $kamp->id,
-                        'naziv' => 'Smena ' . $this->integerToRoman($c),
-                        'datum_od' => $datum_od_c,
-                        'datum_do' => $datum_do_c,
-                        'cena' => $kamp->cena
-                    ]);
-                }
-                // for ($i = $datum_od; $i < $datum_do; $i->addDays($broj_dana_po_smeni)) {
-                // }
-            }
+            $kamp->delete();
+            
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
-    //https://www.hashbangcode.com/article/php-function-turn-integer-roman-numerals
-    public function integerToRoman($integer)
-    {
-        // Convert the integer into an integer (just to make sure)
-        $integer = intval($integer);
-        $result = '';
-
-        // Create a lookup array that contains all of the Roman numerals.
-        $lookup = array(
-            'M' => 1000,
-            'CM' => 900,
-            'D' => 500,
-            'CD' => 400,
-            'C' => 100,
-            'XC' => 90,
-            'L' => 50,
-            'XL' => 40,
-            'X' => 10,
-            'IX' => 9,
-            'V' => 5,
-            'IV' => 4,
-            'I' => 1
-        );
-
-        foreach ($lookup as $roman => $value) {
-            // Determine the number of matches
-            $matches = intval($integer / $value);
-
-            // Add the same number of characters to the string
-            $result .= str_repeat($roman, $matches);
-
-            // Set the integer to be the remainder of the integer and the value
-            $integer = $integer % $value;
-        }
-
-        // The Roman numeral should be built, return it
-        return $result;
-    }
     public function aktivni(){
         return response()->json(\App\Models\Kamp::aktivni()->first());
+    }
+    public function aktivni2(){
+        return response()->json(\App\Models\Kamp::aktivni()->get());
+    }
+    public function statusi(){
+        return response()->json(\App\Models\KampStatus::all());
     }
 }

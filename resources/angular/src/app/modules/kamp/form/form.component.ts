@@ -3,8 +3,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { Kamp, kampFormGroup, newKamp } from '../kamp';
+import { Mesto } from 'app/modules/mesto/mesto';
+import { MestoService } from 'app/modules/mesto/mesto.service';
+import { Observable, of } from 'rxjs';
+import { debounceTime, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
+import { Kamp, kampFormGroup, KampStatus, newKamp } from '../kamp';
 import { KampService } from '../kamp.service';
 
 @Component({
@@ -21,23 +26,44 @@ export class FormComponent implements OnInit {
   action_update: boolean = false;
   action_delete: boolean = false;
   rimski_brojevi = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+  mesta: Mesto[];
+  statusi: KampStatus[] = [];
+  filtriranaMesta: Observable<Mesto[]>;
 
   constructor(
     public fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public kampService: KampService,
-    private _location: Location
+    public mestoService: MestoService,
+    private _location: Location,
+    private _snackBar: MatSnackBar
   ) {
     this.kampForm = kampFormGroup(this.fb, this.kamp);
   }
 
   ngOnInit(): void { 
-    // console.log('init')
+    this.kampService.statusi().subscribe(res => {
+      this.statusi = res;
+    });
     this.loadFromUrl();
+
+    this.kampForm.get('lokacija')?.valueChanges.pipe(
+      debounceTime(500),
+      tap(() => {
+        this.filtriranaMesta = of([]);
+      }),
+      switchMap( async value => this.mestoService.autocomplete(value as any))
+      ).subscribe(data => {
+        this.filtriranaMesta = data;
+      });
+  }
+  displayMesto(mesto: Mesto){
+    // console.log('display mesto')
+    // console.log(mesto);
+    return mesto && mesto.naziv ? mesto.naziv : '';
   }
   ngAfterViewInit(){
-    // console.log('after view init')
     if (this.action_create){
       this.add_smena();
       // this.add_cena();
@@ -47,6 +73,7 @@ export class FormComponent implements OnInit {
   store() {
     if (!this.action_create) return;
 
+    this.kampForm.get('lokacija_id').setValue(this.kampForm.get('lokacija').value?.id)
     this.kampService.store(this.kampForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/admin/kamp') },
@@ -78,6 +105,7 @@ export class FormComponent implements OnInit {
 
   submitFormFailed(form: FormGroup, error: HttpErrorResponse) {
     // this.errors = error.error.errors;
+    // console.log(error.error);
     if (error.status === 422) {
       Object.keys(error.error.errors).forEach(prop => {
         const formControl = form.get(prop);
@@ -88,6 +116,8 @@ export class FormComponent implements OnInit {
           });
         }
       });
+    }else{
+      this._snackBar.open(error.error.message,'OK')
     }
   }
   goBack() {
@@ -105,47 +135,50 @@ export class FormComponent implements OnInit {
     }).includes('brisanje');
     if (this.activatedRoute.snapshot.params?.kampId) {
       this.kampService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+        // console.log(res);
         this.kamp = res
+
+        this.kamp.smene.forEach(smena => {
+          this.add_smena(null, smena.id, smena.naziv, smena.datum_od, smena.datum_do);
+        })
+        this.kamp.dodatni_paketi.forEach(dodatni_paket => {
+          this.add_dodatni_paket(null, dodatni_paket.id, dodatni_paket.naziv, dodatni_paket.opis, dodatni_paket.iznos_rsd, dodatni_paket.iznos_eur);
+        })
+        this.kamp.organizovani_prevoz.forEach(organizovani_prevoz => {
+          this.add_organizovani_prevoz(null, organizovani_prevoz.id, organizovani_prevoz.naziv, organizovani_prevoz.cena_rsd, organizovani_prevoz.cena_eur);
+        })
+
+        this.kampForm.get('lokacija_id').setValue(this.kamp.lokacija_id);
+        // console.log(this.action_update)
       })
     }
-    // console.log(this.action_create, this.action_update, this.action_delete);
-    // this.action = this.activatedRoute.snapshot.url[1]?.path;
-    
-    // console.log(this.activatedRoute.snapshot.params?.kampId);
-    // this.isReadOnly = this.action == "delete";
   }
 
   get smene(){
     return this.kampForm.get('smene') as FormArray;
   }
-  add_smena(index:any = null){
+  add_smena(index:any = null, id=null, naziv=null, datum_od = null, datum_do=null){
     if(!index){
       index = this.smene.length+1;
     }
     this.smene.push(this.fb.group({
-      naziv: 'Smena '+this.rimski_brojevi[index-1],
-      datum_od: '',
-      datum_do: '',
-      broj_prijava: ''
+      id: id,
+      naziv: naziv ?? (this.rimski_brojevi[index-1] + ' smena'),
+      datum_od: datum_od ?? '',
+      datum_do: datum_do ?? '',
+      // broj_prijava: ''
     }))
+  }
+  remove_smena(index){
+    this.smene.removeAt(index);
   }
   broj_smena_change(){
     let n = this.kampForm.get('broj_smena')?.value;
-    if (n == 1) {
-      n = 0;
-    }
-    for (let i = this.smene.length + 1; i <= n; i++) {
-      this.add_smena(i);
-    }
+    if (n == 1) { n = 0; }
 
-    for (let i = this.smene.length; i > n; i--) {
-      this.smene.removeAt(i - 1);
-    }
+    for (let i = this.smene.length + 1; i <= n; i++) { this.add_smena(i); }
 
-    // if (n > 1) {
-    //   this.update_ukupno_vreme();
-    // }
-
+    for (let i = this.smene.length; i > n; i--) { this.smene.removeAt(i - 1); }
   }
   get cene(){
     return this.kampForm.get('cene') as FormArray;
@@ -160,48 +193,38 @@ export class FormComponent implements OnInit {
       iznos_eur: '',
     }))
   }
-  broj_cena_change(){
-    let n = this.kampForm.get('broj_cena')?.value;
-    if (n == 1) {
-      n = 0;
-    }
-    for (let i = this.cene.length + 1; i <= n; i++) {
-      this.add_cena(i);
-    }
-
-    for (let i = this.cene.length; i > n; i--) {
-      this.cene.removeAt(i - 1);
-    }
-
-    // if (n > 1) {
-    //   this.update_ukupno_vreme();
-    // }
-
+  remove_cena(index){
+    this.cene.removeAt(index);
   }
 
   get dodatni_paketi(){
     return this.kampForm.get('dodatni_paketi') as FormArray;
   }
-  add_dodatni_paket(index:any = null){
+  add_dodatni_paket(index:any = null, id=null, naziv = null, opis = null, iznos_rsd = null, iznos_eur = null){
     this.dodatni_paketi.push(this.fb.group({
-      naziv: '',
-      opis: '',
-      iznos_rsd: '',
-      iznos_eur: '',
+      id: id,
+      naziv: naziv ?? '',
+      opis: opis ?? '',
+      iznos_rsd: iznos_rsd ?? '',
+      iznos_eur: iznos_eur ?? '',
     }))
+  }
+  remove_dodatni_paket(index){
+    this.dodatni_paketi.removeAt(index);
   }
 
   get organizovani_prevoz(){
     return this.kampForm.get('organizovani_prevoz') as FormArray;
   }
-  add_organizovani_prevoz(index:any = null){
+  add_organizovani_prevoz(index:any = null, id=null, naziv = null, cena_rsd=null, cena_eur = null){
     this.organizovani_prevoz.push(this.fb.group({
-      naziv: '',
-      opis: '',
-      cena_rsd: '',
-      cena_eur: '',
+      id: id,
+      naziv: naziv ?? '',
+      cena_rsd: cena_rsd ?? '',
+      cena_eur: cena_eur ?? '',
     }))
   }
+  remove_organizovani_prevoz(index){ this.organizovani_prevoz.removeAt(index);}
 }
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {

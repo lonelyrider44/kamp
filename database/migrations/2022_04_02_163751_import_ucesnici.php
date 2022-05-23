@@ -28,6 +28,7 @@ class ImportUcesnici extends Migration
                 'cena_smene_rsd' => 50000,
                 'cena_smene_eur' => 500,
                 'broj_prijava' => 500,
+                'status_id' => 1
             ]);
             $prva_smena = \App\Models\Smena::create([
                 'naziv' => 'Smena I',

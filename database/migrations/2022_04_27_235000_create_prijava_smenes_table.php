@@ -17,6 +17,9 @@ class CreatePrijavaSmenesTable extends Migration
             $table->id();
             $table->foreignId('prijava_id')->constrained('prijavas');
             $table->foreignId('smena_id')->constrained('smenas');
+            $table->foreignId('status_id')->constrained('prijava_statuses')->default(1);
+            $table->decimal('depozit_rsd',11,2)->default(0);
+            $table->decimal('depozit_eur',11,2)->default(0);
             $table->timestamps();
         });
     }

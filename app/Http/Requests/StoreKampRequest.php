@@ -16,9 +16,20 @@ class StoreKampRequest extends FormRequest
         return true;
     }
 
-    // public function prepareForValidation(){
-        
-    // }
+    public function prepareForValidation(){
+        // $nove_smene = [];
+        // foreach($this->smene as $smena){
+        //     if(!empty($smena->id)){
+        //         $nove_smene[$smena->id] = $smena;
+        //     }
+        // }
+        // foreach($this->smene as $smena){
+        //     if(empty($smena->id)){
+        //         $nove_smene[] = $smena;
+        //     }
+        // }
+        // $this->merge(['smene' => $nove_smene]);
+    }
     /**
      * Get the validation rules that apply to the request.
      *

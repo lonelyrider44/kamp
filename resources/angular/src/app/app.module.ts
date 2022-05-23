@@ -27,6 +27,7 @@ import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { CustomDateFormat1Directive } from './directives/custom-date-format1.directive';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.component';
+import { UcesnikLayoutComponent } from './layouts/ucesnik-layout/ucesnik-layout.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.com
     AdminLayoutComponent,
     CustomDateFormat1Directive,
     ParentLayoutComponent,
+    UcesnikLayoutComponent,
 
   ],
   providers: [],

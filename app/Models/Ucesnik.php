@@ -21,13 +21,16 @@ class Ucesnik extends Model implements JWTSubject
             'adresa',
             'grad',
             'drzava',
-            'pol',
+            'pol_id',
             'mesto_id',
             'prezime_roditelja',
             'ime_roditelja',
             'telefon_roditelja',
             'email_roditelja',
 
+    ];
+    protected $dates = [
+        'datum_rodjenja'
     ];
 
     public function ucesnik_kampova(){
@@ -52,5 +55,17 @@ class Ucesnik extends Model implements JWTSubject
     public function getJWTCustomClaims()
     {
         return ['role' => 'ucesnik','user_type' => 'ucesnik'];
+    }
+    public function updateOrCreateRoditelj(){
+        $roditelj = \App\Models\Roditelj::updateOrCreate([
+            'email' => $this->email_roditelja
+        ],[
+            'telefon' => $this->telefon_roditelja,
+            'ime' => $this->ime_roditelja,
+            'prezime' => $this->prezime_roditelja,
+            'password' => $this->roditelj_sifra
+        ]);
+
+        $this->update(['id_roditelja' => $roditelj->id ]);
     }
 }

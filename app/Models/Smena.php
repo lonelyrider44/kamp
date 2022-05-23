@@ -16,4 +16,11 @@ class Smena extends Model
     protected $dates = [
         'datum_od','datum_do'
     ];
+
+    public function scopeAktivne($query, $datum = null){
+        if(empty($datum)){
+            $datum = now();
+        }
+        return $query->whereDate('datum_od','<=', $datum)->whereDate('datum_do','>=',$datum);
+    }
 }

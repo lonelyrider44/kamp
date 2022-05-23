@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', [\App\Http\Controllers\API\JwtAuthController::class, 'login']);
 Route::post('/kamp/aktivni',[\App\Http\Controllers\KampController::class,'aktivni']);
+Route::post('/kamp/aktivni2',[\App\Http\Controllers\KampController::class,'aktivni2']);
+Route::post('/kamp/statusi',[\App\Http\Controllers\KampController::class,'statusi']);
 Route::post('/prijava',[\App\Http\Controllers\PrijavaController::class,'store']);
 Route::apiResource('velicina', \App\Http\Controllers\VelicinaController::class);
 Route::apiResource('pol', \App\Http\Controllers\PolController::class);
+Route::apiResource('trener', \App\Http\Controllers\TrenerController::class);
+
+Route::post('/mesto/autocomplete', [App\Http\Controllers\MestoController::class,'autocomplete']);
 // Route::post('refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);
 
 

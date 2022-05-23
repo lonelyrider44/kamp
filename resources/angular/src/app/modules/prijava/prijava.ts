@@ -1,4 +1,7 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { DodatniPaket } from "../dodatni-paket/dodatni-paket";
+import { Kamp } from "../kamp/kamp";
+import { Smena } from "../smena/smena";
 
 export interface Prijava {
     id?: any,
@@ -33,12 +36,12 @@ export interface Prijava {
     sorc: any,
     duks: any,
     trenerka: any,
-
+    
     napomena_smestaj: any,
     napomena_hrana: any,
     napomena_alergije: any,
     napomena_zdravstveni_problemi: any,
-
+    
     prevoz: any,
     organizovani_prevoz: any,
     saglasnost_politika_privatnosti: boolean,
@@ -46,10 +49,13 @@ export interface Prijava {
     saglasnost_ucesce_na_kampu: boolean,
     saglasnost_donatorski_ugovor: boolean,
     saglasnost_pravila_kampa: boolean,
-
+    
     depozit_rsd?: any,
     depozit_eur?: any,
-
+    
+    kamp?: Kamp,
+    smene?: Smena[],
+    dodatni_paketi?: DodatniPaket[]
 }
 
 export function newPrijava(): Prijava {

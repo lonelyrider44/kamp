@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Kamp } from '../kamp';
+import { KampService } from '../kamp.service';
 
 declare interface RouteInfo {
   path: string;
@@ -23,9 +26,18 @@ export const ROUTES: RouteInfo[] = [
 export class DetailsLayoutComponentComponent implements OnInit {
 
   menuItems = ROUTES;
-  constructor() { }
+  kamp: Kamp;
+  constructor(private activatedRoute: ActivatedRoute, private kampService: KampService) { }
 
   ngOnInit(): void {
+
+    let kampId = this.activatedRoute.snapshot.params?.kampId
+    if( kampId ){
+      this.kampService.find(kampId).subscribe(kamp => {
+        // console.log(kamp);
+        this.kamp = kamp;
+      })
+    }
   }
 
 }

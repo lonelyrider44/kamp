@@ -18,14 +18,14 @@ class CreateUcesniksTable extends Migration
             $table->string('prezime');
             $table->string('ime');
             $table->date('datum_rodjenja');
-            $table->string('jmbg')->unique()->nullable();
-            $table->string('pasos')->unique()->nullable();
+            $table->string('jmbg_pasos')->unique()->nullable();
             $table->string('email')->nullable();
             $table->string('telefon')->nullable();
             $table->string('adresa')->nullable();
             $table->string('grad')->nullable();
             $table->string('drzava')->nullable();
-            $table->enum('pol',[1,2])->nullable();
+            // $table->enum('pol',[1,2])->nullable();
+            $table->foreignId('pol_id')->constrained('pols');
 
             $table->foreignId('mesto_id')->nullable()->constrained('mestos');
 

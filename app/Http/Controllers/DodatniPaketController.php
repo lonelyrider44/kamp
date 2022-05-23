@@ -8,6 +8,28 @@ use App\Http\Requests\UpdateDodatniPaketRequest;
 
 class DodatniPaketController extends Controller
 {
+    public function datatable()
+    {
+        return datatables()->of(\App\Models\DodatniPaket::select(
+            'dodatni_pakets.*',
+            'kamps.naziv as kamp'
+            // \DB::raw('COUNT(DISTINCT ucesnik_kampas.id) as broj_ucesnika'),
+            // \DB::raw('COUNT(DISTINCT smenas.id) as broj_smena'),
+            // \DB::raw('COUNT(DISTINCT dodatni_pakets.id) as broj_paketa'),
+            // \DB::raw('COALESCE(SUM(uplatas.iznos)+ucesnik_kampas.depozit) as uplaceno')
+        )
+            ->leftJoin('kamps', 'kamps.id', 'dodatni_pakets.kamp_id')
+            // ->leftJoin('prijavas', 'prijavas.kamp_id', 'kamps.id')
+            // ->leftJoin('prijava_dodatni_pakets', 'dodatni_pakets.id', 'prijava_dodatni_pakets.dodatni_paket_id')
+            // ->groupBy('dodatni_pakets.id')
+            ->toBase())
+            // ->addColumn('broj_smena', '0')
+            // ->addColumn('cena', 'kamp.partials.dt_cena')
+            ->addColumn('action', 'dodatni_paket.partials.dt_actions')
+            // ->addColumn('period', 'kamp.partials.dt_period')
+            ->rawColumns(['period', 'action', 'cena'])
+            ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *

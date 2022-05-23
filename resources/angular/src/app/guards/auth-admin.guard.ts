@@ -22,8 +22,8 @@ export class AuthAdminGuard implements CanActivate {
             this.auth.handleData(e);
             let user = this.auth.getUser();
             if (user) {
-              console.log('auth guard')
-              console.log(this.auth.getUser().user_type)
+              // console.log('auth guard')
+              // console.log(this.auth.getUser().user_type)
               return this.auth.getUser().user_type=="admin";
             }
         }),

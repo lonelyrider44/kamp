@@ -72,6 +72,20 @@ class PrijavaController extends Controller
             $prijava->smene()->sync($request->smene);
             $prijava->dodatni_paketi()->sync($request->dodatni_paketi);
 
+            $roditelj = \App\Models\Roditelj::updateOrCreate([
+                'email' => $request->email_roditelja
+            ],[
+                'telefon' => $request->telefon_roditelja,
+                'ime' => $request->ime_roditelja,
+                'prezime' => $request->prezime_roditelja,
+                'password' => $request->roditelj_sifra
+            ]);
+            $ucesnik = \App\Models\Ucesnik::updateOrCreate(
+                ['email' => $request->email],
+                $request->all() + ['id_roditelja' => $roditelj->id]
+            );
+            $prijava->update(['ucensik_id' => $ucesnik->id]);
+
             \DB::commit();
             return response()->json($prijava);
         }catch(\Exception $e){
@@ -88,7 +102,7 @@ class PrijavaController extends Controller
      */
     public function show(Prijava $prijava)
     {
-        //
+        return $prijava;
     }
 
     /**

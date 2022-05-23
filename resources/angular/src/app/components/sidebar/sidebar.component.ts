@@ -14,6 +14,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/admin/dashboard', title: 'Statistika',  icon: 'dashboard', class: '' },
     { path: '/admin/kamp', title: 'Kamp',  icon:'home', class: '' },
     { path: '/admin/smena', title: 'Smene',  icon:'work_history', class: '' },
+    { path: '/admin/prijava', title: 'Prijave',  icon:'home', class: '' },
     { path: '/admin/ucesnik', title: 'Učesnici',  icon:'people_alt', class: '' },
     { path: '/admin/korisnik', title: 'Korisnici',  icon:'manage_accounts', class: '' },
     { path: '/admin/uplata', title: 'Uplate',  icon:'paid', class: '' },

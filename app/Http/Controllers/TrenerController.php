@@ -10,7 +10,7 @@ class TrenerController extends Controller
 {
     public function datatable(){
         return datatables()->of(\App\Models\Trener::all())
-            ->addColumn('action','kamp.partials.dt_actions')
+            ->addColumn('action','trener.partials.dt_actions')
         ->make(true);
     }
     /**
@@ -20,7 +20,7 @@ class TrenerController extends Controller
      */
     public function index()
     {
-        //
+        return \App\Models\Trener::all();
     }
 
     /**

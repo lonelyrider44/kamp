@@ -80,6 +80,13 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: '',
         children: [{
+            path: 'prijava',
+            loadChildren: () => import('../../modules/prijava/prijava.module').then(m => m.PrijavaModule)
+        }],
+    },
+    {
+        path: '',
+        children: [{
             path: 'hotel',
             loadChildren: () => import('../../modules/hotel/hotel.module').then(m => m.HotelModule)
         }],

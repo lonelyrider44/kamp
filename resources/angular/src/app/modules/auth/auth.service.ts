@@ -58,10 +58,10 @@ export class AuthService {
 
     if (token) {
       // console.log('token exits');
-      console.log(this.issuer)
+      // console.log(this.issuer)
       const payload = this.payload(token);
-      console.log(payload.iss);
-      console.log(Object.values(this.issuer).indexOf(payload.iss));
+      // console.log(payload.iss);
+      // console.log(Object.values(this.issuer).indexOf(payload.iss));
       if (payload) {
         return Object.values(this.issuer).indexOf(payload.iss) > -1 ? true : !this.removeToken();
       }

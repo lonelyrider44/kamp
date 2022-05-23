@@ -59,6 +59,7 @@ export class SmenaDatatableComponent implements OnInit {
         // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
         { title: 'Period', data: 'period', name: 'period' },
         { title: 'Cena', data: 'cena', name: 'cena' },
+        { title: 'Broj prijava', data: 'broj_prijava', name: 'broj_prijava' },
         { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
         { title: 'Dečaci', data: 'broj_muskih_ucesnika', name: 'broj_muskih_ucesnika' },
         { title: 'Devojčice', data: 'broj_zenskih_ucesnika', name: 'broj_zenskih_ucesnika' },
@@ -70,11 +71,14 @@ export class SmenaDatatableComponent implements OnInit {
         that.dataTable.DataTable().columns(0).visible(json.kamp_id==null);
       },
       "drawCallback": function () {
+        $('.btnShowSmena').on('click', function (event) {
+          that.router.navigateByUrl(`/admin/smena/${$(this).data('id')}`)
+        })
         $('.btnEditSmena').on('click', function (event) {
-          that.router.navigateByUrl(`/smena/izmena/${$(this).data('id')}`)
+          that.router.navigateByUrl(`/admin/smena/izmena/${$(this).data('id')}`)
         })
         $('.btnRemoveSmena').on('click', function (event) {
-          that.router.navigateByUrl(`/smena/brisanje/${$(this).data('id')}`)
+          that.router.navigateByUrl(`/admin/smena/brisanje/${$(this).data('id')}`)
         })
       }
     })

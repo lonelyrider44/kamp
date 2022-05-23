@@ -69,11 +69,14 @@ export class PrijavaDatatableComponent implements OnInit {
         that.dataTable.DataTable().columns(1).visible(json.kamp_id==null);
       },
       "drawCallback": function () {
+        $('.btnShowPrijava').on('click', function (event) {
+          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}`)
+        })
         $('.btnEditPrijava').on('click', function (event) {
-          that.router.navigateByUrl(`/prijava/izmena/${$(this).data('id')}`)
+          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}/izmena`)
         })
         $('.btnRemovePrijava').on('click', function (event) {
-          that.router.navigateByUrl(`/prijava/brisanje/${$(this).data('id')}`)
+          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}/brisanje`)
         })
       }
     })

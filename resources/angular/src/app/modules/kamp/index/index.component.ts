@@ -54,12 +54,14 @@ export class IndexComponent implements OnInit {
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
         { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Period', data: 'period', name: 'period' },
-        { title: 'Cena', data: 'cena_smene', name: 'cena_smene' },
+        // { title: 'Period', data: 'period', name: 'period' },
+        { title: 'Lokacija', data: 'lokacija', name: 'mestos.naziv' },
+        // { title: 'Cena', data: 'cena', name: 'cena' },
         { title: 'Broj smena', data: 'broj_smena', name: 'broj_smena' },
-        { title: 'Dodatni paketi', data: 'broj_paketa', name: 'broj_paketa' },
-        { title: 'Učesnici', data: 'broj_ucesnika', name: 'broj_ucesnika' },
-        { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
+        // { title: 'Dodatni paketi', data: 'broj_paketa', name: 'broj_paketa' },
+        { title: 'Broj prijava', data: 'broj_prijava', name: 'broj_prijava' },
+        // { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
+        { title: 'Status', data: 'status', name: 'kamp_statuses.naziv' },
         { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
       ],
       "drawCallback": function () {
@@ -69,7 +71,7 @@ export class IndexComponent implements OnInit {
         $('.btnEditKamp').on('click', function (event) {
           that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}/izmena`)
         })
-        $('.btnRemoveKamp').on('click', function (event) {
+        $('.btnDeleteKamp').on('click', function (event) {
           that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}/brisanje`)
         })
       }
