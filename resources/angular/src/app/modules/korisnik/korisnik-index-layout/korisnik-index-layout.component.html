@@ -1,0 +1,40 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-tabs card-header-danger">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <span class="nav-tabs-title"></span>
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                    <li class="nav-item" *ngFor="let menuItem of menuItems">
+                                        <a mat-button class="nav-link" [routerLink]="menuItem.path" routerLinkActive="active" data-toggle="tab">
+                                            <i class="material-icons">bug_report</i> {{menuItem.title}}
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item">
+                                        <a mat-button class="nav-link" routerLink="smene" routerLinkActive="active" data-toggle="tab">
+                                            <i class="material-icons">code</i> Website
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a mat-button class="nav-link" href="#settings" data-toggle="tab">
+                                            <i class="material-icons">cloud</i> Server
+                                            <div class="ripple-container"></div>
+                                        </a>
+                                    </li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

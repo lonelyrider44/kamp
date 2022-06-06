@@ -19,10 +19,10 @@ class SmenaController extends Controller
             'kamps.cena_smene_rsd',
             'kamps.cena_smene_eur',
             'kamps.naziv as kamp',
-            \DB::raw('COUNT(IF(prijavas.status_id=1, prijava_smenas.id, NULL)) as broj_prijava'),
-            \DB::raw('COUNT(IF(prijavas.status_id!=1, prijava_smenas.id, NULL)) as broj_ucesnika'),
-            \DB::raw('COUNT(IF(prijavas.status_id!=1 and prijavas.pol_id=1, prijava_smenas.id, NULL)) as broj_muskih_ucesnika'),
-            \DB::raw('COUNT(IF(prijavas.status_id!=1 and prijavas.pol_id=2, prijava_smenas.id, NULL)) as broj_zenskih_ucesnika'),
+            // \DB::raw('COUNT(IF(prijavas.status_id=1, prijava_smenas.id, NULL)) as broj_prijava'),
+            \DB::raw('COUNT(IF(prijavas.status_id=1, prijava_smenas.id, NULL)) as broj_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.status_id=1 and prijavas.pol_id=1, prijava_smenas.id, NULL)) as broj_muskih_ucesnika'),
+            \DB::raw('COUNT(IF(prijavas.status_id=1 and prijavas.pol_id=2, prijava_smenas.id, NULL)) as broj_zenskih_ucesnika'),
             // \DB::raw('COUNT(IF(prijavas.Pol=1,1,NULL)) as broj_muskih_ucesnika'),
             // \DB::raw('COUNT(IF(prijavas.Pol=2,1,NULL)) as broj_zenskih_ucesnika'),
         )
@@ -39,8 +39,9 @@ class SmenaController extends Controller
             ->addColumn('cena', 'smena.partials.dt_cena')
             ->addColumn('action', 'smena.partials.dt_actions')
             ->addColumn('period', 'smena.partials.dt_period')
+            ->addColumn('smena', 'smena.partials.dt_smena')
             ->with('kamp_id', $request->kamp_id)
-            ->rawColumns(['action', 'period','cena'])
+            ->rawColumns(['action', 'period','cena','smena'])
             ->make(true);
     }
     /**

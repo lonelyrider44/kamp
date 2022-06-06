@@ -17,6 +17,7 @@ class CreatePrijavasTable extends Migration
             $table->id();
             $table->foreignId('kamp_id')->constrained('kamps');
             $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
+            $table->foreignId('roditelj_id')->nullable()->constrained('roditeljs');
             $table->foreignId('status_id')->default(1)->constrained('prijava_statuses');
 
             $table->string('ime_roditelja');
@@ -58,11 +59,29 @@ class CreatePrijavasTable extends Migration
             $table->foreignId('tip_prevoza_id')->constrained('tip_prevozas');
             $table->foreignId('organizovani_prevoz')->nullable()->constrained('organizovani_prevozs');
 
+            $table->boolean('sopstveni_smestaj')->default(false);
+            $table->string('broj_sobe')->nullable();
+
             $table->boolean('saglasnost_politika_privatnosti')->default(false);
             $table->boolean('saglasnost_obrada_podataka')->default(false);
             $table->boolean('saglasnost_ucesce_na_kampu')->default(false);
             $table->boolean('saglasnost_donatorski_ugovor')->default(false);
             $table->boolean('saglasnost_pravila_kampa')->default(false);
+
+            $table->decimal('depozit_rsd', 11, 2)->nullable();
+            $table->decimal('smene_rsd', 11, 2)->nullable();
+            $table->decimal('dodatni_paketi_rsd', 11, 2)->nullable();
+            $table->decimal('gratis_rsd', 11, 2)->nullable();
+            $table->decimal('opstina_rsd', 11, 2)->nullable();
+            $table->decimal('ukupno_rsd', 11, 2)->nullable();
+
+            $table->decimal('depozit_eur', 11, 2)->nullable();
+            $table->decimal('smene_eur', 11, 2)->nullable();
+            $table->decimal('dodatni_paketi_eur', 11, 2)->nullable();
+            $table->decimal('gratis_eur', 11, 2)->nullable();
+            $table->decimal('opstina_eur', 11, 2)->nullable();
+            $table->decimal('ukupno_eur', 11, 2)->nullable()
+            ;
 
             $table->timestamps();
         });

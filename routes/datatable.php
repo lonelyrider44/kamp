@@ -21,6 +21,7 @@ Route::middleware(['jwt.auth','jwt.role:admin'])->group(function () {
     Route::post('smena', [\App\Http\Controllers\SmenaController::class,'datatable']);
     Route::post('ucesnik', [\App\Http\Controllers\UcesnikController::class,'datatable']);
     Route::post('korisnik', [\App\Http\Controllers\KorisnikController::class,'datatable']);
+    Route::post('trener', [\App\Http\Controllers\TrenerController::class,'datatable']);
     Route::post('uplata', [\App\Http\Controllers\UplataController::class,'datatable']);
     Route::post('prevoz', [\App\Http\Controllers\PrevozController::class,'datatable']);
     Route::post('oprema', [\App\Http\Controllers\OpremaController::class,'datatable']);

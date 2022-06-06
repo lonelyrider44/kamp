@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SmenaService } from 'app/modules/smena/smena.service';
 import { OpremaService } from '../oprema.service';
@@ -11,18 +11,27 @@ import { OpremaService } from '../oprema.service';
 export class OpremaDatatableComponent implements OnInit {
   @ViewChild('dataTableOprema') table;
   dataTable: any;
+  @Input() kamp_id;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private opremaService: OpremaService) { }
 
   ngOnInit(): void {
+    this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
   }
 
+  ngOnChanges(changes: SimpleChanges){
+    if(this.dataTable){
+      this.dataTable.DataTable().ajax.reload();
+    }
+  }
   ngAfterViewInit() {
     const that = this;
     this.dataTable = $(this.table.nativeElement);
     this.dataTable.DataTable({
       "ajax": (dataTablesParameters: any, callback) => {
-        dataTablesParameters.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+        // dataTablesParameters.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+        dataTablesParameters.kamp_id = this.kamp_id;
+
         this.opremaService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,
@@ -52,13 +61,26 @@ export class OpremaDatatableComponent implements OnInit {
 
       // "dom": 'Blfrtip',
       "columns": [
-        { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
-        { title: 'Naziv', data: 'naziv', name: 'naziv' },
+        // 'velicinas.naziv', 
+        //         'majice_m','majice_z',
+        //         'duksevi_m','duksevi_z',
+        //         'sorcevi_m','sorcevi_z'
+        { title: 'Veličina', data: 'naziv', name: 'velicinas.naziv' },
+        { title: 'Majice (dečaci)', data: 'majice_m', name: 'majice_m' },
+        { title: 'Majice (devojčice)', data: 'majice_z', name: 'majice_z' },
+        { title: 'Duksevi (dečaci)', data: 'duksevi_m', name: 'duksevi_m' },
+        { title: 'Duksevi (devojčice)', data: 'duksevi_z', name: 'duksevi_z' },
+        { title: 'Šorcevi (dečaci)', data: 'sorcevi_m', name: 'sorcevi_m' },
+        { title: 'Šorcevi (devojčice)', data: 'sorcevi_z', name: 'sorcevi_z' },
+        // { title: 'Učesnik', data: 'ime', name: 'ucesniks.ime' },
+        // { title: 'Veličina majice', data: 'velicina_majice', name: 'v_m.naziv' },
+        // { title: 'Veličina šorca', data: 'velicina_sorca', name: 'v_s.naziv' },
+        // { title: 'Veličina duksa', data: 'velicina_duksa', name: 'v_d.naziv' },
         // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
         // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
-        { title: 'Period', data: 'period', name: 'period' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
+        // { title: 'Period', data: 'period', name: 'period' },
+        // { title: 'Cena', data: 'cena', name: 'cena' },
+        // { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       initComplete: function (settings, json) {

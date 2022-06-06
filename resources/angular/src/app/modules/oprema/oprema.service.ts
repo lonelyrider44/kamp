@@ -16,7 +16,7 @@ export class OpremaService {
   constructor(private httpClient: HttpClient) { }
 
   datatable(dtParams:any): Observable<Oprema[]> {
-    return this.httpClient.post<Oprema[]>(`${environment.api_url}/datatable/hotel`,dtParams)
+    return this.httpClient.post<Oprema[]>(`${environment.api_url}/datatable/oprema`,dtParams)
   }
   all(): Observable<Oprema[]> {
     return this.httpClient.get<Oprema[]>(`${environment.api_url}/hotel`);

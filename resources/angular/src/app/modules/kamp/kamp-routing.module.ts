@@ -12,6 +12,7 @@ import { UplataDatatableComponent } from '../uplata/uplata-datatable/uplata-data
 import { OpremaDatatableComponent } from '../oprema/oprema-datatable/oprema-datatable.component';
 import { PrijavaDatatableComponent } from '../prijava/prijava-datatable/prijava-datatable.component';
 import { DodatniPaketDatatableComponent } from '../dodatni-paket/dodatni-paket-datatable/dodatni-paket-datatable.component';
+import { HotelDatatableComponent } from '../hotel/hotel-datatable/hotel-datatable.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
     path: ':kampId',
     component: DetailsLayoutComponentComponent,
     children: [{
-      path: '', redirectTo: 'osnovni-podaci', pathMatch: 'full'
+      // path: '', redirectTo: 'osnovni-podaci', pathMatch: 'full'
+      path: '', redirectTo: 'smene', pathMatch: 'full'
     },
     {
       path: 'osnovni-podaci',
@@ -56,6 +58,11 @@ const routes: Routes = [
     {
       path: 'oprema',
       component: OpremaDatatableComponent
+      // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
+    },
+    {
+      path: 'smestaj',
+      component: HotelDatatableComponent
       // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
     }
   ],

@@ -8,6 +8,9 @@ import { DetailsComponent } from './details/details.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KorisnikDatatableComponent } from './korisnik-datatable/korisnik-datatable.component';
+import { KorisnikIndexLayoutComponent } from './korisnik-index-layout/korisnik-index-layout.component';
+import { AdministratorDatatableComponent } from './administrator-datatable/administrator-datatable.component';
+import { TrenerDatatableComponent } from './trener-datatable/trener-datatable.component';
 
 
 @NgModule({
@@ -15,7 +18,10 @@ import { KorisnikDatatableComponent } from './korisnik-datatable/korisnik-datata
     IndexComponent,
     FormComponent,
     DetailsComponent,
-    KorisnikDatatableComponent
+    KorisnikDatatableComponent,
+    KorisnikIndexLayoutComponent,
+    AdministratorDatatableComponent,
+    TrenerDatatableComponent
   ],
   imports: [
     CommonModule,

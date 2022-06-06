@@ -21,13 +21,16 @@ export class PrijavaDatatableComponent implements OnInit {
     this.dataTable = $(this.table.nativeElement);
     this.dataTable.DataTable({
       "ajax": (dataTablesParameters: any, callback) => {
+
         dataTablesParameters.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+        dataTablesParameters.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
         this.prijavaService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,
             recordsFiltered: data.recordsFiltered,
             data: data.data,
-            kamp_id: data.kamp_id
+            kamp_id: data.kamp_id,
+            smena_id: data.smena_id,
           });
         });
       },

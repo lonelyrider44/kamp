@@ -12,11 +12,11 @@
                         <div class="col-md-10">
                             <span>Trenutno nema aktivnih kampova</span>
                 </div>
-                <div class="col-md-2 text-right">
+                <!-- <div class="col-md-2 text-right">
                     <a routerLink="/login">
                         <span class="material-icons">login</span>
                     </a>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="card" *ngIf="!prijava_success">
@@ -360,15 +360,54 @@
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="example-full-width col-md-2">
-                            <input matInput placeholder="Opština" formControlName="depozit_rsd" [ngModel]="prijava.depozit_rsd" [errorStateMatcher]="matcher" />
-                            <mat-error *ngIf="prijavaForm.get('depozit_rsd')?.errors?.serverError">
+                            <input matInput placeholder="Opština" formControlName="opstina_rsd" [ngModel]="prijava.depozit_rsd" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('opstina_rsd')?.errors?.serverError">
                                 {{ prijavaForm.get("opstina_rsd") ?.errors?.serverError }}
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="example-full-width col-md-2">
                             <input matInput placeholder="Ukupno" formControlName="ukupno_rsd" [ngModel]="prijava.depozit_rsd" [errorStateMatcher]="matcher" />
-                            <mat-error *ngIf="prijavaForm.get('depozit_rsd')?.errors?.serverError">
-                                {{ prijavaForm.get("depozit_rsd") ?.errors?.serverError }}
+                            <mat-error *ngIf="prijavaForm.get('ukupno_rsd')?.errors?.serverError">
+                                {{ prijavaForm.get("ukupno_rsd") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <h3>Plaćanje (EUR)</h3>
+                    <div class="row">
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Depozit" formControlName="depozit_eur" [ngModel]="prijava.depozit_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('depozit_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("depozit_eur") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Smene" formControlName="smene_eur" [ngModel]="prijava.smene_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('smene_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("smene_eur") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Dodatni paketi" formControlName="dodatni_paketi_eur" [ngModel]="prijava.dodatni_paketi_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('dodatni_paketi_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("dodatni_paketi_eur") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Gratis" formControlName="gratis_eur" [ngModel]="prijava.gratis_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('gratis_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("gratis_eur") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Opština" formControlName="opstina_eur" [ngModel]="prijava.opstina_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('opstina_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("opstina_eur") ?.errors?.serverError }}
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="example-full-width col-md-2">
+                            <input matInput placeholder="Ukupno" formControlName="ukupno_eur" [ngModel]="prijava.ukupno_eur" [errorStateMatcher]="matcher" />
+                            <mat-error *ngIf="prijavaForm.get('ukupno_eur')?.errors?.serverError">
+                                {{ prijavaForm.get("ukupno_eur") ?.errors?.serverError }}
                             </mat-error>
                         </mat-form-field>
                     </div>

@@ -102,7 +102,6 @@ export function newPrijava(): Prijava {
         saglasnost_ucesce_na_kampu: false,
         saglasnost_donatorski_ugovor: false,
         saglasnost_pravila_kampa: false,
-
     };
 }
 export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
@@ -152,6 +151,23 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
         saglasnost_pravila_kampa: [prijava.saglasnost_pravila_kampa],
 
         smene: fb.array([]),
-        dodatni_paketi: fb.array([])
+        dodatni_paketi: fb.array([]),
+
+        status_id: [''],
+        trener_id: [''],
+
+        depozit_rsd: [''],
+        smene_rsd: [''],
+        dodatni_paketi_rsd: [''],
+        gratis_rsd: [''],
+        opstina_rsd: [''],
+        ukupno_rsd: [''],
+
+        depozit_eur: [''],
+        smene_eur: [''],
+        dodatni_paketi_eur: [''],
+        gratis_eur: [''],
+        opstina_eur: [''],
+        ukupno_eur: [''],
     })
 }

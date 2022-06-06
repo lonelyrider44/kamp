@@ -8,10 +8,39 @@ use App\Http\Requests\UpdateHotelRequest;
 
 class HotelController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Hotel::all())
-            ->addColumn('action','hotel.partials.dt_actions')
-        ->make(true);
+    public function datatable(\Illuminate\Http\Request $request)
+    {
+        return datatables()->of(
+            // \App\Models\Hotel::all()
+            \App\Models\Prijava::select(
+                'prijavas.id',
+                'ucesniks.ime',
+                'ucesniks.prezime',
+                'ucesniks.email',
+                'ucesniks.telefon',
+                'roditeljs.ime as ime_r',
+                'roditeljs.prezime as prezime_r',
+                'roditeljs.email as email_r',
+                'roditeljs.telefon as telefon_r',
+                'sopstveni_smestaj',
+                'napomena_smestaj',
+                'broj_sobe'
+            )
+                ->join('roditeljs', 'roditeljs.id', 'prijavas.roditelj_id')
+                ->join('ucesniks', 'ucesniks.id', 'prijavas.ucesnik_id')
+                ->when(!empty($request->kamp_id), function($query)use($request){
+                    return $query->where('prijavas.kamp_id', $request->kamp_id);
+                })
+                ->when(empty($request->kamp_id), function($query){
+                    return $query->where('prijavas.kamp_id', -1);
+                })
+                ->toBase()
+        )
+            ->addColumn('ucesnik', 'hotel.partials.dt_ucesnik')
+            ->addColumn('roditelj', 'hotel.partials.dt_roditelj')
+            ->addColumn('action', 'hotel.partials.dt_actions')
+            ->rawColumns(['ucesnik', 'roditelj', 'action'])
+            ->make(true);
     }
     /**
      * Display a listing of the resource.
@@ -19,8 +48,7 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-    }
+    { }
 
     /**
      * Show the form for creating a new resource.

@@ -23,8 +23,9 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     protected $observers = [
-        Ucesnik::class => [UcesnikObserver::class],
-        Roditelj::class => [RoditeljObserver::class]
+        // Ucesnik::class => [UcesnikObserver::class],
+        // Roditelj::class => [RoditeljObserver::class],
+        // \App\Models\Prijava::class => [\App\Observers\PrijavaObserver::class]
     ];
 
     /**

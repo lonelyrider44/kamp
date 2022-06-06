@@ -5,20 +5,22 @@
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <h4 class="card-title ">Hoteli
-                            <button mat-mini-fab aria-label="Example icon button with a delete icon" class="pull-right" routerLink="unos">
+                            <!-- <button mat-mini-fab aria-label="Example icon button with a delete icon" class="pull-right" routerLink="unos">
                                 <mat-icon>add</mat-icon>
-                              </button>
+                              </button> -->
                         </h4>
                         <p class="card-category"> </p>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table #dataTableHotel id="datatable_hotel" class="table table-bordered table-striped table-sm"></table>
-                        </div>
+                        <mat-form-field appearance="outline" class="pull-right col-md-3">
+                            <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp">
+                                <mat-option *ngFor="let kamp of kampovi$ | async" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <app-hotel-datatable [kamp_id]="kamp_id"></app-hotel-datatable>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
-  
+</div>

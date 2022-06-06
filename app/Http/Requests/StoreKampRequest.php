@@ -17,6 +17,10 @@ class StoreKampRequest extends FormRequest
     }
 
     public function prepareForValidation(){
+        // $this->merge(['smene' => collect($this->smene)->map(function($item){
+        //     $item['kamp_id'] = $this->kamp_id;
+        //     return $item;
+        // })->all()]);
         // $nove_smene = [];
         // foreach($this->smene as $smena){
         //     if(!empty($smena->id)){

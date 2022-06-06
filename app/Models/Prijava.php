@@ -11,6 +11,7 @@ class Prijava extends Model
     protected $fillable = [
         'kamp_id',
         'ucesnik_id',
+        'roditelj_id',
         'status_id',
 
         'ime_roditelja',
@@ -49,6 +50,7 @@ class Prijava extends Model
         'napomena_alergije',
 
         'prevoz',
+        'tip_prevoza_id',
 
         'saglasnost_politika_privatnosti',
         'saglasnost_obrada_podataka',
@@ -58,6 +60,20 @@ class Prijava extends Model
 
         'depozit_rsd',
         'depozit_eur',
+
+        'depozit_rsd',
+        'smene_rsd',
+        'dodatni_paketi_rsd',
+        'gratis_rsd',
+        'opstina_rsd',
+        'ukupno_rsd',
+
+        'depozit_eur',
+        'smene_eur',
+        'dodatni_paketi_eur',
+        'gratis_eur',
+        'opstina_eur',
+        'ukupno_eur',
     ];
 
     // protected $casts = [
@@ -77,17 +93,53 @@ class Prijava extends Model
     {
         return $this->belongsToMany(\App\Models\DodatniPaket::class, 'prijava_paketis', 'prijava_id', 'dodatni_paket_id');
     }
-    public function kamp(){
-        return $this->belongsTo(\App\Models\Kamp::class,'kamp_id');
+    public function kamp()
+    {
+        return $this->belongsTo(\App\Models\Kamp::class, 'kamp_id');
     }
 
     public function updateOrCreateUcesnik()
     {
+        $roditelj = \App\Models\Roditelj::updateOrCreate(
+            ['email' => $this->email_roditelja],
+            [
+                'email' => $this->email_roditelja,
+                'telefon' => $this->telefon_roditelja,
+                'ime' => $this->ime_roditelja,
+                'prezime' => $this->prezime_roditelja
+            ]
+        );
         $ucesnik = \App\Models\Ucesnik::updateOrCreate(
             ['email' => $this->email],
-            $this->toArray()
+            [
+                'prezime' => $this->prezime,
+                'ime' => $this->ime,
+                'datum_rodjenja' => $this->datum_rodjenja,
+                'jmbg_pasos' => $this->jmbg_pasos,
+                // 'pasos' => $this->jmbg_pasos,
+                'email' => $this->email,
+                'telefon' => $this->telefon,
+                'adresa' => $this->adresa,
+                'grad' => $this->grad,
+                'drzava' => $this->drzava,
+                'pol_id' => $this->pol_id,
+                'mesto_id' => $this->mesto_id,
+                'prezime_roditelja' => $this->prezime_roditelja,
+                'ime_roditelja' => $this->ime_roditelja,
+                'telefon_roditelja' => $this->telefon_roditelja,
+                'email_roditelja' => $this->email_roditelja,
+            ]
         );
-        $ucesnik->updateOrCreateRoditelj();
-        $this->update(['id_ucesnika' => $ucesnik->id]);
+        // $ucesnik->updateOrCreateRoditelj();
+
+        $this->update([
+            'ucesnik_id' => $ucesnik->id,
+            'roditelj_id' => $roditelj->id
+        ]);
+        if (!empty($ucesnik)) {
+            $ucesnik->update([
+                'roditelj_id' => $roditelj->id
+            ]);
+        }
     }
 }

@@ -82,7 +82,7 @@ class ImportUcesnici extends Migration
                     'smena' => $ucesnik->smena,
                     'alergija_polen' => $ucesnik->alergija_polen,
                     'zdravstveni_problem' => $ucesnik->zdravstveni_problem,
-                    'prevoz' => ($ucesnik->prevoz=='Samostalno')?1:2,
+                    'tip_prevoza_id' => ($ucesnik->prevoz=='Samostalno')?1:2,
                     'organizovani_prevoz' => ($ucesnik->prevoz!='Samostalno')?\App\Models\OrganizovaniPrevoz::where('naziv',$ucesnik->prevoz)->first()->id:null,
                     'pet_treninga' => $ucesnik->pet_treninga,
                     'napomena_hrana' => $ucesnik->napomena_hrana,
@@ -102,18 +102,8 @@ class ImportUcesnici extends Migration
                     'smena_id' => ($ucesnik->smena=="I smena")?$prva_smena->id:$druga_smena->id
                 ];
             })->each(function ($ucesnik, $key) {
-                // $u= \App\Models\Ucesnik::where('jmbg', $ucesnik['jmbg'])->first();
-
-                // if(empty($u)){
-                //     $u = \App\Models\Ucesnik::create($ucesnik);
-                // }
-                // $u->ucesnik_kampova()->save(new \App\Models\UcesnikKampa($ucesnik));
                 $prijava = \App\Models\Prijava::create($ucesnik);
                 $prijava->smene()->sync([$ucesnik['smena_id']]);
-                // $prijava_smena = \App\Models\PrijavaSmena::create([
-                //     'prijava_id' => $prijava->id,
-                //     'smena_id' => $ucesnik['smena_id']
-                // ]);
             });
 
             \DB::commit();

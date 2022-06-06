@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OpremaDatatableComponent } from '../oprema/oprema-datatable/oprema-datatable.component';
+import { PrijavaDatatableComponent } from '../prijava/prijava-datatable/prijava-datatable.component';
 import { UcesnikDatatableComponent } from '../ucesnik/ucesnik-datatable/ucesnik-datatable.component';
 import { UplataDatatableComponent } from '../uplata/uplata-datatable/uplata-datatable.component';
 import { DetailsBasicComponent } from './details-basic/details-basic.component';
@@ -15,11 +16,11 @@ const routes: Routes = [
     path: ':smenaId',
     component: SmenaLayoutComponent,
     children: [{
-      path: '', redirectTo: 'osnovni-podaci', pathMatch: 'full'
+      path: '', redirectTo: 'prijave', pathMatch: 'full'
     },
     {
-      path: 'osnovni-podaci',
-      component: DetailsBasicComponent
+      path: 'prijave',
+      component: PrijavaDatatableComponent
     },
     {
       path: 'ucesnici',

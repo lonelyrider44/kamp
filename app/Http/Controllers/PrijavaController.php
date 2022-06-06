@@ -13,7 +13,7 @@ class PrijavaController extends Controller
         return datatables()->of(\App\Models\Prijava::select(
             'prijava_smenas.id',
             \DB::raw('CONCAT(prijavas.prezime," ",prijavas.ime) as ucesnik'),
-            'smenas.naziv as smena',
+            \DB::raw('GROUP_CONCAT(smenas.naziv) as smena'),
             'kamps.naziv as kamp',
             // 'smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena',
             //     'kamps.naziv as kamp',
@@ -29,6 +29,10 @@ class PrijavaController extends Controller
             ->when(!empty($request->kamp_id), function($query)use($request){
                 return $query->where('prijavas.kamp_id',$request->kamp_id);
             })
+            ->when(!empty($request->smena_id), function ($query) use ($request) {
+                return $query->where('smenas.id', $request->smena_id);
+            })
+            ->groupBy('prijavas.id')
             // ->groupBy('smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena','kamps.naziv')
             ->toBase())
             ->addColumn('action','prijava.partials.dt_actions')
@@ -70,21 +74,7 @@ class PrijavaController extends Controller
 
             $prijava = \App\Models\Prijava::create($request->all());
             $prijava->smene()->sync($request->smene);
-            $prijava->dodatni_paketi()->sync($request->dodatni_paketi);
-
-            $roditelj = \App\Models\Roditelj::updateOrCreate([
-                'email' => $request->email_roditelja
-            ],[
-                'telefon' => $request->telefon_roditelja,
-                'ime' => $request->ime_roditelja,
-                'prezime' => $request->prezime_roditelja,
-                'password' => $request->roditelj_sifra
-            ]);
-            $ucesnik = \App\Models\Ucesnik::updateOrCreate(
-                ['email' => $request->email],
-                $request->all() + ['id_roditelja' => $roditelj->id]
-            );
-            $prijava->update(['ucensik_id' => $ucesnik->id]);
+            $prijava->dodatni_paketi()->sync($request->dodatni_paketi);            
 
             \DB::commit();
             return response()->json($prijava);

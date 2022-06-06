@@ -52,7 +52,7 @@ class KampController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(\App\Models\Kamp::all());
     }
 
     /**
@@ -77,11 +77,11 @@ class KampController extends Controller
             \DB::beginTransaction();
             $kamp = \App\Models\Kamp::create($request->all());
 
-            $kamp->smene()->upsert($request->smene,['id'],['naziv','datum_od','datum_do']);
+            $kamp->smene()->createMany($request->smene);
 
-            $kamp->dodatni_paketi()->upsert($request->dodatni_paketi, ['id'],['naziv','opis','iznos_rsd','iznos_eur']);
+            $kamp->dodatni_paketi()->createMany($request->dodatni_paketi);
 
-            $kamp->organizovani_prevoz()->upsert($request->organizovani_prevoz, ['id'],['naziv','cena_rsd','cena_eur']);
+            $kamp->organizovani_prevoz()->createMany($request->organizovani_prevoz);
 
             \DB::commit();
         } catch (\Exception $e) {
@@ -129,13 +129,24 @@ class KampController extends Controller
             $kamp->update($request->all());
 
             $kamp->smene()->whereNotIn('id',collect($request->smene)->pluck('id'))->delete();
-            $kamp->smene()->upsert($request->smene,['id'],['naziv','datum_od','datum_do']);
+            $kamp->smene()->upsert(collect($request->smene)->filter(function($smena){return !empty($smena['id']);})->all(),
+                ['id'],['naziv','datum_od','datum_do']);
+            $kamp->smene()->createMany(
+                collect($request->smene)->filter(function($smena){return empty($smena['id']);})->all());
 
             $kamp->dodatni_paketi()->whereNotIn('id', collect($request->dodatni_paketi)->pluck('id'))->delete();
-            $kamp->dodatni_paketi()->upsert($request->dodatni_paketi, ['id'],['naziv','opis','iznos_rsd','iznos_eur']);
+            $kamp->dodatni_paketi()->upsert(
+                collect($request->dodatni_paketi)->filter(function($dp){return !empty($dp['id']);})->all(), 
+                ['id'],['naziv','opis','iznos_rsd','iznos_eur']);
+            $kamp->dodatni_paketi()->createMany(
+                collect($request->dodatni_paketi)->filter(function($dp){return empty($dp['id']);})->all());
 
             $kamp->organizovani_prevoz()->whereNotIn('id', collect($request->organizovani_prevoz)->pluck('id'))->delete();
-            $kamp->organizovani_prevoz()->upsert($request->organizovani_prevoz, ['id'],['naziv','cena_rsd','cena_eur']);
+            $kamp->organizovani_prevoz()->upsert(
+                collect($request->organizovani_prevoz)->filter(function($op){ return !empty($op['id']);})->all(), 
+                ['id'],['naziv','cena_rsd','cena_eur']);
+            $kamp->organizovani_prevoz()->createMany(
+                collect($request->organizovani_prevoz)->filter(function($op){ return empty($op['id']);})->all());
 
             \DB::commit();
         } catch (\Exception $e) {
@@ -157,6 +168,9 @@ class KampController extends Controller
         try {
             \DB::beginTransaction();
 
+            $kamp->smene()->delete();
+            $kamp->organizovani_prevoz()->delete();
+            $kamp->dodatni_paketi()->delete();
             $kamp->delete();
             
             \DB::commit();

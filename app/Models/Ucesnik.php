@@ -27,6 +27,7 @@ class Ucesnik extends Model implements JWTSubject
             'ime_roditelja',
             'telefon_roditelja',
             'email_roditelja',
+            'roditelj_id'
 
     ];
     protected $dates = [
@@ -66,6 +67,6 @@ class Ucesnik extends Model implements JWTSubject
             'password' => $this->roditelj_sifra
         ]);
 
-        $this->update(['id_roditelja' => $roditelj->id ]);
+        $this->update(['roditelj_id' => $roditelj->id ]);
     }
 }

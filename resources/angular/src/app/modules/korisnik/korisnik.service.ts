@@ -18,6 +18,12 @@ export class KorisnikService {
   datatable(dtParams:any): Observable<Korisnik[]> {
     return this.httpClient.post<Korisnik[]>(`${environment.api_url}/datatable/korisnik`,dtParams)
   }
+  datatable_administrator(dtParams:any): Observable<Korisnik[]> {
+    return this.httpClient.post<Korisnik[]>(`${environment.api_url}/datatable/korisnik`,dtParams)
+  }
+  datatable_trener(dtParams:any): Observable<Korisnik[]> {
+    return this.httpClient.post<Korisnik[]>(`${environment.api_url}/datatable/trener`,dtParams)
+  }
   all(): Observable<Korisnik[]> {
     return this.httpClient.get<Korisnik[]>(`${environment.api_url}/korisnik`);
   }
