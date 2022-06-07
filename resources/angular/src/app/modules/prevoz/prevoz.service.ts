@@ -16,21 +16,21 @@ export class PrevozService {
   constructor(private httpClient: HttpClient) { }
 
   datatable(dtParams:any): Observable<Prevoz[]> {
-    return this.httpClient.post<Prevoz[]>(`${environment.api_url}/datatable/hotel`,dtParams)
+    return this.httpClient.post<Prevoz[]>(`${environment.api_url}/datatable/prevoz`,dtParams)
   }
   all(): Observable<Prevoz[]> {
-    return this.httpClient.get<Prevoz[]>(`${environment.api_url}/hotel`);
+    return this.httpClient.get<Prevoz[]>(`${environment.api_url}/prevoz`);
   }
   find(id:any): Observable<Prevoz> {
-    return this.httpClient.get<Prevoz>(`${environment.api_url}/hotel/${id}`)
+    return this.httpClient.get<Prevoz>(`${environment.api_url}/prevoz/${id}`)
   }
-  store(hotel): Observable<Prevoz> {
-    return this.httpClient.post<Prevoz>(`${environment.api_url}/hotel`, JSON.stringify(hotel), this.httpOptions)
+  store(prevoz): Observable<Prevoz> {
+    return this.httpClient.post<Prevoz>(`${environment.api_url}/prevoz`, JSON.stringify(prevoz), this.httpOptions)
   }
-  update(id:any, hotel): Observable<Prevoz> {
-    return this.httpClient.put<Prevoz>(`${environment.api_url}/hotel/id`, JSON.stringify(hotel), this.httpOptions)
+  update(id:any, prevoz): Observable<Prevoz> {
+    return this.httpClient.put<Prevoz>(`${environment.api_url}/prevoz/id`, JSON.stringify(prevoz), this.httpOptions)
   }
   delete(id:any){
-    return this.httpClient.delete<Prevoz>(`${environment.api_url}/hotel/${id}`, this.httpOptions)
+    return this.httpClient.delete<Prevoz>(`${environment.api_url}/prevoz/${id}`, this.httpOptions)
   }
 }

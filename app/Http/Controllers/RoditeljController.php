@@ -8,6 +8,14 @@ use App\Http\Requests\UpdateRoditeljRequest;
 
 class RoditeljController extends Controller
 {
+    public function datatable(\Illuminate\Http\Request $request){
+        return datatables()->of(\App\Models\Roditelj::select(
+            'roditeljs.*',
+            \DB::raw('COUNT(ucesniks.id) as broj_ucesnika')
+            )->leftJoin('ucesniks','ucesniks.roditelj_id','roditeljs.id')
+            ->groupBy('roditeljs.id'))
+            ->make(true);
+    }
     /**
      * Display a listing of the resource.
      *

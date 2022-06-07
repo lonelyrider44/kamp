@@ -1,48 +1,49 @@
 <div class="main-content">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Uplata</h4>
-                        <p class="card-category">Complete your profile</p>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <div class="row">
-                                <!-- Roditelj -->
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Roditelj" formControlName="roditelj_id" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="uplataForm.get('roditelj_id')?.errors?.serverError">
-                                            {{ uplataForm.get("roditelj_id")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
+            <div class="offset-md-2 col-md-8">
+
+                <form [formGroup]="uplataForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-danger">
+                                    <h4 class="card-title">Uplata</h4>
+                                    <p class="card-category" *ngIf="action_create">
+                                        Novi unos
+                                    </p>
+                                    <p class="card-category" *ngIf="action_update">
+                                        Izmena
+                                    </p>
+                                    <p class="card-category" *ngIf="action_delete">
+                                        Brisanje
+                                    </p>
                                 </div>
-                                <!-- DECA, readonly -->
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Dete" formControlName="dete_id" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="uplataForm.get('dete_id')?.errors?.serverError">
-                                            {{ uplataForm.get("dete_id")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <!-- IZNOS -->
-                                <div class="col-md-6">
-                                    <mat-form-field class="example-full-width">
-                                        <input matInput placeholder="Iznos" formControlName="iznos" [errorStateMatcher]="matcher">
-                                        <mat-error *ngIf="uplataForm.get('iznos')?.errors?.serverError">
-                                            {{ uplataForm.get("iznos")?.errors?.serverError }}
-                                        </mat-error>
-                                    </mat-form-field>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Iznos RSD" formControlName="iznos_rsd" [ngModel]="uplata.iznos_rsd" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="uplataForm.get('iznos_rsd')?.errors?.serverError">
+                                                {{ uplataForm.get("iznos_rsd")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Iznos RSD" formControlName="iznos_eur" [ngModel]="uplata.iznos_rsd" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="uplataForm.get('iznos_rsd')?.errors?.serverError">
+                                                {{ uplataForm.get("iznos_rsd")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                                        Potvrdi
+                                    </button>
+                                    <div class="clearfix"></div>
                                 </div>
                             </div>
-                            <button mat-raised-button type="submit" class="btn btn-danger pull-right">Potvrdi</button>
-                            <div class="clearfix"></div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>

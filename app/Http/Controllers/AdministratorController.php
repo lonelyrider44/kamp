@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Trener;
-use App\Http\Requests\StoreTrenerRequest;
-use App\Http\Requests\UpdateTrenerRequest;
+use App\Models\User;
+use Illuminate\Http\Request;
 
-class TrenerController extends Controller
+class AdministratorController extends Controller
 {
-    public function datatable(){
-        return datatables()->of(\App\Models\Trener::all())
-            ->addColumn('action','trener.partials.dt_actions')
-        ->make(true);
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +14,7 @@ class TrenerController extends Controller
      */
     public function index()
     {
-        return \App\Models\Trener::all();
+        //
     }
 
     /**
@@ -36,21 +30,28 @@ class TrenerController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreTrenerRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTrenerRequest $request)
+    public function store(Request $request)
     {
-        $trener = \App\Models\Trener::create($request->all());
+        $request->validate([
+            'ime' => 'required',
+            'prezime' => 'required',
+            'email' => 'required',
+            'telefon' => 'required',
+            'password' => 'required|confirmed'
+        ]);
+        $user = \App\Models\User::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Trener  $trener
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Trener $trener)
+    public function show(User $user)
     {
         //
     }
@@ -58,10 +59,10 @@ class TrenerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Trener  $trener
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trener $trener)
+    public function edit(User $user)
     {
         //
     }
@@ -69,11 +70,11 @@ class TrenerController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateTrenerRequest  $request
-     * @param  \App\Models\Trener  $trener
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateTrenerRequest $request, Trener $trener)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -81,10 +82,10 @@ class TrenerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Trener  $trener
+     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trener $trener)
+    public function destroy(User $user)
     {
         //
     }

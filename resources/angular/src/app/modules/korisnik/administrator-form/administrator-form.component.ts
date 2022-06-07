@@ -1,23 +1,24 @@
-import { Location, LocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { newUplata, Uplata, uplataFormGroup } from '../uplata';
-import { UplataService } from '../uplata.service';
+import { Administrator, administratorFormGroup, newAdministrator } from '../administrator';
+import { AdministratorService } from '../administrator.service';
+import { KorisnikService } from '../korisnik.service';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-administrator-form',
+  templateUrl: './administrator-form.component.html',
+  styleUrls: ['./administrator-form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class AdministratorFormComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
-  uplata: Uplata = newUplata();
-  uplataForm: FormGroup;
+  admin: Administrator = newAdministrator();
+  adminForm: FormGroup;
   action_create: boolean = false;
   action_update: boolean = false;
   action_delete: boolean = false;
@@ -26,11 +27,11 @@ export class FormComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    public uplataService: UplataService,
-    private _location: LocationStrategy,
+    public adminService: AdministratorService,
+    private _location: Location,
     private _snackBar: MatSnackBar
   ) {
-    this.uplataForm = uplataFormGroup(this.fb, this.uplata);
+    this.adminForm = administratorFormGroup(this.fb, this.admin);
   }
 
   ngOnInit(): void { 
@@ -40,27 +41,27 @@ export class FormComponent implements OnInit {
   store() {
     if (!this.action_create) return;
 
-    this.uplataService.store(this.uplataForm.value).subscribe(
+    this.adminService.store(this.adminForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.adminForm, error) }
       }
     )
   }
   update() {
     if (!this.action_update) return;
-    this.uplataService.update(this.uplata.id, this.uplataForm.value).subscribe(
+    this.adminService.update(this.admin.id, this.adminForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.adminForm, error) }
       }
     )
   }
   delete() {
     if (!this.action_delete) return;
-    this.uplataService.delete(this.uplata.id).subscribe({
+    this.adminService.delete(this.admin.id).subscribe({
       next: res => { this.router.navigateByUrl('/admin/kamp') },
-      error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+      error: (error: HttpErrorResponse) => { this.submitFormFailed(this.adminForm, error) }
     })
   }
   submitForm() {
@@ -100,9 +101,9 @@ export class FormComponent implements OnInit {
       return value.path;
     }).includes('brisanje');
     if (this.activatedRoute.snapshot.params?.kampId) {
-      this.uplataService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+      this.adminService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
         // console.log(res);
-        this.uplata = res
+        this.admin = res
       })
     }
   }

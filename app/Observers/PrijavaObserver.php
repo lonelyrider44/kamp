@@ -15,7 +15,7 @@ class PrijavaObserver
     public function created(Prijava $prijava)
     {
         $roditelj = \App\Models\Roditelj::updateOrCreate([
-            'email' => $prijava->email_roditelja
+            'email' => $prijava->email_roditelja,
         ], [
             'telefon' => $prijava->telefon_roditelja,
             'ime' => $prijava->ime_roditelja,
@@ -25,11 +25,11 @@ class PrijavaObserver
         if(!empty($prijava->email)){
             $ucesnik = \App\Models\Ucesnik::updateOrCreate(
                 ['email' => $prijava->email],
-                $prijava->toArray() + ['id_roditelja' => $roditelj->id]
+                $prijava->toArray() + ['roditelj_id' => $roditelj->id]
             );
         }else{
             $ucesnik = \App\Models\Ucesnik::create(
-                $prijava->toArray() + ['id_roditelja' => $roditelj->id]
+                $prijava->toArray() + ['roditelj_id' => $roditelj->id]
             );
         }
         $prijava->update([

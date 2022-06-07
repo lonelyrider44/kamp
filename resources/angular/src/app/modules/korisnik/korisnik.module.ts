@@ -11,6 +11,8 @@ import { KorisnikDatatableComponent } from './korisnik-datatable/korisnik-datata
 import { KorisnikIndexLayoutComponent } from './korisnik-index-layout/korisnik-index-layout.component';
 import { AdministratorDatatableComponent } from './administrator-datatable/administrator-datatable.component';
 import { TrenerDatatableComponent } from './trener-datatable/trener-datatable.component';
+import { AdministratorFormComponent } from './administrator-form/administrator-form.component';
+import { TrenerFormComponent } from './trener-form/trener-form.component';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { TrenerDatatableComponent } from './trener-datatable/trener-datatable.co
     KorisnikDatatableComponent,
     KorisnikIndexLayoutComponent,
     AdministratorDatatableComponent,
-    TrenerDatatableComponent
+    TrenerDatatableComponent,
+    AdministratorFormComponent,
+    TrenerFormComponent
   ],
   imports: [
     CommonModule,

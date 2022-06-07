@@ -1,23 +1,26 @@
-import { Location, LocationStrategy } from '@angular/common';
+import { Location } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { newUplata, Uplata, uplataFormGroup } from '../uplata';
-import { UplataService } from '../uplata.service';
+import { Administrator, administratorFormGroup, newAdministrator } from '../administrator';
+import { AdministratorService } from '../administrator.service';
+import { Trener, newTrener, trenerFormGroup } from '../trener';
+import { TrenerService } from '../trener.service';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-trener-form',
+  templateUrl: './trener-form.component.html',
+  styleUrls: ['./trener-form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class TrenerFormComponent implements OnInit {
+
   matcher = new MyErrorStateMatcher();
 
-  uplata: Uplata = newUplata();
-  uplataForm: FormGroup;
+  trener: Trener = newTrener();
+  trenerForm: FormGroup;
   action_create: boolean = false;
   action_update: boolean = false;
   action_delete: boolean = false;
@@ -26,11 +29,11 @@ export class FormComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    public uplataService: UplataService,
-    private _location: LocationStrategy,
+    public trenerService: TrenerService,
+    private _location: Location,
     private _snackBar: MatSnackBar
   ) {
-    this.uplataForm = uplataFormGroup(this.fb, this.uplata);
+    this.trenerForm = trenerFormGroup(this.fb, this.trener);
   }
 
   ngOnInit(): void { 
@@ -40,27 +43,27 @@ export class FormComponent implements OnInit {
   store() {
     if (!this.action_create) return;
 
-    this.uplataService.store(this.uplataForm.value).subscribe(
+    this.trenerService.store(this.trenerForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.trenerForm, error) }
       }
     )
   }
   update() {
     if (!this.action_update) return;
-    this.uplataService.update(this.uplata.id, this.uplataForm.value).subscribe(
+    this.trenerService.update(this.trener.id, this.trenerForm.value).subscribe(
       {
         next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.trenerForm, error) }
       }
     )
   }
   delete() {
     if (!this.action_delete) return;
-    this.uplataService.delete(this.uplata.id).subscribe({
+    this.trenerService.delete(this.trener.id).subscribe({
       next: res => { this.router.navigateByUrl('/admin/kamp') },
-      error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
+      error: (error: HttpErrorResponse) => { this.submitFormFailed(this.trenerForm, error) }
     })
   }
   submitForm() {
@@ -100,9 +103,9 @@ export class FormComponent implements OnInit {
       return value.path;
     }).includes('brisanje');
     if (this.activatedRoute.snapshot.params?.kampId) {
-      this.uplataService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+      this.trenerService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
         // console.log(res);
-        this.uplata = res
+        this.trener = res
       })
     }
   }

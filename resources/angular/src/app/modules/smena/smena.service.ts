@@ -18,7 +18,7 @@ export class SmenaService {
   datatable(dtParams:any): Observable<Smena[]> {
     return this.httpClient.post<Smena[]>(`${environment.api_url}/datatable/smena`,dtParams)
   }
-  all(): Observable<Smena[]> {
+  all(kamp_id:any = null): Observable<Smena[]> {
     return this.httpClient.get<Smena[]>(`${environment.api_url}/smena`);
   }
   find(id:any): Observable<Smena> {

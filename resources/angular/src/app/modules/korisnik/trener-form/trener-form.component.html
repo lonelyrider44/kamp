@@ -1,0 +1,98 @@
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-md-8">
+
+                <form [formGroup]="trenerForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-danger">
+                                    <h4 class="card-title">Trener</h4>
+                                    <p class="card-category" *ngIf="action_create">
+                                        Novi unos
+                                    </p>
+                                    <p class="card-category" *ngIf="action_update">
+                                        Izmena
+                                    </p>
+                                    <p class="card-category" *ngIf="action_delete">
+                                        Brisanje
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Ime" formControlName="ime" [ngModel]="trener.ime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('ime')?.errors?.serverError">
+                                                {{ trenerForm.get("ime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Prezime" formControlName="prezime" [ngModel]="trener.prezime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('prezime')?.errors?.serverError">
+                                                {{ trenerForm.get("prezime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Email" formControlName="email" [ngModel]="trener.email" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('email')?.errors?.serverError">
+                                                {{ trenerForm.get("email")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="trener.telefon" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('telefon')?.errors?.serverError">
+                                                {{ trenerForm.get("telefon")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Lozinka" formControlName="password" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('password')?.errors?.serverError">
+                                                {{ trenerForm.get("password")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Potvrdi lozinku" formControlName="password_confirmation" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="trenerForm.get('password_confirmation')?.errors?.serverError">
+                                                {{ trenerForm.get("password_confirmation")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-3">
+                                            <mat-select placeholder="Majica" formControlName="majica" [disabled]="action_delete" [errorStateMatcher]="matcher"></mat-select>
+                                            <mat-error *ngIf="trenerForm.get('majica')?.errors?.serverError">
+                                                {{ trenerForm.get("majica")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-3">
+                                            <mat-select placeholder="Duks" formControlName="duks" [disabled]="action_delete" [errorStateMatcher]="matcher"></mat-select>
+                                            <mat-error *ngIf="trenerForm.get('duks')?.errors?.serverError">
+                                                {{ trenerForm.get("duks")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-3">
+                                            <mat-select placeholder="Šorc" formControlName="sorc" [disabled]="action_delete" [errorStateMatcher]="matcher"></mat-select>
+                                            <mat-error *ngIf="trenerForm.get('sorc')?.errors?.serverError">
+                                                {{ trenerForm.get("sorc")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-3">
+                                            <mat-select placeholder="Trenerka" formControlName="trenerka" [disabled]="action_delete" [errorStateMatcher]="matcher"></mat-select>
+                                            <mat-error *ngIf="trenerForm.get('trenerka')?.errors?.serverError">
+                                                {{ trenerForm.get("trenerka")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                                        Potvrdi
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
