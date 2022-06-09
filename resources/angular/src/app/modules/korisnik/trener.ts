@@ -5,7 +5,12 @@ export interface Trener {
     ime: string,
     prezime: string,
     email: string,
-    telefon: string
+    telefon: string,
+    majica: string,
+    duks: string,
+    sorc: string,
+    trenerka: string,
+    koordinator: string
 }
 
 export function newTrener(): Trener {
@@ -13,7 +18,12 @@ export function newTrener(): Trener {
         ime: '',
         prezime: '',
         email: '',
-        telefon: ''
+        telefon: '',
+        majica: '',
+        duks: '',
+        sorc: '',
+        trenerka: '',
+        koordinator: ''
     };
 }
 export function trenerFormGroup(fb: FormBuilder, trener: Trener): FormGroup {
@@ -28,5 +38,6 @@ export function trenerFormGroup(fb: FormBuilder, trener: Trener): FormGroup {
         sorc: [''],
         duks: [''],
         trenerka: [''],
+        koordinator: ['']
     })
 }

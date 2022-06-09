@@ -13,7 +13,7 @@ class UpdateTrenerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class UpdateTrenerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'prezime' => 'required',
+            'ime' => 'required',
+            'email' => 'required',
+            'telefon' => 'required',
+            'password' => 'nullable|confirmed',
+            'majica' => 'required',
+            'sorc' => 'required',
+            'duks' => 'required',
+            'trenerka' => 'required',
+            'koordinator' => 'required'
         ];
     }
 }

@@ -13,7 +13,7 @@ class StoreTrenerRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,17 @@ class StoreTrenerRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            // 'name' => 'required',
+            'prezime' => 'required',
+            'ime' => 'required',
+            'email' => 'required',
+            'telefon' => 'required',
+            'password' => 'required|confirmed',
+            'majica' => 'required',
+            'sorc' => 'required',
+            'duks' => 'required',
+            'trenerka' => 'required',
+            'koordinator' => 'required'
         ];
     }
 }

@@ -54,10 +54,10 @@ export class TrenerDatatableComponent implements OnInit {
       ],
       "drawCallback": function () {
         $('.btnEditTrener').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/trener/${$(this).data('id')}/update`)
+          that.router.navigateByUrl(`admin/korisnik/trener/${$(this).data('id')}/izmena`)
         })
-        $('.btnRemoveTrener').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/trener/${$(this).data('id')}/delete`)
+        $('.btnDeleteTrener').on('click', function (event) {
+          that.router.navigateByUrl(`admin/korisnik/trener/${$(this).data('id')}/brisanje`)
         })
       }
     })

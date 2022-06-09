@@ -18,6 +18,8 @@ const routes: Routes = [
   ]},
   { path: 'administrator/unos', pathMatch: 'full', component: AdministratorFormComponent},
   { path: 'trener/unos', pathMatch: 'full', component: TrenerFormComponent},
+  { path: 'trener/:trenerId/izmena', pathMatch: 'full', component: TrenerFormComponent},
+  { path: 'trener/:trenerId/brisanje', pathMatch: 'full', component: TrenerFormComponent},
   { path: 'unos', pathMatch: 'full', component: FormComponent},
   { path: ':korisnikId', component: DetailsComponent},
   { path: ':korisnikId/izmena', component: FormComponent},

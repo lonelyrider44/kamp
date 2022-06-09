@@ -36,6 +36,7 @@ Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('korisnik', \App\Http\Controllers\KorisnikController::class);
     Route::apiResource('uplata', \App\Http\Controllers\UplataController::class);
     Route::apiResource('administrator',\App\Http\Controllers\AdministratorController::class);
+    Route::apiResource('trener',\App\Http\Controllers\TrenerController::class);
     
     
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);

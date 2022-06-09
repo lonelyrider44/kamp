@@ -26,6 +26,8 @@ class CreateTrenersTable extends Migration
             $table->foreignId('sorc')->constrained('velicinas');
             $table->foreignId('duks')->constrained('velicinas');
             $table->foreignId('trenerka')->constrained('velicinas');
+
+            $table->boolean('koordinator')->default(false);
             $table->timestamps();
         });
 

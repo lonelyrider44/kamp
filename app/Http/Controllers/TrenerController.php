@@ -8,10 +8,11 @@ use App\Http\Requests\UpdateTrenerRequest;
 
 class TrenerController extends Controller
 {
-    public function datatable(){
+    public function datatable()
+    {
         return datatables()->of(\App\Models\Trener::all())
-            ->addColumn('action','trener.partials.dt_actions')
-        ->make(true);
+            ->addColumn('action', 'trener.partials.dt_actions')
+            ->make(true);
     }
     /**
      * Display a listing of the resource.
@@ -41,7 +42,9 @@ class TrenerController extends Controller
      */
     public function store(StoreTrenerRequest $request)
     {
-        $trener = \App\Models\Trener::create($request->all());
+        $this->exec_safe(function () use ($request) {
+            $trener = \App\Models\Trener::create($request->all());
+        });
     }
 
     /**
@@ -52,7 +55,7 @@ class TrenerController extends Controller
      */
     public function show(Trener $trener)
     {
-        //
+        return response()->json($trener);
     }
 
     /**
@@ -63,7 +66,7 @@ class TrenerController extends Controller
      */
     public function edit(Trener $trener)
     {
-        //
+        return response()->json($trener);
     }
 
     /**
@@ -75,7 +78,9 @@ class TrenerController extends Controller
      */
     public function update(UpdateTrenerRequest $request, Trener $trener)
     {
-        //
+        $this->exec_safe(function () use ($request, $trener) {
+            $trener->update($request->all());
+        });
     }
 
     /**
@@ -86,6 +91,22 @@ class TrenerController extends Controller
      */
     public function destroy(Trener $trener)
     {
-        //
+        $this->exec_safe(function () use ($trener) {
+            $trener->delete();
+        });
+    }
+
+    public function exec_safe($f)
+    {
+        try {
+            \DB::beginTransaction();
+            $f();
+            \DB::commit();
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }

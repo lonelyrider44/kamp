@@ -25,14 +25,11 @@ export class TrenerService {
   find(id:any): Observable<Trener> {
     return this.httpClient.get<Trener>(`${environment.api_url}/trener/${id}`)
   }
-  aktivni(): Observable<Trener> {
-    return this.httpClient.post<Trener>(`${environment.api_url}/trener/aktivni`,{})
+  store(trener): Observable<Trener> {
+    return this.httpClient.post<Trener>(`${environment.api_url}/trener`, JSON.stringify(trener), this.httpOptions)
   }
-  store(pol): Observable<Trener> {
-    return this.httpClient.post<Trener>(`${environment.api_url}/trener`, JSON.stringify(pol), this.httpOptions)
-  }
-  update(id:any, pol): Observable<Trener> {
-    return this.httpClient.put<Trener>(`${environment.api_url}/trener/${id}`, JSON.stringify(pol), this.httpOptions)
+  update(id:any, trener): Observable<Trener> {
+    return this.httpClient.put<Trener>(`${environment.api_url}/trener/${id}`, JSON.stringify(trener), this.httpOptions)
   }
   delete(id:any){
     return this.httpClient.delete<Trener>(`${environment.api_url}/trener/${id}`, this.httpOptions)
