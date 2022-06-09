@@ -37,7 +37,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v128/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/materialicons/v129/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
 }
 /* cyrillic-ext */
 @font-face {
@@ -53,7 +53,7 @@
   font-style: normal;
   font-weight: 300;
   src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmSU5fABc4AMP6lbBP.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek-ext */
 @font-face {
@@ -109,7 +109,7 @@
   font-style: normal;
   font-weight: 400;
   src: url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek-ext */
 @font-face {
@@ -165,7 +165,7 @@
   font-style: normal;
   font-weight: 700;
   src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfABc4AMP6lbBP.woff2) format('woff2');
-  unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 /* greek-ext */
 @font-face {
@@ -236,7 +236,7 @@
       </svg>
         </div>
     </app-root>
-<script src="/assets/angular/runtime.367774acf0950c63.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.469d63c76c523417.js" defer=""></script><script src="/assets/angular/main.852d844076ba28ab.js" type="module"></script></body>
+<script src="/assets/angular/runtime.045c8c6ec8c36893.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.469d63c76c523417.js" defer=""></script><script src="/assets/angular/main.7ede5cd0e728a28f.js" type="module"></script></body>
 
 
 </html>

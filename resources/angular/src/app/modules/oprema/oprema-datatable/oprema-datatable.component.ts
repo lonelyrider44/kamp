@@ -12,11 +12,13 @@ export class OpremaDatatableComponent implements OnInit {
   @ViewChild('dataTableOprema') table;
   dataTable: any;
   @Input() kamp_id;
+  @Input() smena_id;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private opremaService: OpremaService) { }
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+    // this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -31,6 +33,7 @@ export class OpremaDatatableComponent implements OnInit {
       "ajax": (dataTablesParameters: any, callback) => {
         // dataTablesParameters.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
         dataTablesParameters.kamp_id = this.kamp_id;
+        dataTablesParameters.smena_id = this.smena_id;
 
         this.opremaService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({

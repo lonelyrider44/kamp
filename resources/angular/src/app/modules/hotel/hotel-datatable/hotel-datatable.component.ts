@@ -11,6 +11,7 @@ export class HotelDatatableComponent implements OnInit {
   @ViewChild('dtHotel') table;
   dataTable: any;
   @Input() kamp_id;
+  @Input() smena_id;
 
   constructor(private router: Router, private hotelService: HotelService,private activatedRoute: ActivatedRoute) { }
 
@@ -29,6 +30,7 @@ export class HotelDatatableComponent implements OnInit {
     this.dataTable.DataTable({
       "ajax": (dataTablesParameters: any, callback) => {
         dataTablesParameters.kamp_id = this.kamp_id;
+        dataTablesParameters.smena_id = this.smena_id;
         this.hotelService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,

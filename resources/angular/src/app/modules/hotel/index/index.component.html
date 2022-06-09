@@ -12,12 +12,21 @@
                         <p class="card-category"> </p>
                     </div>
                     <div class="card-body">
-                        <mat-form-field appearance="outline" class="pull-right col-md-3">
-                            <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp">
-                                <mat-option *ngFor="let kamp of kampovi$ | async" [value]="kamp.id">{{kamp.naziv}}</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <app-hotel-datatable [kamp_id]="kamp_id"></app-hotel-datatable>
+                        <div class="row border-bottom mb-2">
+                            <div class="col-12">
+                                <mat-form-field appearance="standard" class="pull-right col-md-3">
+                                    <mat-select #smena [(ngModel)]="smena_id" placeholder="Izaberite smenu">
+                                        <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field appearance="standard" class="pull-right col-md-3">
+                                    <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+                                        <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <app-hotel-datatable [kamp_id]="kamp_id" [smena_id]="smena_id"></app-hotel-datatable>
                     </div>
                 </div>
             </div>
