@@ -18,6 +18,7 @@ export class OpremaDatatableComponent implements OnInit {
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+    this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
     // this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
   }
 

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HotelDatatableComponent } from '../hotel/hotel-datatable/hotel-datatable.component';
 import { OpremaDatatableComponent } from '../oprema/oprema-datatable/oprema-datatable.component';
+import { PrevozDatatableComponent } from '../prevoz/prevoz-datatable/prevoz-datatable.component';
 import { PrijavaDatatableComponent } from '../prijava/prijava-datatable/prijava-datatable.component';
 import { UcesnikDatatableComponent } from '../ucesnik/ucesnik-datatable/ucesnik-datatable.component';
 import { UplataDatatableComponent } from '../uplata/uplata-datatable/uplata-datatable.component';
@@ -16,24 +18,32 @@ const routes: Routes = [
     path: ':smenaId',
     component: SmenaLayoutComponent,
     children: [{
-      path: '', redirectTo: 'prijave', pathMatch: 'full'
+      path: '', redirectTo: 'ucesnici', pathMatch: 'full'
     },
-    {
-      path: 'prijave',
-      component: PrijavaDatatableComponent
-    },
+    // {
+    //   path: 'prijave',
+    //   component: PrijavaDatatableComponent
+    // },
     {
       path: 'ucesnici',
       component: UcesnikDatatableComponent
     },
     {
-      path: 'uplate',
-      component: UplataDatatableComponent
+      path: 'hotel',
+      component: HotelDatatableComponent
+    },
+    {
+      path: 'prevoz',
+      component: PrevozDatatableComponent
     },
     {
       path: 'oprema',
       component: OpremaDatatableComponent
-    }
+    },
+    {
+      path: 'uplate',
+      component: UplataDatatableComponent
+    },
   ],
   },
   { path: ':smenaId/izmena', component: FormComponent },

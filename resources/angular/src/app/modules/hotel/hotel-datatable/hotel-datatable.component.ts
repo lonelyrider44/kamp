@@ -17,6 +17,7 @@ export class HotelDatatableComponent implements OnInit {
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+    this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
   }
 
   ngOnChanges(changes: SimpleChanges){
