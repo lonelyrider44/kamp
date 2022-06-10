@@ -17,6 +17,8 @@ const routes: Routes = [
     { path: 'roditelj', pathMatch: 'full', component: RoditeljDatatableComponent},
   ]},
   { path: 'administrator/unos', pathMatch: 'full', component: AdministratorFormComponent},
+  { path: 'administrator/:adminId/izmena', pathMatch: 'full', component: AdministratorFormComponent},
+  { path: 'administrator/:adminId/brisanje', pathMatch: 'full', component: AdministratorFormComponent},
   { path: 'trener/unos', pathMatch: 'full', component: TrenerFormComponent},
   { path: 'trener/:trenerId/izmena', pathMatch: 'full', component: TrenerFormComponent},
   { path: 'trener/:trenerId/brisanje', pathMatch: 'full', component: TrenerFormComponent},

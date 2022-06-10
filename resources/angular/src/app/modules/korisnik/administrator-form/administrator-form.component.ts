@@ -100,8 +100,8 @@ export class AdministratorFormComponent implements OnInit {
     this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
       return value.path;
     }).includes('brisanje');
-    if (this.activatedRoute.snapshot.params?.kampId) {
-      this.adminService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
+    if (this.activatedRoute.snapshot.params?.adminId) {
+      this.adminService.find(this.activatedRoute.snapshot.params?.adminId).subscribe(res => {
         // console.log(res);
         this.admin = res
       })

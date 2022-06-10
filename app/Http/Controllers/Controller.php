@@ -14,4 +14,22 @@ class Controller extends BaseController
     public function angular(){
         return view('angular');
     }
+
+    public function exec_safe($f, $message = null)
+    {
+        try {
+            \DB::beginTransaction();
+            $f();
+            \DB::commit();
+            return response()->json([
+                'message' => $message ?? "Operacija uspešna"
+            ]);
+        } catch (\Exception $e) {
+            \DB::rollback();
+            return
+             response()->json([
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }

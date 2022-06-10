@@ -54,10 +54,10 @@ export class AdministratorDatatableComponent implements OnInit {
       ],
       "drawCallback": function () {
         $('.btnEditAdministrator').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/administrator/${$(this).data('id')}/update`)
+          that.router.navigateByUrl(`admin/korisnik/administrator/${$(this).data('id')}/izmena`)
         })
-        $('.btnRemoveAdministrator').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/administrator/${$(this).data('id')}/delete`)
+        $('.btnDeleteAdministrator').on('click', function (event) {
+          that.router.navigateByUrl(`admin/korisnik/administrator/${$(this).data('id')}/brisanje`)
         })
       }
     })

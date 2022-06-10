@@ -42,7 +42,9 @@ class AdministratorController extends Controller
             'telefon' => 'required',
             'password' => 'required|confirmed'
         ]);
-        $user = \App\Models\User::create($request->all());
+        $this->exec_safe(function()use($request){
+            $user = \App\Models\User::create($request->all());
+        });
     }
 
     /**
@@ -51,9 +53,9 @@ class AdministratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $administrator)
     {
-        //
+        return response()->json($administrator);
     }
 
     /**
@@ -62,9 +64,9 @@ class AdministratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $administrator)
     {
-        //
+        return response()->json($administrator);
     }
 
     /**
@@ -74,9 +76,11 @@ class AdministratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $administrator)
     {
-        //
+        $this->exec_safe(function()use($request, $administrator){
+            $administrator->update($request->all());
+        });
     }
 
     /**
@@ -85,8 +89,10 @@ class AdministratorController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $administrator)
     {
-        //
+        $this->exec_safe(function()use($administrator){
+            $administrator->delete();
+        });
     }
 }

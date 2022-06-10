@@ -96,17 +96,5 @@ class TrenerController extends Controller
         });
     }
 
-    public function exec_safe($f)
-    {
-        try {
-            \DB::beginTransaction();
-            $f();
-            \DB::commit();
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return response()->json([
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
+    
 }
