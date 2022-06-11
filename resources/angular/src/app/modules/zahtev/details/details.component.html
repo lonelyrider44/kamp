@@ -1,1 +1,62 @@
-<p>details works!</p>
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-danger">
+                                <h4 class="card-title">Zahtev</h4>
+                                <p class="card-category">
+                                    Status zahteva <strong>{{zahtev?.status_zahteva?.naziv }}</strong>
+                                </p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <p>Roditelj: <strong>{{zahtev?.roditelj?.prezime}} {{zahtev?.roditelj?.ime}}</strong></p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Kamp: <strong>{{zahtev?.kamp.naziv}}</strong></p>
+                                    </div>
+                                </div>
+                                <div class="row border-bottom">
+                                    <div class="col-md-4">
+                                        <p>Učesnik <strong>{{zahtev?.ucesnik?.prezime}} {{zahtev?.ucesnik?.ime}}</strong> </p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>Smena <strong>{{zahtev?.smena?.naziv}}</strong> </p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p><strong>Zahtev:</strong></p>
+                                        <p>{{zahtev?.zahtev}}</p>
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <div class="col-md-6">
+                                        <p>Status zahteva <strong>{{zahtev.status_zahteva.naziv }}</strong> </p>
+                                    </div>
+                                </div> -->
+                                <div class="row" *ngIf="!!zahtev?.odgovor">
+                                    <div class="col-md-12">
+                                        <p><strong>Odgovor:</strong></p>
+                                        <p>{{zahtev?.odgovor}}</p>
+                                    </div>
+                                </div>
+                                <div class="row border-bottom">
+                                </div>
+
+                                <a mat-raised-button class="btn btn-danger pull-right" routerLink="odgovor">
+                                      Odgovori
+                                    </a>
+                                <div class="clearfix "></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

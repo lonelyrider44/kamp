@@ -1,0 +1,66 @@
+<!-- <app-zahtev-details></app-zahtev-details> -->
+
+<div class="main-content">
+    <div class="container">
+        <!-- ------------ -->
+        <div class="row">
+            <div class="col-md-12">
+                <form [formGroup]="odgovorForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-danger">
+                                    <h4 class="card-title">Odgovor</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Roditelj: <strong>{{zahtev?.roditelj?.prezime}} {{zahtev?.roditelj?.ime}}</strong></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Kamp: <strong>{{zahtev?.kamp.naziv}}</strong></p>
+                                        </div>
+                                    </div>
+                                    <div class="row border-bottom">
+                                        <div class="col-md-4">
+                                            <p>Učesnik <strong>{{zahtev?.ucesnik?.prezime}} {{zahtev?.ucesnik?.ime}}</strong> </p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p>Smena <strong>{{zahtev?.smena?.naziv}}</strong> </p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <p><strong>Zahtev:</strong></p>
+                                            <p>{{zahtev?.zahtev}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <mat-select placeholder="Status" formControlName="status_id" [ngModel]="zahtev.status_id" [errorStateMatcher]="matcher">
+                                                <mat-option *ngFor="let status of statusi" [value]="status.id">{{status.naziv}}</mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-12">
+                                            <textarea matInput placeholder="Odgovor" formControlName="odgovor" [ngModel]="zahtev.odgovor" [errorStateMatcher]="matcher"></textarea>
+                                            <mat-error *ngIf="odgovorForm.get('odgovor')?.errors?.serverError">
+                                                {{ odgovorForm.get("odgovor")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                              Potvrdi
+                          </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

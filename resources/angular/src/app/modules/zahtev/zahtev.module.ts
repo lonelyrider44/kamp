@@ -8,6 +8,7 @@ import { DetailsComponent } from './details/details.component';
 import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ZahtevDatatableComponent } from './zahtev-datatable/zahtev-datatable.component';
+import { OdgovorFormComponent } from './odgovor-form/odgovor-form.component';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { ZahtevDatatableComponent } from './zahtev-datatable/zahtev-datatable.co
     IndexComponent,
     FormComponent,
     DetailsComponent,
-    ZahtevDatatableComponent
+    ZahtevDatatableComponent,
+    OdgovorFormComponent
   ],
   imports: [
     CommonModule,

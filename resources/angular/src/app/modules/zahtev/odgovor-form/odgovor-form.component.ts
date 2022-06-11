@@ -15,15 +15,15 @@ import { SmenaService } from 'app/modules/smena/smena.service';
 import { Ucesnik } from 'app/modules/ucesnik/ucesnik';
 import { UcesnikService } from 'app/modules/ucesnik/ucesnik.service';
 import { StatusZahteva } from '../status-zahteva';
-import { newZahtev, Zahtev, zahtevFormGroup } from '../zahtev';
+import { newZahtev, odgovorFormGroup, Zahtev, zahtevFormGroup } from '../zahtev';
 import { ZahtevService } from '../zahtev.service';
 
 @Component({
-  selector: 'app-form',
-  templateUrl: './form.component.html',
-  styleUrls: ['./form.component.scss']
+  selector: 'app-odgovor-form',
+  templateUrl: './odgovor-form.component.html',
+  styleUrls: ['./odgovor-form.component.scss']
 })
-export class FormComponent implements OnInit {
+export class OdgovorFormComponent implements OnInit {
   matcher = new MyErrorStateMatcher();
 
   zahtev: Zahtev = newZahtev();
@@ -58,15 +58,15 @@ export class FormComponent implements OnInit {
     private _location: Location,
     private _snackBar: MatSnackBar
   ) {
-    this.zahtevForm = zahtevFormGroup(this.fb, this.zahtev);
+    this.odgovorForm = odgovorFormGroup(this.fb, this.zahtev);
   }
 
   ngOnInit(): void {
     this.loadFromUrl();
     this.zahtevService.statusi().subscribe(res => this.statusi = res)
 
-    this.roditeljService.all().subscribe(res => this.roditelji = res);
-    this.kampService.all().subscribe(res => this.kampovi = res);
+    // this.roditeljService.all().subscribe(res => this.roditelji = res);
+    // this.kampService.all().subscribe(res => this.kampovi = res);
   }
 
   kamp_changed($event){
@@ -93,8 +93,8 @@ export class FormComponent implements OnInit {
   }
   update() {
     if (!this.action_update) return;
-    this.zahtevService.update(this.zahtev.id, this.zahtevForm.value).subscribe({
-        next: res => { this.router.navigateByUrl(this.routerExt.getPreviousUrl()) },
+    this.zahtevService.update_odgovor(this.zahtev.id, this.odgovorForm.value).subscribe({
+        next: res => { this.router.navigateByUrl('/admin/zahtevi') },
         error: (error: HttpErrorResponse) => { this.submitFormFailed(this.zahtevForm, error) }
       })
   }
@@ -141,6 +141,7 @@ export class FormComponent implements OnInit {
     this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index: number, array: UrlSegment[]) => {
       return value.path;
     }).includes('brisanje');
+    this.action_update = true;
     if (this.activatedRoute.snapshot.params?.zahtevId) {
       this.zahtevService.find(this.activatedRoute.snapshot.params?.zahtevId).subscribe(res => {
         // console.log(res);

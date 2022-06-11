@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { Smena } from '../smena/smena';
 import { Kamp, KampStatus } from './kamp';
 
 @Injectable({
@@ -42,5 +43,8 @@ export class KampService {
   }
   delete(id:any){
     return this.httpClient.delete<Kamp>(`${environment.api_url}/kamp/${id}`, this.httpOptions)
+  }
+  smene(id:any){
+    return this.httpClient.get<Smena[]>(`${environment.api_url}/kamp/${id}/smene`);
   }
 }

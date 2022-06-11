@@ -191,4 +191,7 @@ class KampController extends Controller
     public function statusi(){
         return response()->json(\App\Models\KampStatus::all());
     }
+    public function smene(\App\Models\Kamp $kamp){
+        return response()->json($kamp->smene);
+    }
 }

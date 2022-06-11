@@ -1,0 +1,1 @@
+{{$prezime_r}} {{$ime_r}}<br><small>{{$email_r}}, {{$telefon_r}}</small>

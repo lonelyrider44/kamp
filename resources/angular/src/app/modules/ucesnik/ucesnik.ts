@@ -1,3 +1,5 @@
 export interface Ucesnik {
-    id: any
+    id?: any,
+    ime?: string,
+    prezime?: string
 }

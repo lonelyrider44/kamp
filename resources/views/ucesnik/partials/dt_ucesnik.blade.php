@@ -1,6 +1,6 @@
 {{$prezime}} {{$ime}} <br>
 
-@if(!empty($email) || !empty($telefon))
 <small>
-    @if(!empty($email)){{$email}}@endif @if(!empty($telefon)) @if(!empty($email)),@endif {{$telefon}}@endif </small>
-@endif
+    {{ collect([$email, $telefon])->filter(function($item){return !empty($item);})->implode(',') }}
+    {{-- @if(!empty($email)){{$email}}@endif @if(!empty($telefon)) @if(!empty($email)),@endif {{$telefon}}@endif  --}}
+</small>

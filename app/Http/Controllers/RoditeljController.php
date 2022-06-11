@@ -14,6 +14,7 @@ class RoditeljController extends Controller
             \DB::raw('COUNT(ucesniks.id) as broj_ucesnika')
             )->leftJoin('ucesniks','ucesniks.roditelj_id','roditeljs.id')
             ->groupBy('roditeljs.id'))
+            ->addColumn('action','roditelj.partials.dt_actions')
             ->make(true);
     }
     /**
@@ -23,7 +24,7 @@ class RoditeljController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(\App\Models\Roditelj::all());
     }
 
     /**
@@ -90,5 +91,8 @@ class RoditeljController extends Controller
     public function destroy(Roditelj $roditelj)
     {
         //
+    }
+    public function ucesnici(Roditelj $roditelj){
+        return response()->json($roditelj->ucesnici);
     }
 }

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { Ucesnik } from '../ucesnik/ucesnik';
 import { Roditelj } from './roditelj';
 
 @Injectable({
@@ -39,5 +40,8 @@ export class RoditeljService {
   }
   delete(id:any){
     return this.httpClient.delete<Roditelj>(`${environment.api_url}/roditelj/${id}`, this.httpOptions)
+  }
+  ucesnici(id:any){
+    return this.httpClient.get<Ucesnik[]>(`${environment.api_url}/roditelj/${id}/ucesnici`);
   }
 }

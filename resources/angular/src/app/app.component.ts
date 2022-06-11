@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from './modules/auth/auth.service';
+import { RouterExtService } from './modules/shared/router-ext.service';
 
 
 @Component({
@@ -9,7 +10,10 @@ import { AuthService } from './modules/auth/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private ngxService: NgxSpinnerService, private authService: AuthService){
+  constructor(private ngxService: NgxSpinnerService, 
+    private authService: AuthService,
+    private routerExtService: RouterExtService
+    ){
   }
 
   ngOnInit(){

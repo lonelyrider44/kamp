@@ -30,6 +30,7 @@ Route::post('/mesto/autocomplete', [App\Http\Controllers\MestoController::class,
 // Route::middleware(['assign.guard:roditelj','jwt.auth'])->group(function () {
 Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
+    Route::get('kamp/{kamp}/smene',[\App\Http\Controllers\KampController::class,'smene']);
     Route::apiResource('prijava', \App\Http\Controllers\PrijavaController::class)->except(['store']);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);
@@ -37,6 +38,11 @@ Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('uplata', \App\Http\Controllers\UplataController::class);
     Route::apiResource('administrator',\App\Http\Controllers\AdministratorController::class);
     Route::apiResource('trener',\App\Http\Controllers\TrenerController::class);
+    Route::apiResource('roditelj',\App\Http\Controllers\RoditeljController::class);
+    Route::get('roditelj/{roditelj}/ucesnici',[\App\Http\Controllers\RoditeljController::class,'ucesnici']);
+    Route::apiResource('zahtev',\App\Http\Controllers\ZahtevController::class);
+    Route::post('zahtev/statusi',[\App\Http\Controllers\ZahtevController::class,'statusi']);
+    Route::put('zahtev/{zahtev}/odgovor',[\App\Http\Controllers\ZahtevController::class,'odgovor']);
     
     
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);

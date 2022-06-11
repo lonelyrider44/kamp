@@ -23,23 +23,10 @@ class UcesnikController extends Controller
             'ucesniks.prezime_roditelja',
             'ucesniks.email_roditelja',
             'ucesniks.telefon_roditelja',
-            \DB::raw('COUNT(ucesnik_kampas.id) as broj_kampova')
+            \DB::raw('COUNT(prijavas.kamp_id) as broj_kampova')
         )
-            ->leftJoin('ucesnik_kampas', 'ucesnik_kampas.ucesnik_id', 'ucesniks.id')
-            ->groupBy(
-                'ucesniks.id',
-                'ucesniks.ime',
-                'ucesniks.prezime',
-                'ucesniks.email',
-                'ucesniks.telefon',
-                'ucesniks.adresa',
-                'ucesniks.grad',
-                'ucesniks.drzava',
-                'ucesniks.ime_roditelja',
-                'ucesniks.prezime_roditelja',
-                'ucesniks.email_roditelja',
-                'ucesniks.telefon_roditelja',
-            )
+            ->leftJoin('prijavas', 'prijavas.ucesnik_id', 'ucesniks.id')
+            ->groupBy('ucesniks.id')
             ->toBase()->get())
             ->addColumn('action', 'ucesnik.partials.dt_actions')
             ->addColumn('ucesnik', 'ucesnik.partials.dt_ucesnik')

@@ -44,4 +44,8 @@ class Roditelj extends Authenticatable implements JWTSubject
     {
         return ['role' => 'roditelj','user_type' => 'roditelj'];
     }
+
+    public function ucesnici(){
+        return $this->hasMany(\App\Models\Ucesnik::class);
+    }
 }
