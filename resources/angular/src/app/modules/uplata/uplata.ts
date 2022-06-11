@@ -1,9 +1,20 @@
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { Kamp } from "../kamp/kamp";
+import { Smena } from "../smena/smena";
+import { Ucesnik } from "../ucesnik/ucesnik";
 
 export interface Uplata {
     id?: number,
     iznos_rsd: string,
-    iznos_eur: string
+    iznos_eur: string,
+    datum_uplate?: string,
+    kamp_id?: number,
+    smena_id?: number,
+    ucesnik_id?:number
+
+    kamp?: Kamp,
+    smena?: Smena,
+    ucesnik?: Ucesnik
     // ime: string,
     // prezime: string,
     // email: string,
@@ -25,7 +36,8 @@ export function uplataFormGroup(fb: FormBuilder, uplata: Uplata): FormGroup {
         iznos_rsd: [''],
         iznos_eur: [''],
         ucesnik_id: [''],
-        prijava_id: [''],
+        kamp_id: [''],
         smena_id: [''],
+        datum_uplate: ['']
     })
 }

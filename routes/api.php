@@ -31,6 +31,8 @@ Route::post('/mesto/autocomplete', [App\Http\Controllers\MestoController::class,
 Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('kamp', \App\Http\Controllers\KampController::class);
     Route::get('kamp/{kamp}/smene',[\App\Http\Controllers\KampController::class,'smene']);
+    Route::get('kamp/{kamp}/ucesnici',[\App\Http\Controllers\KampController::class,'ucesnici']);
+    Route::get('smena/{smena}/ucesnici',[\App\Http\Controllers\SmenaController::class,'ucesnici']);
     Route::apiResource('prijava', \App\Http\Controllers\PrijavaController::class)->except(['store']);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);

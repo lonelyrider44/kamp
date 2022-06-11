@@ -52,12 +52,10 @@ export class UplataDatatableComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
-        { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
-        // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
-        { title: 'Period', data: 'period', name: 'period' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
+        { title: 'Smena', data: 'smena', name: 'smenas.naziv' },
+        { title: 'Učesnik', data: 'ucesnik', name: 'ucesniks.prezime' },
+        { title: 'Datum uplate', data: 'datum_uplate', name: 'datum_uplate' },
+        { title: 'Iznos', data: 'iznos', name: 'iznos_rsd' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
       ],
       initComplete: function (settings, json) {
@@ -65,10 +63,10 @@ export class UplataDatatableComponent implements OnInit {
       },
       "drawCallback": function () {
         $('.btnEditUplata').on('click', function (event) {
-          that.router.navigateByUrl(`/uplata/izmena/${$(this).data('id')}`)
+          that.router.navigateByUrl(`admin/uplata/${$(this).data('id')}/izmena`)
         })
-        $('.btnRemoveUplata').on('click', function (event) {
-          that.router.navigateByUrl(`/uplata/brisanje/${$(this).data('id')}`)
+        $('.btnDeleteUplata').on('click', function (event) {
+          that.router.navigateByUrl(`admin/uplata/${$(this).data('id')}/brisanje`)
         })
       }
     })

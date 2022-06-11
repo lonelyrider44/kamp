@@ -67,7 +67,7 @@ class ImportUcesnici extends Migration
                     'depozit' => $ucesnik->depozit,
                     'pol_id' => ($ucesnik->pol == 'Muški') ? 1 : 2,
                     'adresa' => $ucesnik->adresa,
-                    'mesto' => $ucesnik->grad,
+                    'grad' => $ucesnik->grad,
                     'drzava' => $ucesnik->drzava,
                     'visina' => $ucesnik->visina,
                     'tezina' => $ucesnik->tezina,

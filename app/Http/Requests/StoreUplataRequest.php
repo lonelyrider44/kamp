@@ -13,7 +13,7 @@ class StoreUplataRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class StoreUplataRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'kamp_id' => 'required',
+            'smena_id' => 'nullable',
+            'ucesnik_id' => 'required',
+            'datum_uplate' => 'required',
+            'iznos_rsd' => 'required_without:iznos_eur',
+            'iznos_eur' => 'required_without:iznos_rsd',
         ];
     }
 }

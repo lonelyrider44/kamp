@@ -14,12 +14,13 @@ class Ucesnik extends Model implements JWTSubject
             'prezime',
             'ime',
             'datum_rodjenja',
-            'jmbg',
+            'jmbg_pasos',
             'pasos',
             'email',
             'telefon',
             'adresa',
             'grad',
+            'mesto',
             'drzava',
             'pol_id',
             'mesto_id',
@@ -68,5 +69,27 @@ class Ucesnik extends Model implements JWTSubject
         ]);
 
         $this->update(['roditelj_id' => $roditelj->id ]);
+    }
+    public function setMestoAttribute($value){
+        $this->attributes['grad']=$value;
+    }
+
+    public function scopeZaKamp($query, $kamp){
+        return $query->whereIn('id', function($query)use($kamp){
+            $query->select('prijavas.ucesnik_id')
+                ->from('prijavas')
+                ->where('prijavas.kamp_id',$kamp->id);
+        });
+    }
+    public function scopeZaSmenu($query, $smena){
+        return $query->whereIn('id', function($query)use($smena){
+            $query->select('prijavas.ucesnik_id')
+                ->from('prijavas')
+                ->whereIn('prijavas.id',function($query)use($smena){
+                    $query->select('prijava_smenas.prijava_id')
+                        ->from('prijava_smenas')
+                        ->where('prijava_smenas.smena_id', $smena->id);
+                });
+        });
     }
 }

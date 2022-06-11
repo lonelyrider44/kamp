@@ -30,6 +30,7 @@ class Prijava extends Model
         'jmbg_pasos',
 
         'adresa',
+        'grad',
         'mesto',
         'drzava',
 
@@ -97,49 +98,7 @@ class Prijava extends Model
     {
         return $this->belongsTo(\App\Models\Kamp::class, 'kamp_id');
     }
-
-    public function updateOrCreateUcesnik()
-    {
-        $roditelj = \App\Models\Roditelj::updateOrCreate(
-            ['email' => $this->email_roditelja],
-            [
-                'email' => $this->email_roditelja,
-                'telefon' => $this->telefon_roditelja,
-                'ime' => $this->ime_roditelja,
-                'prezime' => $this->prezime_roditelja
-            ]
-        );
-        $ucesnik = \App\Models\Ucesnik::updateOrCreate(
-            ['email' => $this->email],
-            [
-                'prezime' => $this->prezime,
-                'ime' => $this->ime,
-                'datum_rodjenja' => $this->datum_rodjenja,
-                'jmbg_pasos' => $this->jmbg_pasos,
-                // 'pasos' => $this->jmbg_pasos,
-                'email' => $this->email,
-                'telefon' => $this->telefon,
-                'adresa' => $this->adresa,
-                'grad' => $this->grad,
-                'drzava' => $this->drzava,
-                'pol_id' => $this->pol_id,
-                'mesto_id' => $this->mesto_id,
-                'prezime_roditelja' => $this->prezime_roditelja,
-                'ime_roditelja' => $this->ime_roditelja,
-                'telefon_roditelja' => $this->telefon_roditelja,
-                'email_roditelja' => $this->email_roditelja,
-            ]
-        );
-        // $ucesnik->updateOrCreateRoditelj();
-
-        $this->update([
-            'ucesnik_id' => $ucesnik->id,
-            'roditelj_id' => $roditelj->id
-        ]);
-        if (!empty($ucesnik)) {
-            $ucesnik->update([
-                'roditelj_id' => $roditelj->id
-            ]);
-        }
+    public function setGradAttribute($value){
+        $this->attributes['mesto'] = $value;
     }
 }

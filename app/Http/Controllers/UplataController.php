@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Uplata;
 use App\Http\Requests\StoreUplataRequest;
 use App\Http\Requests\UpdateUplataRequest;
 
@@ -14,12 +13,17 @@ class UplataController extends Controller
             \App\Models\Uplata::select(
                 'uplatas.*',
                 'kamps.naziv as kamp',
+                'smenas.naziv as smena',
                 \DB::raw('CONCAT(ucesniks.prezime," ", ucesniks.ime) as ucesnik')
-            )->join('kamps', 'kamps.id', 'uplatas.kamp_id')
-                ->join('ucesnik_kampas', 'ucesnik_kampas.id', 'uplatas.ucesnik_kampa_id')
-                ->join('ucesniks', 'ucesniks.id', 'ucesnik_kampas.ucesnik_id')->toBase()
+            )
+                ->leftJoin('kamps', 'kamps.id', 'uplatas.kamp_id')
+                ->leftJoin('smenas', 'smenas.id', 'uplatas.smena_id')
+                ->leftJoin('ucesniks', 'ucesniks.id', 'uplatas.ucesnik_id')
+                ->toBase()
         )
+            ->addColumn('iznos', 'uplata.partials.dt_iznos')
             ->addColumn('action', 'uplata.partials.dt_actions')
+            ->rawColumns(['iznos','action'])
             ->make(true);
     }
     /**
@@ -50,7 +54,9 @@ class UplataController extends Controller
      */
     public function store(StoreUplataRequest $request)
     {
-        //
+        return $this->exec_safe(function()use($request){
+            \App\Models\Uplata::create($request->all());
+        });
     }
 
     /**
@@ -59,9 +65,10 @@ class UplataController extends Controller
      * @param  \App\Models\Uplata  $uplata
      * @return \Illuminate\Http\Response
      */
-    public function show(Uplata $uplata)
+    public function show($uplata)
     {
-        //
+        $uplata = \App\Models\Uplata::find($uplata);
+        return response()->json($uplata->toArray());
     }
 
     /**
@@ -70,9 +77,9 @@ class UplataController extends Controller
      * @param  \App\Models\Uplata  $uplata
      * @return \Illuminate\Http\Response
      */
-    public function edit(Uplata $uplata)
+    public function edit(\App\Models\Uplata $uplata)
     {
-        //
+        return response()->json($uplata);
     }
 
     /**
@@ -82,9 +89,12 @@ class UplataController extends Controller
      * @param  \App\Models\Uplata  $uplata
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUplataRequest $request, Uplata $uplata)
+    public function update(UpdateUplataRequest $request, $uplata)
     {
-        //
+        $uplata = \App\Models\Uplata::find($uplata);
+        return $this->exec_safe(function()use($request,$uplata){
+            $uplata->update($request->all());
+        });
     }
 
     /**
@@ -93,8 +103,11 @@ class UplataController extends Controller
      * @param  \App\Models\Uplata  $uplata
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Uplata $uplata)
+    public function destroy($uplata)
     {
-        //
+        $uplata = \App\Models\Uplata::find($uplata);
+        return $this->exec_safe(function()use($uplata){
+            $uplata->delete();
+        });
     }
 }

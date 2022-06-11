@@ -194,4 +194,8 @@ class KampController extends Controller
     public function smene(\App\Models\Kamp $kamp){
         return response()->json($kamp->smene);
     }
+
+    public function ucesnici(\App\Models\Kamp $kamp){
+        return response()->json(\App\Models\Ucesnik::zaKamp($kamp)->get());
+    }
 }

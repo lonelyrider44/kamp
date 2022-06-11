@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { Smena } from '../smena/smena';
+import { Ucesnik } from '../ucesnik/ucesnik';
 import { Kamp, KampStatus } from './kamp';
 
 @Injectable({
@@ -46,5 +47,8 @@ export class KampService {
   }
   smene(id:any){
     return this.httpClient.get<Smena[]>(`${environment.api_url}/kamp/${id}/smene`);
+  }
+  ucesnici(id:any){
+    return this.httpClient.get<Ucesnik[]>(`${environment.api_url}/kamp/${id}/ucesnici`);
   }
 }

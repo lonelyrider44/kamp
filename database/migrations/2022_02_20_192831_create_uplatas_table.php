@@ -16,9 +16,12 @@ class CreateUplatasTable extends Migration
         Schema::create('uplatas', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kamp_id')->constrained('kamps');
-            $table->foreignId('ucesnik_kampa_id')->constrained('ucesnik_kampas');
-            $table->date('datum');
-            $table->decimal('iznos',11,2);
+            $table->foreignId('smena_id')->nullable()->constrained('smenas');
+            // $table->foreignId('roditelj_id')->constrained('roditeljs');
+            $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
+            $table->date('datum_uplate');
+            $table->decimal('iznos_rsd',11,2)->nullable();
+            $table->decimal('iznos_eur',11,2)->nullable();
             $table->timestamps();
         });
     }

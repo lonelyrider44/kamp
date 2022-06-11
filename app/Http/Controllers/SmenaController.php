@@ -119,4 +119,7 @@ class SmenaController extends Controller
     {
         //
     }
+    public function ucesnici(\App\Models\Smena $smena){
+        return response()->json(\App\Models\Ucesnik::zaSmenu($smena)->get());
+    }
 }

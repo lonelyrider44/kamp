@@ -28,7 +28,7 @@ export class UplataService {
     return this.httpClient.post<Uplata>(`${environment.api_url}/uplata`, JSON.stringify(uplata), this.httpOptions)
   }
   update(id:any, uplata): Observable<Uplata> {
-    return this.httpClient.put<Uplata>(`${environment.api_url}/uplata/id`, JSON.stringify(uplata), this.httpOptions)
+    return this.httpClient.put<Uplata>(`${environment.api_url}/uplata/${id}`, JSON.stringify(uplata), this.httpOptions)
   }
   delete(id:any){
     return this.httpClient.delete<Uplata>(`${environment.api_url}/uplata/${id}`, this.httpOptions)

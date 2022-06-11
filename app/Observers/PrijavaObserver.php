@@ -28,7 +28,8 @@ class PrijavaObserver
                 $prijava->toArray() + ['roditelj_id' => $roditelj->id]
             );
         }else{
-            $ucesnik = \App\Models\Ucesnik::create(
+            $ucesnik = \App\Models\Ucesnik::updateOrCreate(
+                ['jmbg_pasos' => $prijava->jmbg_pasos],
                 $prijava->toArray() + ['roditelj_id' => $roditelj->id]
             );
         }

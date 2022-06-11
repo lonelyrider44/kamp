@@ -22,16 +22,50 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <mat-form-field class="example-full-width col-md-6">
+                                            <mat-select placeholder="Kamp" formControlName="kamp_id" [ngModel]="uplata.kamp_id" (selectionChange)="kamp_changed($event)" [errorStateMatcher]="matcher">
+                                                <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="uplataForm.get('kamp_id')?.errors?.serverError">
+                                                {{ uplataForm.get("kamp_id")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <mat-select placeholder="Smena" formControlName="smena_id" [ngModel]="uplata.smena_id" (selectionChange)="smena_changed($event)" [errorStateMatcher]="matcher">
+                                                <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="uplataForm.get('smena_id')?.errors?.serverError">
+                                                {{ uplataForm.get("smena_id")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-12">
+                                            <mat-select placeholder="Učesnik" formControlName="ucesnik_id" [ngModel]="uplata.ucesnik_id" [errorStateMatcher]="matcher">
+                                                <mat-option *ngFor="let ucesnik of ucesnici" [value]="ucesnik.id">{{ucesnik.prezime}} {{ucesnik.ime}} ({{ucesnik.jmbg_pasos}})</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="uplataForm.get('ucesnik_id')?.errors?.serverError">
+                                                {{ uplataForm.get("ucesnik_id")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
                                             <input matInput placeholder="Iznos RSD" formControlName="iznos_rsd" [ngModel]="uplata.iznos_rsd" [readonly]="action_delete" [errorStateMatcher]="matcher" />
                                             <mat-error *ngIf="uplataForm.get('iznos_rsd')?.errors?.serverError">
                                                 {{ uplataForm.get("iznos_rsd")?.errors?.serverError }}
                                             </mat-error>
                                         </mat-form-field>
                                         <mat-form-field class="example-full-width col-md-6">
-                                            <input matInput placeholder="Iznos RSD" formControlName="iznos_eur" [ngModel]="uplata.iznos_rsd" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <input matInput placeholder="Iznos EUR" formControlName="iznos_eur" [ngModel]="uplata.iznos_eur" [readonly]="action_delete" [errorStateMatcher]="matcher" />
                                             <mat-error *ngIf="uplataForm.get('iznos_rsd')?.errors?.serverError">
                                                 {{ uplataForm.get("iznos_rsd")?.errors?.serverError }}
                                             </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6" appCustomDateFormat1>
+                                            <mat-label>Datum uplate</mat-label>
+                                            <input matInput [matDatepicker]="datum_picker" formControlName="datum_uplate" [ngModel]="uplata.datum_uplate" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-datepicker-toggle matSuffix [for]="datum_picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #datum_picker></mat-datepicker>
                                         </mat-form-field>
                                     </div>
 

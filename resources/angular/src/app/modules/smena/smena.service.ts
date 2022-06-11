@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { Ucesnik } from '../ucesnik/ucesnik';
 import { Smena } from './smena';
 
 @Injectable({
@@ -32,5 +33,8 @@ export class SmenaService {
   }
   delete(id:any){
     return this.httpClient.delete<Smena>(`${environment.api_url}/smena/${id}`, this.httpOptions)
+  }
+  ucesnici(id:any){
+    return this.httpClient.get<Ucesnik[]>(`${environment.api_url}/smena/${id}/ucesnici`);
   }
 }
