@@ -50,7 +50,7 @@ class Prijava extends Model
         'napomena_zdravstveni_problemi',
         'napomena_alergije',
 
-        'prevoz',
+        // 'prevoz',
         'tip_prevoza_id',
 
         'saglasnost_politika_privatnosti',
@@ -59,31 +59,43 @@ class Prijava extends Model
         'saglasnost_donatorski_ugovor',
         'saglasnost_pravila_kampa',
 
-        'depozit_rsd',
-        'depozit_eur',
+        'donosi_depozit_u_kamp',
+        'opstina',
+        'gratis',
 
         'depozit_rsd',
-        'smene_rsd',
-        'dodatni_paketi_rsd',
-        'gratis_rsd',
-        'opstina_rsd',
+        'depozit_eur',
+        
+        // 'depozit_rsd',
+        // 'smene_rsd',
+        // 'dodatni_paketi_rsd',
+        // 'opstina_rsd',
+        // 'ukupno_rsd',
+
+        // 'depozit_eur',
+        // 'smene_eur',
+        // 'dodatni_paketi_eur',
+        // 'opstina_eur',
+        // 'ukupno_eur',
+
+        'ukupno_smene_rsd',
+        'ukupno_smene_eur',
+        'ukupno_dodatni_paketi_rsd',
+        'ukupno_dodatni_paketi_eur',
         'ukupno_rsd',
-
-        'depozit_eur',
-        'smene_eur',
-        'dodatni_paketi_eur',
-        'gratis_eur',
-        'opstina_eur',
-        'ukupno_eur',
+        'ukupno_eur'
     ];
 
     // protected $casts = [
     //     'datum_rodjenja' => 'date'
 
     // ];
-    protected $dates = [
-        'datum_rodjenja'
-    ];
+    // protected $dates = [
+    //     'datum_rodjenja'
+    // ];
+    // protected $casts = [
+    //     'datum_rodjenja' => 'date:d.m.Y.'
+    // ];
     protected $with = ['kamp', 'smene', 'dodatni_paketi'];
 
     public function smene()
@@ -98,7 +110,27 @@ class Prijava extends Model
     {
         return $this->belongsTo(\App\Models\Kamp::class, 'kamp_id');
     }
-    public function setGradAttribute($value){
+    public function setGradAttribute($value)
+    {
         $this->attributes['mesto'] = $value;
+    }
+    public function updateCena()
+    {
+        $ukupno_smene_rsd = $this->kamp->cena_smene_rsd * $this->smene->count();
+        $ukupno_smene_eur = $this->kamp->cena_smene_eur * $this->smene->count();
+        $ukupno_dodatni_paketi_rsd = 0;
+        $ukupno_dodatni_paketi_eur = 0;
+        $this->dodatni_paketi->each(function ($dp) use (&$ukupno_dodatni_paketi_rsd, &$ukupno_dodatni_paketi_eur) {
+            $ukupno_dodatni_paketi_eur += $dp->iznos_eur;
+            $ukupno_dodatni_paketi_rsd += $dp->iznos_rsd;
+        });
+        $this->update([
+            'ukupno_smene_rsd' => $ukupno_smene_rsd,
+            'ukupno_smene_eur' => $ukupno_smene_eur,
+            'ukupno_dodatni_paketi_rsd' => $ukupno_dodatni_paketi_rsd,
+            'ukupno_dodatni_paketi_eur' => $ukupno_dodatni_paketi_eur,
+            'ukupno_rsd' => $ukupno_smene_rsd + $ukupno_dodatni_paketi_rsd,
+            'ukupno_eur' => $ukupno_smene_eur + $ukupno_dodatni_paketi_eur,
+        ]);
     }
 }

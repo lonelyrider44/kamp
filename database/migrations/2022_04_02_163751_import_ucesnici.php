@@ -15,7 +15,6 @@ class ImportUcesnici extends Migration
     {
         if (Schema::hasTable('ucesnici')) {
             \DB::beginTransaction();
-            \DB::table('ucesnik_kampas')->delete();
             \DB::table('smenas')->delete();
             \DB::table('kamps')->delete();
             $kamp = \App\Models\Kamp::create([
@@ -27,6 +26,8 @@ class ImportUcesnici extends Migration
                 // 'cena_smene' => 500,
                 'cena_smene_rsd' => 50000,
                 'cena_smene_eur' => 500,
+                'depozit_rsd' => 6000,
+                'depozit_eur' => 50,
                 'broj_prijava' => 500,
                 'status_id' => 1
             ]);
@@ -40,6 +41,13 @@ class ImportUcesnici extends Migration
                 'naziv' => 'Smena II',
                 'datum_od' => '2022-01-08',
                 'datum_do' => '2022-01-14',
+                'kamp_id' => $kamp->id
+            ]);
+            $prvi_dp = \App\Models\DodatniPaket::create([
+                'naziv' => 'Dodatni paket 1',
+                'opis' => 'Opis dodatnog paketa 1',
+                'iznos_rsd' => '2400',
+                'iznos_eur' => '20',
                 'kamp_id' => $kamp->id
             ]);
             $kamp->organizovani_prevoz()->save(new \App\Models\OrganizovaniPrevoz(['naziv' => 'Oba pravca', 'cena_rsd'=>'1300', 'cena_eur'=>10]));
@@ -103,7 +111,8 @@ class ImportUcesnici extends Migration
                 ];
             })->each(function ($ucesnik, $key) {
                 $prijava = \App\Models\Prijava::create($ucesnik);
-                $prijava->smene()->sync([$ucesnik['smena_id']]);
+                $prijava->smene()->sync([$ucesnik['smena_id'] => ['status_id' => 1]]);
+                $prijava->updateCena();
             });
 
             \DB::commit();

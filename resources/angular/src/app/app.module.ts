@@ -28,6 +28,8 @@ import { CustomDateFormat1Directive } from './directives/custom-date-format1.dir
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.component';
 import { UcesnikLayoutComponent } from './layouts/ucesnik-layout/ucesnik-layout.component';
+import { ZahtevModule } from './modules/zahtev/zahtev.module';
+import { UcesnikModule } from './modules/ucesnik/ucesnik.module';
 
 
 @NgModule({
@@ -44,7 +46,8 @@ import { UcesnikLayoutComponent } from './layouts/ucesnik-layout/ucesnik-layout.
       apiKey: 'YOUR_GOOGLE_MAPS_API_KEY'
     }),
     LoadingBarModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    
   ],
   declarations: [
     AppComponent,

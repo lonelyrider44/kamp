@@ -48,7 +48,7 @@ class CreatePrijavasTable extends Migration
             $table->foreignId('majica')->constrained('velicinas');
             $table->foreignId('sorc')->constrained('velicinas');
             $table->foreignId('duks')->constrained('velicinas');
-            $table->foreignId('trenerka')->constrained('velicinas');
+            $table->foreignId('trenerka')->nullable()->constrained('velicinas');
 
             $table->text('napomena_alergije')->nullable();
             $table->text('napomena_zdravstveni_problemi')->nullable();
@@ -67,21 +67,21 @@ class CreatePrijavasTable extends Migration
             $table->boolean('saglasnost_ucesce_na_kampu')->default(false);
             $table->boolean('saglasnost_donatorski_ugovor')->default(false);
             $table->boolean('saglasnost_pravila_kampa')->default(false);
+            
+            $table->boolean('gratis')->default(false);
+            $table->boolean('opstina')->default(false);
+            $table->unsignedInteger('status_depozita')->default(1);
+            $table->boolean('donosi_depozit_u_kamp')->default(false);
 
             $table->decimal('depozit_rsd', 11, 2)->nullable();
-            $table->decimal('smene_rsd', 11, 2)->nullable();
-            $table->decimal('dodatni_paketi_rsd', 11, 2)->nullable();
-            $table->decimal('gratis_rsd', 11, 2)->nullable();
-            $table->decimal('opstina_rsd', 11, 2)->nullable();
+            $table->decimal('ukupno_smene_rsd', 11, 2)->nullable();
+            $table->decimal('ukupno_dodatni_paketi_rsd', 11, 2)->nullable();
             $table->decimal('ukupno_rsd', 11, 2)->nullable();
 
             $table->decimal('depozit_eur', 11, 2)->nullable();
-            $table->decimal('smene_eur', 11, 2)->nullable();
-            $table->decimal('dodatni_paketi_eur', 11, 2)->nullable();
-            $table->decimal('gratis_eur', 11, 2)->nullable();
-            $table->decimal('opstina_eur', 11, 2)->nullable();
-            $table->decimal('ukupno_eur', 11, 2)->nullable()
-            ;
+            $table->decimal('ukupno_smene_eur', 11, 2)->nullable();
+            $table->decimal('ukupno_dodatni_paketi_eur', 11, 2)->nullable();
+            $table->decimal('ukupno_eur', 11, 2)->nullable();
 
             $table->timestamps();
         });

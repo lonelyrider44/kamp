@@ -7,7 +7,7 @@ use App\Http\Requests\UpdateUplataRequest;
 
 class UplataController extends Controller
 {
-    public function datatable()
+    public function datatable(\Illuminate\Http\Request $request)
     {
         return datatables()->of(
             \App\Models\Uplata::select(
@@ -19,6 +19,12 @@ class UplataController extends Controller
                 ->leftJoin('kamps', 'kamps.id', 'uplatas.kamp_id')
                 ->leftJoin('smenas', 'smenas.id', 'uplatas.smena_id')
                 ->leftJoin('ucesniks', 'ucesniks.id', 'uplatas.ucesnik_id')
+                ->when(!empty($request->kamp_id), function($query)use($request){
+                    return $query->where('uplatas.kamp_id',$request->kamp_id);
+                })
+                ->when(!empty($request->smena_id), function ($query) use ($request) {
+                    return $query->where('uplatas.smena_id', $request->smena_id);
+                })
                 ->toBase()
         )
             ->addColumn('iznos', 'uplata.partials.dt_iznos')
@@ -110,4 +116,5 @@ class UplataController extends Controller
             $uplata->delete();
         });
     }
+
 }

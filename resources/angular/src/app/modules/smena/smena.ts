@@ -1,4 +1,5 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Kamp } from "../kamp/kamp";
 
 export interface Smena {
     id: any
@@ -8,6 +9,8 @@ export interface Smena {
     datum_do: any,
     broj_prijava: any,
     cena: any,
+
+    kamp?: Kamp
 }
 
 export function newSmena(): Smena{

@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from 
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { KampService } from 'app/modules/kamp/kamp.service';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { newSmena, Smena, smenaFormGroup } from '../smena';
 import { SmenaService } from '../smena.service';
 
@@ -108,11 +109,5 @@ export class FormComponent implements OnInit {
     
     // console.log(this.activatedRoute.snapshot.params?.kampId);
     // this.isReadOnly = this.action == "delete";
-  }
-}
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
   }
 }

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DetailsLayoutComponent } from './details-layout.component';
+import { UcesnikLayoutComponent } from './ucesnik-layout.component';
 
-describe('DetailsLayoutComponent', () => {
-  let component: DetailsLayoutComponent;
-  let fixture: ComponentFixture<DetailsLayoutComponent>;
+describe('UcesnikLayoutComponent', () => {
+  let component: UcesnikLayoutComponent;
+  let fixture: ComponentFixture<UcesnikLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DetailsLayoutComponent ]
+      declarations: [ UcesnikLayoutComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DetailsLayoutComponent);
+    fixture = TestBed.createComponent(UcesnikLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

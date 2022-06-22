@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+
+.dt-center {
+    text-align: center;
+}
+
+th.dt-center {
+    text-align: left!important;
+}
+
+th.dt-right {
+    text-align: left!important;
+}

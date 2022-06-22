@@ -9,6 +9,7 @@ import { MaterialModule } from '../material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UcesnikDtComponent } from './ucesnik-dt/ucesnik-dt.component';
 import { UcesnikDatatableComponent } from './ucesnik-datatable/ucesnik-datatable.component';
+import { UcesnikLayoutComponent } from './ucesnik-layout/ucesnik-layout.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { UcesnikDatatableComponent } from './ucesnik-datatable/ucesnik-datatable
     FormComponent,
     DetailsComponent,
     UcesnikDtComponent,
-    UcesnikDatatableComponent
+    UcesnikDatatableComponent,
+    UcesnikLayoutComponent
   ],
   imports: [
     CommonModule,

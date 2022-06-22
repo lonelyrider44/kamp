@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { UcesnikService } from '../ucesnik.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-ucesnik-dt',
@@ -11,10 +11,20 @@ export class UcesnikDtComponent implements OnInit {
 
   @ViewChild('dataTableUcesnik') table;
   dataTable: any;
+  @Input() kamp_id;
+  @Input() smena_id;
 
-  constructor(private router: Router, private ucesnikService: UcesnikService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private ucesnikService: UcesnikService) { }
 
   ngOnInit(): void {
+    this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+    this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
+  }
+
+  ngOnChanges(changes: SimpleChanges){
+    if(this.dataTable){
+      this.dataTable.DataTable().ajax.reload();
+    }
   }
 
   ngAfterViewInit() {
@@ -22,6 +32,8 @@ export class UcesnikDtComponent implements OnInit {
     this.dataTable = $(this.table.nativeElement);
     this.dataTable.DataTable({
       "ajax": (dataTablesParameters: any, callback) => {
+        dataTablesParameters.kamp_id = this.kamp_id;
+        dataTablesParameters.smena_id = this.smena_id;
         this.ucesnikService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,
@@ -53,15 +65,27 @@ export class UcesnikDtComponent implements OnInit {
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
         { title: 'Adresa', data: 'puna_adresa', name: 'puna_adresa' },
         { title: 'Roditelj', data: 'roditelj', name: 'roditelj' },
-        { title: 'Broj kampova', data: 'broj_kampova', name: 'broj_kampova' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Broj kampova', data: 'broj_kampova', name: 'broj_kampova', className: "dt-center" },
+        { title: 'Broj smena', data: 'broj_smena', className: "dt-center" },
+        { title: 'Depozit', data: 'depozit', className: "dt-right" },
+        { title: 'Ukupno za uplatu', data: 'ukupno', className: "dt-right" },
+        { title: 'Uplate', data: 'uplate', className: "dt-right" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%" , className: "dt-center"},
+      ],
+      "columnDefs":[{
+          targets: [3],
+          visible: !that.activatedRoute.snapshot.parent.params?.kampId
+        },{
+          targets: [5,6,7],
+          visible: !!that.activatedRoute.snapshot.parent.params?.kampId
+        }
       ],
       "drawCallback": function () {
         $('.btnEditUcesnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/update/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/admin/ucesnik/${$(event.target).data('id')}/izmena`)
         })
         $('.btnRemoveUcesnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
+          that.router.navigateByUrl(`/admin/ucesnik/${$(event.target).data('id')}/brisanje`)
         })
       }
     })

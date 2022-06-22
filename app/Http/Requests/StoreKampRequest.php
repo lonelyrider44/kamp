@@ -48,6 +48,10 @@ class StoreKampRequest extends FormRequest
             // 'datum_od' => 'required',
             // 'datum_do' => 'required',
             'broj_prijava' => 'required',
+            'cena_smene_rsd' => 'required',
+            'cena_smene_eur' => 'required',
+            'depozit_rsd' => 'required_without:depozit_eur',
+            'depozit_eur' => 'required_without:depozit_rsd'
             // 'status' => 'required',
             // 'cena' => 'required'
         ];

@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Kamp } from 'app/modules/kamp/kamp';
 import { KampService } from 'app/modules/kamp/kamp.service';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { Smena } from 'app/modules/smena/smena';
 import { SmenaService } from 'app/modules/smena/smena.service';
 import { Ucesnik } from 'app/modules/ucesnik/ucesnik';
@@ -32,7 +33,6 @@ export class FormComponent implements OnInit {
   ucesnici: Ucesnik[] = [];
 
 
-
   constructor(
     public fb: FormBuilder,
     private router: Router,
@@ -47,8 +47,8 @@ export class FormComponent implements OnInit {
   }
 
   ngOnInit(): void { 
-    this.loadFromUrl();
     this.kampService.all().subscribe(res => this.kampovi = res);
+    this.loadFromUrl();
   }
   kamp_changed($event){
     this.kampService.smene($event.value).subscribe(res => this.smene = res);
@@ -71,7 +71,7 @@ export class FormComponent implements OnInit {
     if (!this.action_update) return;
     this.uplataService.update(this.uplata.id, this.uplataForm.getRawValue()).subscribe(
       {
-        next: res => { this.router.navigateByUrl('/admin/kamp') },
+        next: res => { this.router.navigateByUrl('/admin/uplata') },
         error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
       }
     )
@@ -79,7 +79,7 @@ export class FormComponent implements OnInit {
   delete() {
     if (!this.action_delete) return;
     this.uplataService.delete(this.uplata.id).subscribe({
-      next: res => { this.router.navigateByUrl('/admin/kamp') },
+      next: res => { this.router.navigateByUrl('/admin/uplata') },
       error: (error: HttpErrorResponse) => { this.submitFormFailed(this.uplataForm, error) }
     })
   }
@@ -128,11 +128,4 @@ export class FormComponent implements OnInit {
     }
   }
 
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
 }

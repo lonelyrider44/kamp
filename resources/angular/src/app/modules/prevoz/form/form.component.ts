@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { Prevoz } from '../prevoz';
 import { PrevozService } from '../prevoz.service';
 
@@ -99,9 +100,3 @@ export class FormComponent implements OnInit {
   }
 }
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
-}

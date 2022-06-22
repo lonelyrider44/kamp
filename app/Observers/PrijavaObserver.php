@@ -14,6 +14,7 @@ class PrijavaObserver
      */
     public function created(Prijava $prijava)
     {
+        
         $roditelj = \App\Models\Roditelj::updateOrCreate([
             'email' => $prijava->email_roditelja,
         ], [
@@ -33,9 +34,17 @@ class PrijavaObserver
                 $prijava->toArray() + ['roditelj_id' => $roditelj->id]
             );
         }
+        if(\App\Models\Prijava::where('ucesnik_id', $ucesnik->id)->where('status_id',4)->count()>0){
+            throw new \Exception('Imate zabranu prijave!');
+        }
         $prijava->update([
-            'ucesnik_id' => $ucesnik->id, 'roditelj_id' => $roditelj->id
+            'ucesnik_id' => $ucesnik->id, 'roditelj_id' => $roditelj->id,
+            'depozit_rsd' => $prijava->kamp->depozit_rsd,
+            'depozit_eur' => $prijava->kamp->depozit_eur
         ]);
+        
+
+        
     }
 
     /**

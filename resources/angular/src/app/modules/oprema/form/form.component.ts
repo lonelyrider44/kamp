@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { Oprema } from '../oprema';
 import { OpremaService } from '../oprema.service';
 
@@ -96,12 +97,5 @@ export class FormComponent implements OnInit {
   }
   goBack() {
     this._location.back();
-  }
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
   }
 }

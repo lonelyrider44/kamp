@@ -1,0 +1,287 @@
+<div class="main-content">
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <mat-form-field class="example-full-width col-md-4">
+                <mat-select placeholder="Kamp" (selectionChange)="kamp_changed($event)" [ngModel]="kamp_id">
+                    <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
+        <div class="row" *ngIf="!!stats">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger ">
+                        <h4>Ukupno popunjenih mesta</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="card-category col-md-3">
+                                {{stats?.ukupno_prijava}}/{{stats?.ukupno_mesta}} dece prijavljenih
+                            </div>
+                            <div class="col-md-3">
+                                <p class="card-category">
+                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{stats?.gratis}} </span> gratis
+                                </p>
+                                <p class="card-category">
+                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{stats?.donosi_u_kamp}} </span> donosi u kamp
+                                </p>
+                                <p class="card-category">
+                                    <span class="text-success"><i class="fa fa-long-arrow-up"></i> {{stats?.uplatilo}} </span> uplatilo
+                                </p>
+                            </div>
+                            <div class="col-md-3">
+                                <p class="card-category">
+                                    <span class="text-warning"><i class="fa fa-long-arrow-down"></i> {{stats?.zabrana_prijave}} </span> zabrana prijave
+                                </p>
+                                <p class="card-category">
+                                    <span class="text-warning"><i class="fa fa-long-arrow-down"></i> {{stats?.otkazane_smene}} </span> otkazane smene
+                                </p>
+                                <p class="card-category">
+                                    <span class="text-warning"><i class="fa fa-long-arrow-down"></i> {{stats?.nije_se_pojavilo}} </span> nije se pojavilo
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!!stats">
+            <div class="col-lg-4 col-md-6 col-sm-12" *ngFor="let smena of stats?.smene">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info ">
+                        <div class="card-icon">
+                            {{smena.naziv}}
+                        </div>
+                        <canvas baseChart [datasets]="smena?.chart_data" [labels]="smena?.chart_godista" [options]="barChartOptions" [legend]="true" [chartType]="barChartType"></canvas>
+                        <!-- <h4 class="card-title"></h4> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="stats">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Dečaka: {{smena.broj_decaka}}<br> Devojčica: {{smena.broj_devojcica}}
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <h3 class="card-title">{{smena.broj_prijava}}/{{smena.broj_mesta}}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row" *ngIf="!!stats">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType">
+                </canvas>
+                        <!-- <h4 class="card-title">Opšta statistika</h4> -->
+                    </div>
+                    <div class="card-body">
+                        <!-- <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Država</th>
+                                    <th>Broj prijava</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let drzava of stats?.drzave">
+                                    <td>{{drzava.drzava}}</td>
+                                    <td>{{drzava.broj_prijava}}</td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Učesnici po državama</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Država</th>
+                                    <th>Broj prijava</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let drzava of stats?.drzave">
+                                    <td>{{drzava.drzava}}</td>
+                                    <td>{{drzava.broj_prijava}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title">Statistika po klubovima</h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Država</th>
+                                    <th>Broj prijava</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let drzava of stats?.drzave">
+                                    <td>{{drzava.drzava}}</td>
+                                    <td>{{drzava.broj_prijava}}</td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!!stats">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Statistika po godišu i smenama</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Godište</th>
+                                    <th *ngFor="let smena of stats?.godista[0]?.smene">{{smena.naziv}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let godiste of stats?.godista">
+                                    <td>{{godiste.godiste}}</td>
+                                    <td *ngFor="let smena of godiste?.smene">{{smena.broj_ucesnika}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Statistika po godištu i smenama DEČACI</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Godište</th>
+                                    <th *ngFor="let smena of stats?.godista_decaci[0]?.smene">{{smena.naziv}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let godiste of stats?.godista_decaci">
+                                    <td>{{godiste.godiste}}</td>
+                                    <td *ngFor="let smena of godiste?.smene">{{smena.broj_ucesnika}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-primary">
+                        <h4 class="card-title">Statistika po godištu i smenama DEVOJČICE</h4>
+                    </div>
+                    <div class="card-body table-responsive">
+                        <table class="table">
+                            <thead class="text-warining">
+                                <tr>
+                                    <th>Godište</th>
+                                    <th *ngFor="let smena of stats?.godista_devojcice[0]?.smene">{{smena.naziv}}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let godiste of stats?.godista_devojcice">
+                                    <td>{{godiste.godiste}}</td>
+                                    <td *ngFor="let smena of godiste?.smene">{{smena.broj_ucesnika}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons text-danger">warning</i>
+                            <a href="javascript:void(0)">Get More Space...</a>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="!!stats">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="card card-stats">
+                    <div class="card-header card-header-danger ">
+                        Zahtevi
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <app-zahtev-datatable [kamp_id]="kamp_id" [smena_id]="smena_id"></app-zahtev-datatable>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

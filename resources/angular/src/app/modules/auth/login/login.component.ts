@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { filter } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
@@ -41,7 +42,7 @@ export class LoginComponent implements OnInit {
         let user = this.authService.getUser();
         // console.log(user.user_type);
         if(user.user_type=="admin"){
-          this.router.navigate(['/admin/kamp']);
+          this.router.navigate(['/admin/dashboard']);
         }
         if(user.user_type=="roditelj"){
           this.router.navigate(['/roditelj']);
@@ -103,11 +104,4 @@ export class LoginComponent implements OnInit {
     );
   }
 
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
 }

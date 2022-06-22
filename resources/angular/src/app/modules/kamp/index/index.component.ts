@@ -62,7 +62,7 @@ export class IndexComponent implements OnInit {
         { title: 'Broj učesnika', data: 'broj_prijava', name: 'broj_prijava' },
         // { title: 'Uplate', data: 'uplaceno', name: 'uplaceno' },
         { title: 'Status', data: 'status', name: 'kamp_statuses.naziv' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "120px", className: "dt-center"},
       ],
       "drawCallback": function () {
         $('.btnShowKamp').on('click', function (event) {
@@ -74,6 +74,9 @@ export class IndexComponent implements OnInit {
         $('.btnDeleteKamp').on('click', function (event) {
           that.router.navigateByUrl(`/admin/kamp/${$(this).data('id')}/brisanje`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_korisnik_wrapper .col-md-6:eq(0)');

@@ -7,7 +7,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Mesto } from 'app/modules/mesto/mesto';
 import { MestoService } from 'app/modules/mesto/mesto.service';
-import { Observable, of } from 'rxjs';
+import { Form } from 'app/modules/shared/form';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
+import { RouterExtService } from 'app/modules/shared/router-ext.service';
+import { Observable, of, ReplaySubject } from 'rxjs';
 import { debounceTime, finalize, map, startWith, switchMap, tap } from 'rxjs/operators';
 import { Kamp, kampFormGroup, KampStatus, newKamp } from '../kamp';
 import { KampService } from '../kamp.service';
@@ -17,122 +20,82 @@ import { KampService } from '../kamp.service';
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss']
 })
-export class FormComponent implements OnInit {
-  matcher = new MyErrorStateMatcher();
+export class FormComponent extends Form implements OnInit {
 
   kamp: Kamp = newKamp();
   kampForm: FormGroup;
-  action_create: boolean = false;
-  action_update: boolean = false;
-  action_delete: boolean = false;
-  rimski_brojevi = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+  rimski_brojevi = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
   mesta: Mesto[];
   statusi: KampStatus[] = [];
   filtriranaMesta: Observable<Mesto[]>;
 
+  /** control for the MatSelect filter keyword */
+  public mestoFilterCtrl: FormControl = new FormControl();
+
+  /** list of banks filtered by search keyword */
+  public filteredBanks: ReplaySubject<Mesto[]> = new ReplaySubject<Mesto[]>(1);
+
   constructor(
     public fb: FormBuilder,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected activatedRoute: ActivatedRoute,
+    protected routerExt: RouterExtService,
     public kampService: KampService,
     public mestoService: MestoService,
-    private _location: Location,
-    private _snackBar: MatSnackBar
+    protected _location: Location,
+    protected _snackBar: MatSnackBar
   ) {
-    this.kampForm = kampFormGroup(this.fb, this.kamp);
+    super(fb, router, activatedRoute, routerExt, _snackBar);
+    // this.obj = newKamp();
+    this.form = this.kampForm = kampFormGroup(this.fb, this.kamp);
+    this.service = this.kampService;
+    // this.kampForm = kampFormGroup(this.fb, this.kamp);
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.kampService.statusi().subscribe(res => {
       this.statusi = res;
     });
     this.loadFromUrl();
 
-    this.kampForm.get('lokacija')?.valueChanges.pipe(
-      debounceTime(500),
-      tap(() => {
-        this.filtriranaMesta = of([]);
-      }),
-      switchMap( async value => this.mestoService.autocomplete(value as any))
-      ).subscribe(data => {
-        this.filtriranaMesta = data;
+    // this.kampForm.get('lokacija')?.valueChanges.pipe(
+    //   debounceTime(500),
+    //   tap(() => {
+    //     this.filtriranaMesta = of([]);
+    //   }),
+    //   switchMap( async value => this.mestoService.autocomplete(value as any))
+    //   ).subscribe(data => {
+    //     this.filtriranaMesta = data;
+    //   });
+
+    // listen for search field value changes
+    this.mestoFilterCtrl.valueChanges
+       .pipe(debounceTime(500))
+      .subscribe(() => {
+        // console.log('mestoFilterctrl.valuChanges')
+        if(this.mestoFilterCtrl.value){
+          console.log(this.mestoFilterCtrl.value)
+          this.filterBanks();
+        }
       });
   }
-  displayMesto(mesto: Mesto){
-    // console.log('display mesto')
-    // console.log(mesto);
-    return mesto && mesto.naziv ? mesto.naziv : '';
-  }
-  ngAfterViewInit(){
-    if (this.action_create){
+
+  displayMesto(mesto: Mesto) { return mesto && mesto.naziv ? mesto.naziv : ''; }
+
+  ngAfterViewInit() {
+    if (this.action_create) {
       this.add_smena();
       // this.add_cena();
     }
   }
 
-  store() {
-    if (!this.action_create) return;
+  // store() {
+  //   this.form.get('lokacija_id').setValue(this.kampForm.get('lokacija').value?.id)
+  //   super.store()
+  // }
 
-    this.kampForm.get('lokacija_id').setValue(this.kampForm.get('lokacija').value?.id)
-    this.kampService.store(this.kampForm.value).subscribe(
-      {
-        next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
-      }
-    )
-  }
-  update() {
-    if (!this.action_update) return;
-    this.kampService.update(this.kamp.id, this.kampForm.value).subscribe(
-      {
-        next: res => { this.router.navigateByUrl('/admin/kamp') },
-        error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
-      }
-    )
-  }
-  delete() {
-    if (!this.action_delete) return;
-    this.kampService.delete(this.kamp.id).subscribe({
-      next: res => { this.router.navigateByUrl('/admin/kamp') },
-      error: (error: HttpErrorResponse) => { this.submitFormFailed(this.kampForm, error) }
-    })
-  }
-  submitForm() {
-    this.store();
-    this.update();
-    this.delete();
-  }
-
-  submitFormFailed(form: FormGroup, error: HttpErrorResponse) {
-    // this.errors = error.error.errors;
-    // console.log(error.error);
-    if (error.status === 422) {
-      Object.keys(error.error.errors).forEach(prop => {
-        const formControl = form.get(prop);
-        if (formControl) {
-          // activate the error message
-          formControl.setErrors({
-            serverError: error.error.errors[prop]
-          });
-        }
-      });
-    }else{
-      this._snackBar.open(error.error.message,'OK')
-    }
-  }
-  goBack() {
-    this._location.back();
-  }
-  loadFromUrl(){
-    this.action_create = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
-      return value.path;
-    }).includes('unos');
-    this.action_update = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
-      return value.path;
-    }).includes('izmena');
-    this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index:number, array: UrlSegment[])=>{
-      return value.path;
-    }).includes('brisanje');
+  loadFromUrl() {
+    super.loadFromUrl();
     if (this.activatedRoute.snapshot.params?.kampId) {
       this.kampService.find(this.activatedRoute.snapshot.params?.kampId).subscribe(res => {
         // console.log(res);
@@ -154,53 +117,35 @@ export class FormComponent implements OnInit {
     }
   }
 
-  get smene(){
-    return this.kampForm.get('smene') as FormArray;
-  }
-  add_smena(index:any = null, id=null, naziv=null, datum_od = null, datum_do=null){
-    if(!index){
-      index = this.smene.length+1;
-    }
+  get obj() { return this.kamp };
+
+  get smene() { return this.kampForm.get('smene') as FormArray; }
+
+  get cene() { return this.kampForm.get('cene') as FormArray; }
+
+  get dodatni_paketi() { return this.kampForm.get('dodatni_paketi') as FormArray; }
+
+  get organizovani_prevoz() { return this.kampForm.get('organizovani_prevoz') as FormArray; }
+
+  add_smena(index: any = null, id = null, naziv = null, datum_od = null, datum_do = null) {
+    if (!index) { index = this.smene.length + 1; }
     this.smene.push(this.fb.group({
       id: id,
-      naziv: naziv ?? (this.rimski_brojevi[index-1] + ' smena'),
+      naziv: naziv ?? (this.rimski_brojevi[index - 1] + ' smena'),
       datum_od: datum_od ?? '',
       datum_do: datum_do ?? '',
       // broj_prijava: ''
     }))
   }
-  remove_smena(index){
-    this.smene.removeAt(index);
-  }
-  broj_smena_change(){
-    let n = this.kampForm.get('broj_smena')?.value;
-    if (n == 1) { n = 0; }
-
-    for (let i = this.smene.length + 1; i <= n; i++) { this.add_smena(i); }
-
-    for (let i = this.smene.length; i > n; i--) { this.smene.removeAt(i - 1); }
-  }
-  get cene(){
-    return this.kampForm.get('cene') as FormArray;
-  }
-  add_cena(index:any = null){
-    if(!index){
-      index = this.smene.length+1;
-    }
+  add_cena(index: any = null) {
+    if (!index) { index = this.smene.length + 1; }
     this.cene.push(this.fb.group({
       naziv: '',
       iznos_rsd: '',
       iznos_eur: '',
     }))
   }
-  remove_cena(index){
-    this.cene.removeAt(index);
-  }
-
-  get dodatni_paketi(){
-    return this.kampForm.get('dodatni_paketi') as FormArray;
-  }
-  add_dodatni_paket(index:any = null, id=null, naziv = null, opis = null, iznos_rsd = null, iznos_eur = null){
+  add_dodatni_paket(index: any = null, id = null, naziv = null, opis = null, iznos_rsd = null, iznos_eur = null) {
     this.dodatni_paketi.push(this.fb.group({
       id: id,
       naziv: naziv ?? '',
@@ -209,14 +154,7 @@ export class FormComponent implements OnInit {
       iznos_eur: iznos_eur ?? '',
     }))
   }
-  remove_dodatni_paket(index){
-    this.dodatni_paketi.removeAt(index);
-  }
-
-  get organizovani_prevoz(){
-    return this.kampForm.get('organizovani_prevoz') as FormArray;
-  }
-  add_organizovani_prevoz(index:any = null, id=null, naziv = null, cena_rsd=null, cena_eur = null){
+  add_organizovani_prevoz(index: any = null, id = null, naziv = null, cena_rsd = null, cena_eur = null) {
     this.organizovani_prevoz.push(this.fb.group({
       id: id,
       naziv: naziv ?? '',
@@ -224,12 +162,34 @@ export class FormComponent implements OnInit {
       cena_eur: cena_eur ?? '',
     }))
   }
-  remove_organizovani_prevoz(index){ this.organizovani_prevoz.removeAt(index);}
-}
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
+  remove_smena(index) { this.smene.removeAt(index); }
+
+  remove_cena(index) { this.cene.removeAt(index); }
+
+  remove_dodatni_paket(index) { this.dodatni_paketi.removeAt(index); }
+
+  remove_organizovani_prevoz(index) { this.organizovani_prevoz.removeAt(index); }
+
+  protected filterBanks() {
+    let search = this.mestoFilterCtrl.value;
+    this.filtriranaMesta = this.mestoService.autocomplete(search)
+
+    this.mestoService.autocomplete(search).subscribe(res => this.filteredBanks.next(res))
+    // if (!this.banks) {
+    //   return;
+    // }
+    // // get the search keyword
+    // if (!search) {
+    //   this.filteredBanks.next(this.banks.slice());
+    //   return;
+    // } else {
+    //   search = search.toLowerCase();
+    // }
+    // // filter the banks
+    // this.filteredBanks.next(
+    //   this.banks.filter(bank => bank.name.toLowerCase().indexOf(search) > -1)
+    // );
   }
+
 }

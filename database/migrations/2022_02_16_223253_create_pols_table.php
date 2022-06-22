@@ -18,6 +18,8 @@ class CreatePolsTable extends Migration
             $table->string('naziv');
             $table->timestamps();
         });
+        \App\Models\Pol::create(['naziv' => 'Muški']);
+        \App\Models\Pol::create(['naziv' => 'Ženski']);
     }
 
     /**

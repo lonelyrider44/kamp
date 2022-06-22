@@ -64,8 +64,8 @@ export class HotelDatatableComponent implements OnInit {
         { title: 'Roditelj', data: 'roditelj', name: 'prezime' },
         { title: 'Sopstveni smeštaj', data: 'sopstveni_smestaj', name: 'sopstveni_smestaj' },
         { title: 'Napomena', data: 'napomena_smestaj', name: 'napomena_smestaj' },
-        { title: 'Broj sobe', data: 'broj_sobe', name: 'broj_sobe' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Broj sobe', data: 'broj_sobe', name: 'broj_sobe', className: "dt-center" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
       "columnDefs":[
         {

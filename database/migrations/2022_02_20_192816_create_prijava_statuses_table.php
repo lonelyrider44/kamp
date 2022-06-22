@@ -19,10 +19,11 @@ class CreatePrijavaStatusesTable extends Migration
             $table->timestamps();
         });
 
-        \App\Models\PrijavaStatus::create(['name' => 'U obradi']);
-        \App\Models\PrijavaStatus::create(['name' => 'Učesnik']);
-        \App\Models\PrijavaStatus::create(['name' => 'Otkazano']);
-        \App\Models\PrijavaStatus::create(['name' => 'Nije se pojavio']);
+        // \App\Models\PrijavaStatus::create(['naziv' => 'Prijavljen']);
+        \App\Models\PrijavaStatus::create(['naziv' => 'Učesnik']);
+        \App\Models\PrijavaStatus::create(['naziv' => 'Otkazano']);
+        \App\Models\PrijavaStatus::create(['naziv' => 'Nije se pojavio']);
+        \App\Models\PrijavaStatus::create(['naziv' => 'Zabrana prijave']);
     }
 
     /**

@@ -11,11 +11,15 @@ export class RouterExtService {
   private currentUrl: string = undefined;
 
   constructor(private router : Router) {
+    
     this.currentUrl = this.router.url;
     router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.previousUrl = this.currentUrl;
-        this.currentUrl = event.url;
+        if(this.currentUrl != event.url){
+          // console.log('prev:', event.url);
+          this.previousUrl = this.currentUrl;
+          this.currentUrl = event.url;
+        }
       };
     });
   }

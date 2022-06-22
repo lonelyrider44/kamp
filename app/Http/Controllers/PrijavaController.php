@@ -32,7 +32,7 @@ class PrijavaController extends Controller
             ->when(!empty($request->smena_id), function ($query) use ($request) {
                 return $query->where('smenas.id', $request->smena_id);
             })
-            ->groupBy('prijavas.id')
+            ->groupBy('prijavas.ucesnik_id')
             // ->groupBy('smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena','kamps.naziv')
             ->toBase())
             ->addColumn('action','prijava.partials.dt_actions')
@@ -69,19 +69,13 @@ class PrijavaController extends Controller
      */
     public function store(StorePrijavaRequest $request)
     {
-        try{
-            \DB::beginTransaction();
-
+        return $this->exec_safe(function()use($request){
             $prijava = \App\Models\Prijava::create($request->all());
             $prijava->smene()->sync($request->smene);
             $prijava->dodatni_paketi()->sync($request->dodatni_paketi);            
-
-            \DB::commit();
+            $prijava->updateCena();
             return response()->json($prijava);
-        }catch(\Exception $e){
-            \DB::rollback();
-            return response()->json(['message'=>$e->getMessage()], 500);
-        }
+        });
     }
 
     /**
@@ -92,6 +86,7 @@ class PrijavaController extends Controller
      */
     public function show(Prijava $prijava)
     {
+        $prijava->kamp->load(['smene','aktivne_smene','dodatni_paketi']);
         return $prijava;
     }
 
@@ -115,7 +110,14 @@ class PrijavaController extends Controller
      */
     public function update(UpdatePrijavaRequest $request, Prijava $prijava)
     {
-        //
+        return $this->exec_safe(function()use($request, $prijava){
+            // $prijava = \App\Models\Prijava::create($request->all());
+            $prijava->update($request->all());
+            $prijava->smene()->sync($request->smene);
+            $prijava->dodatni_paketi()->sync($request->dodatni_paketi);            
+            // $prijava->updateCena();
+            return response()->json($prijava);
+        });
     }
 
     /**

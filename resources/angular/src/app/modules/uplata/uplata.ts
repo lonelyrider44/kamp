@@ -10,7 +10,8 @@ export interface Uplata {
     datum_uplate?: string,
     kamp_id?: number,
     smena_id?: number,
-    ucesnik_id?:number
+    ucesnik_id?:number,
+    depozit?:boolean,
 
     kamp?: Kamp,
     smena?: Smena,
@@ -36,8 +37,10 @@ export function uplataFormGroup(fb: FormBuilder, uplata: Uplata): FormGroup {
         iznos_rsd: [''],
         iznos_eur: [''],
         ucesnik_id: [''],
+        status_uplate_id: [''],
         kamp_id: [''],
         smena_id: [''],
-        datum_uplate: ['']
+        datum_uplate: [''],
+        depozit: ['']
     })
 }

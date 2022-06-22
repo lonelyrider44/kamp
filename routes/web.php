@@ -29,7 +29,7 @@ Route::prefix('template')->middleware([])->group(function(){
     /* Učesnici kampa */
     Route::view('participants/list','template.participants/list')->name('participants/list');
     Route::view('participants/view','template.participants/view')->name('participants/view');
-    Route::view('participants/edit','template.participants/edit')->name('participants/edit');
+    Route::view('->nullable()','template.participants/edit')->name('participants/edit');
     
     
     /* Svi korisnici */

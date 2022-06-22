@@ -18,6 +18,8 @@ export const ROUTES: RouteInfo[] = [
   { path: 'uplate', title: 'Uplate',  icon:'people_alt', class: '' },
   { path: 'oprema', title: 'Oprema',  icon:'manage_accounts', class: '' },
   { path: 'smestaj', title: 'Smeštaj',  icon:'manage_accounts', class: '' },
+  { path: 'prevoz', title: 'Prevoz',  icon:'manage_accounts', class: '' },
+  { path: 'zahtev', title: 'Zahtevi',  icon:'manage_accounts', class: '' },
 ];
 @Component({
   selector: 'app-details-layout-component',

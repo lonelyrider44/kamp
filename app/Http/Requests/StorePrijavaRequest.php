@@ -21,11 +21,18 @@ class StorePrijavaRequest extends FormRequest
         $this->merge([
             'smene' => collect($this->smene)->filter(function ($item) {
                 return $item['izabrana'] == true;
-            })->pluck('id')->all(),
+            })
+            ->map(function($item){
+                $item['status_id'] = 1;
+                return $item;
+            })
+            ->pluck('status_id','id')->all(),
             'dodatni_paketi' => collect($this->dodatni_paketi)->filter(function ($item) {
                 return $item['izabran'] == true;
             })->pluck('id')->all(),
-            'roditelj_sifra' => 'bscadmin#123'
+            'roditelj_sifra' => 'bscadmin#123',
+            // 'tip_prevoza_id' => $this->prevoz,
+            'status_id' => 1,
         ]);
     }
 
@@ -67,15 +74,15 @@ class StorePrijavaRequest extends FormRequest
             'majica' => 'required',
             'sorc' => 'required',
             'duks' => 'required',
-            'trenerka' => 'required',
+            // 'trenerka' => 'required',
 
             'napomena_smestaj' => 'nullable',
             'napomena_hrana' => 'nullable',
             'napomena_alergije' => 'required_if:alergije,"true"',
             'napomena_zdravstveni_problemi' => 'required_if:zdravstveni_problem,"true"',
 
-            'prevoz' => 'required',
-            'organizovani_prevoz' => 'required_if:prevoz,1',
+            'tip_prevoza_id' => 'required',
+            'organizovani_prevoz' => 'required_if:tip_prevoza_id,2',
 
             'saglasnost_politika_privatnosti' => 'required|boolean|size:1',
             'saglasnost_obrada_podataka' => 'required|boolean|size:1',

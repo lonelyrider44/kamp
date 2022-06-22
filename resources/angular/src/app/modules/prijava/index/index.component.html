@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header card-header-danger">
+                    <div class="card-header card-header-info">
                         <h4 class="card-title ">Prijave
                             <!-- <button mat-mini-fab aria-label="Example icon button with a delete icon" class="pull-right" routerLink="unos">
                                 <mat-icon>add</mat-icon>
@@ -12,7 +12,17 @@
                         <p class="card-category"> </p>
                     </div>
                     <div class="card-body">
-                        <app-prijava-datatable></app-prijava-datatable>
+                        <mat-form-field class="pull-right col-md-3">
+                            <mat-select #smena [(ngModel)]="smena_id" placeholder="Izaberite smenu">
+                                <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pull-right col-md-3">
+                            <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+                                <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <app-prijava-datatable [kamp_id]="kamp_id" [smena_id]="smena_id"></app-prijava-datatable>
                     </div>
                 </div>
             </div>

@@ -1,9 +1,14 @@
 <div class="main-content">
     <div class="container-fluid">
         <div class="row">
+            <div class="offset-md-10 col-md-2 text-right">
+                <a routerLink="/login">
+                    <span class="material-icons">login</span>
+                </a>
+            </div>
+        </div>
+        <div class="row">
             <div class="offset-md-1 col-md-10">
-
-
                 <div class="card">
                     <div class="card-header card-header-danger">
                         <div class="row">
@@ -11,12 +16,6 @@
                                 <h4 class="card-title">
                                     Prijava za kamp: {{ kamp?.naziv }}
                                 </h4>
-
-                            </div>
-                            <div class="col-md-2 text-right">
-                                <a routerLink="/login">
-                                    <span class="material-icons">login</span>
-                                </a>
                             </div>
                         </div>
                         <!-- <p class="card-category"></p> -->
@@ -25,7 +24,7 @@
                         <div class="alert alert-success" *ngIf="prijava_success">
                             <span>Prijava uspešno podneta. Broj prijave: {{ prijava.id }}</span>
                         </div>
-                        <div class="alert alert-success" *ngIf="kampovi.length == 0">
+                        <div class="alert alert-success" *ngIf="nema_kampa">
                             <div class="row">
                                 <div class="col-md-10">
                                     <span>Trenutno nema aktivnih kampova</span>
@@ -272,15 +271,15 @@
                                 <div class="col-md-6">
                                     <h3>Prevoz</h3>
                                     <mat-form-field class="example-full-width">
-                                        <mat-select placeholder="Kako dolazite na kamp?" formControlName="prevoz" #prevoz [errorStateMatcher]="matcher">
-                                            <mat-option [value]="0">Samostalno - u pratnji roditelja / staratelja</mat-option>
-                                            <mat-option [value]="1">Organizovanim prevozom</mat-option>
+                                        <mat-select placeholder="Kako dolazite na kamp?" formControlName="tip_prevoza_id" #prevoz [errorStateMatcher]="matcher">
+                                            <mat-option [value]="1">Samostalno - u pratnji roditelja / staratelja</mat-option>
+                                            <mat-option [value]="2">Organizovanim prevozom</mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="prijavaForm.get('prevoz')?.errors?.serverError">
                                             {{ prijavaForm.get("prevoz")?.errors?.serverError }}
                                         </mat-error>
                                     </mat-form-field>
-                                    <mat-form-field class="example-full-width" *ngIf="prevoz.value==1">
+                                    <mat-form-field class="example-full-width" *ngIf="prevoz.value==2">
                                         <mat-select placeholder="Kako dolazite na kamp?" formControlName="organizovani_prevoz" [errorStateMatcher]="matcher">
                                             <mat-option *ngFor="let op of kamp.organizovani_prevoz" [value]="op.id">{{op.naziv}}, ({{op.cena_rsd}} RSD)</mat-option>
                                         </mat-select>

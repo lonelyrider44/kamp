@@ -11,6 +11,8 @@ import { KampService } from 'app/modules/kamp/kamp.service';
 import { OrganizovaniPrevoz } from 'app/modules/organizovani-prevoz/organizovani-prevoz';
 import { Pol } from 'app/modules/pol/pol';
 import { PolService } from 'app/modules/pol/pol.service';
+import { JMBG } from 'app/modules/shared/jmbg';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { Velicina } from 'app/modules/velicina/velicina';
 import { VelicinaService } from 'app/modules/velicina/velicina.service';
 import { newPrijava, Prijava, prijavaFormGroup } from '../prijava';
@@ -52,6 +54,10 @@ export class GuestFormComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.prijavaForm = prijavaFormGroup(this.fb, this.prijava);
+    this.prijavaForm.get('gratis').setValue(false);
+    this.prijavaForm.get('opstina').setValue(false);
+    this.prijavaForm.get('status_id').setValue(1);
+
   }
 
   ngOnInit(): void {
@@ -61,11 +67,12 @@ export class GuestFormComponent implements OnInit {
 
     this.kampService.aktivni().subscribe(res => {
       this.kampovi = res;
+      this.nema_kampa = this.kampovi.length==0;
     });
     this.prijavaForm.get('kamp_id')?.valueChanges.subscribe( x => {
       this.kamp = this.kampovi.find(k => k.id = x)
       if(this.kamp){
-        this.kamp.smene.forEach(smena => {
+        this.kamp.aktivne_smene.forEach(smena => {
           this.smene.push(
             this.fb.group({
               naziv: smena.naziv,
@@ -93,29 +100,14 @@ export class GuestFormComponent implements OnInit {
         this.dodatni_paketi.clear();
       }
     })
-    // this.kampService.getAktivniKamp().subscribe(res => {
-      // console.log(res);
-
-      // if(res.id){
-      //   this.kamp = res;
-      //   this.prijavaForm.get('kamp_id').setValue(this.kamp.id);
-                
-      // }else{
-      //   this.nema_kampa = true;
-      // }
-      
-      
-    // })
   }
 
   store() {
-    // if (!this.action_create) return;
-
-    // console-
     this.prijavaService.store(this.prijavaForm.value).subscribe(
       {
         next: res => {
           this.prijava_success = true;
+          this.prijava = res;
           // this.router.navigateByUrl('/admin/kamp') 
         },
         error: (error: HttpErrorResponse) => { this.submitFormFailed(this.prijavaForm, error) }
@@ -184,55 +176,13 @@ export class GuestFormComponent implements OnInit {
         this.prijava = res
       })
     }
-    // console.log(this.action_create, this.action_update, this.action_delete);
-    // this.action = this.activatedRoute.snapshot.url[1]?.path;
-
-    // console.log(this.activatedRoute.snapshot.params?.kampId);
-    // this.isReadOnly = this.action == "delete";
   }
 
   jmbg_parse() {
-    // if( $('#jmbg').val().length == 13 ){
-    var str = this.prijavaForm.get('jmbg_pasos').value;
-
-    if (str.length == 13) {
-
-      /*
-      A B V G D Đ E Ž Z I J K L
-      A B C D E F G H I J K L M
-      L = 11 - (( 7*(A+E) + 6*(B+Ž) + 5*(V+Z) + 4*(G+I) + 3*(D+J) + 2*(Đ+K) ) % 11)
-      */
-      var A = str[0];
-      var B = str[1];
-      var C = str[2];
-      var D = str[3];
-      var E = str[4];
-      var F = str[5];
-      var G = str[6];
-      var H = str[7];
-      var I = str[8];
-      var J = str[9];
-      var K = str[10];
-      var L = str[11];
-      var M = str[12];
-
-      let kk = 11 - ((7 * (+A + +G) + 6 * (+B + +H) + 5 * (+C + +I) + 4 * (+D + +J) + 3 * (+E + +K) + 2 * (+F + +L)) % 11);
-      if (kk > 9) kk = 0;
-      if (kk == M) {
-        var dd = str.substring(0, 2);
-        var mm = str.substring(2, 4);
-        var ggg = str.substring(4, 7);
-        var rr = str.substring(7, 9);
-        var bbb = str.substring(9, 12);
-        var k = str.substring(12, 13);
-
-
-        ggg = (ggg < 100) ? ("2" + ggg) : ("1" + ggg)
-        this.prijavaForm.get('datum_rodjenja').setValue(dd + "." + mm + "." + ggg + ".");
-
-        let pol = (bbb < 500) ? 1 : 2;
-        this.prijavaForm.get('pol_id').setValue(pol)
-      }
+    var jmbg = new JMBG(this.prijavaForm.get('jmbg_pasos').value)
+    if(jmbg.is_valid()){
+      this.prijavaForm.get('datum_rodjenja').setValue(jmbg.get_date_str());
+      this.prijavaForm.get('pol_id').setValue(jmbg.get_pol_id())
     }
   }
 
@@ -247,11 +197,4 @@ export class GuestFormComponent implements OnInit {
     // console.log($event);
   }
 
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
 }

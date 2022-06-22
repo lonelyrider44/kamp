@@ -25,6 +25,9 @@ import { OdgovorFormComponent } from './odgovor-form/odgovor-form.component';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    ZahtevDatatableComponent
   ]
 })
 export class ZahtevModule { }

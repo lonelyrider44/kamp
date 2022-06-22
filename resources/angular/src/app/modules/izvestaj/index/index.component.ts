@@ -54,7 +54,7 @@ export class IndexComponent implements OnInit {
         { title: 'Godina', data: 'godina', name: 'godina' },
         { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
         { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
       "drawCallback": function () {
         $('.btnEditKorisnik').on('click', function (event) {

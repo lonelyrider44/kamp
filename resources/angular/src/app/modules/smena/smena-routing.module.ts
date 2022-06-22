@@ -3,10 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HotelDatatableComponent } from '../hotel/hotel-datatable/hotel-datatable.component';
 import { OpremaDatatableComponent } from '../oprema/oprema-datatable/oprema-datatable.component';
 import { PrevozDatatableComponent } from '../prevoz/prevoz-datatable/prevoz-datatable.component';
-import { PrijavaDatatableComponent } from '../prijava/prijava-datatable/prijava-datatable.component';
-import { UcesnikDatatableComponent } from '../ucesnik/ucesnik-datatable/ucesnik-datatable.component';
+import { UcesnikDtComponent } from '../ucesnik/ucesnik-dt/ucesnik-dt.component';
 import { UplataDatatableComponent } from '../uplata/uplata-datatable/uplata-datatable.component';
-import { DetailsBasicComponent } from './details-basic/details-basic.component';
 import { FormComponent } from './form/form.component';
 import { IndexComponent } from './index/index.component';
 import { SmenaLayoutComponent } from './smena-layout/smena-layout.component';
@@ -26,7 +24,7 @@ const routes: Routes = [
     // },
     {
       path: 'ucesnici',
-      component: UcesnikDatatableComponent
+      component: UcesnikDtComponent
     },
     {
       path: 'hotel',
@@ -42,6 +40,10 @@ const routes: Routes = [
     },
     {
       path: 'uplate',
+      component: UplataDatatableComponent
+    },
+    {
+      path: 'dodatni-paketi',
       component: UplataDatatableComponent
     },
   ],

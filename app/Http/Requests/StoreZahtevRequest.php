@@ -15,6 +15,9 @@ class StoreZahtevRequest extends FormRequest
     {
         return true;
     }
+    public function prepareForValidation(){
+        $this->merge(['status_id' => 1]);
+    }
 
     /**
      * Get the validation rules that apply to the request.

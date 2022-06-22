@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateUcesnikRequest;
 
 class UcesnikController extends Controller
 {
-    public function datatable()
+    public function datatable(\Illuminate\Http\Request $request)
     {
         return datatables()->of(\App\Models\Ucesnik::select(
             'ucesniks.id',
@@ -23,16 +23,41 @@ class UcesnikController extends Controller
             'ucesniks.prezime_roditelja',
             'ucesniks.email_roditelja',
             'ucesniks.telefon_roditelja',
-            \DB::raw('COUNT(prijavas.kamp_id) as broj_kampova')
+            'prijavas.depozit_rsd',
+            'prijavas.depozit_eur',
+            'prijavas.ukupno_rsd',
+            'prijavas.ukupno_eur',
+            'prijavas.gratis',
+            'prijavas.opstina',
+            \DB::raw('COUNT(DISTINCT prijavas.kamp_id) as broj_kampova'),
+            \DB::raw('COUNT(prijava_smenas.smena_id) as broj_smena'),
+            \DB::raw('SUM(uplatas.iznos_rsd) as uplate_rsd'),
+            \DB::raw('SUM(uplatas.iznos_eur) as uplate_eur'),
         )
-            ->leftJoin('prijavas', 'prijavas.ucesnik_id', 'ucesniks.id')
+            ->join('prijavas', 'prijavas.ucesnik_id', 'ucesniks.id')
+            ->join('prijava_smenas','prijava_smenas.prijava_id','prijavas.id')
+            ->leftJoin('uplatas','uplatas.ucesnik_id', 'ucesniks.id')
+            ->when(!empty($request->kamp_id), function($query)use($request){
+                return $query->where('prijavas.kamp_id',$request->kamp_id);
+            })
+            ->when(!empty($request->smena_id), function ($query) use ($request) {
+                return $query->whereIn('prijavas.id', function($query)use($request){
+                    $query->select('prijava_smenas.prijava_id')
+                        ->from('prijava_smenas')
+                        ->where('prijava_smenas.smena_id', $request->smena_id);
+                });
+                // return $query->where('smenas.id', $request->smena_id);
+            })
             ->groupBy('ucesniks.id')
             ->toBase()->get())
             ->addColumn('action', 'ucesnik.partials.dt_actions')
             ->addColumn('ucesnik', 'ucesnik.partials.dt_ucesnik')
             ->addColumn('puna_adresa', 'ucesnik.partials.dt_puna_adresa')
             ->addColumn('roditelj', 'ucesnik.partials.dt_roditelj')
-            ->rawColumns(['action', 'ucesnik', 'puna_adresa', 'roditelj'])
+            ->addColumn('uplate', 'ucesnik.partials.dt_uplate')
+            ->addColumn('ukupno', 'ucesnik.partials.dt_ukupno')
+            ->addColumn('depozit', 'ucesnik.partials.dt_depozit')
+            ->rawColumns(['action', 'ucesnik', 'puna_adresa', 'roditelj','uplate','ukupno','depozit'])
             ->make(true);
     }
     /**

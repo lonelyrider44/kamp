@@ -1,5 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Mesto } from "../mesto/mesto";
+import { Smena } from "../smena/smena";
 
 export interface Kamp {
     id?: number,
@@ -13,14 +14,17 @@ export interface Kamp {
     broj_prijava: any,
     status: any, 
     status_id: any,
-    cena_smene: any,
     cena_smene_rsd: any,
     cena_smene_eur: any,
+    depozit_rsd: any,
+    depozit_eur: any,
     broj_smena: any,
     smene: any,
     cene: any,
     dodatni_paketi: any,
-    organizovani_prevoz: any
+    organizovani_prevoz: any,
+
+    aktivne_smene?: Smena[]
 }
 export interface KampStatus {
     id: number,
@@ -38,9 +42,11 @@ export function newKamp(): Kamp{
         broj_prijava: '',
         status: '',
         status_id: '',
-        cena_smene: '',
+        // cena_smene: '',
         cena_smene_rsd: '',
         cena_smene_eur: '',
+        depozit_rsd: 6000,
+        depozit_eur: 50,
         broj_smena: '',
         smene: [],
         cene: [],
@@ -58,9 +64,11 @@ export function kampFormGroup(fb: FormBuilder, kamp: Kamp): FormGroup{
         datum_do: [kamp.datum_do],
         broj_prijava: [kamp.broj_prijava],
         // status: [kamp.status],
-        cena_smene: [kamp.cena_smene],
-        cena_smene_rsd: [kamp.cena_smene],
-        cena_smene_eur: [kamp.cena_smene],
+        // cena_smene: [],
+        cena_smene_rsd: [''],
+        cena_smene_eur: [''],
+        depozit_rsd: [''],
+        depozit_eur: [''],
         status_id: '',
         smene: fb.array([]),
         cene: fb.array([]),

@@ -20,7 +20,7 @@ export class IndexComponent implements OnInit {
   kamp_id: number = null;
   smena_id: number = null;
 
-  constructor(private router: Router, private prevozService: PrevozService, private kampService: KampService, private smenaService: SmenaService) { 
+  constructor(private router: Router, private kampService: KampService) { 
     // this.kampovi$ = this.kampService.all();
     this.kampService.all().subscribe(res => {
       this.kampovi = res;

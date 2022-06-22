@@ -38,7 +38,7 @@ class HotelController extends Controller
                             ->where('prijava_smenas.smena_id', $request->smena_id);
                     });
                 })
-                ->when(empty($request->smena_id), function($query){
+                ->when(empty($request->kamp_id)&&empty($request->smena_id), function($query){
                     return $query->where('prijavas.kamp_id', -1);
                 })
                 ->toBase()

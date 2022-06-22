@@ -53,8 +53,8 @@ export class UcesnikDatatableComponent implements OnInit {
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
         { title: 'Adresa', data: 'puna_adresa', name: 'puna_adresa' },
         { title: 'Roditelj', data: 'roditelj', name: 'roditelj' },
-        { title: 'Broj kampova', data: 'broj_kampova', name: 'broj_kampova' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Broj kampova2', data: 'broj_kampova', name: 'broj_kampova' },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
       "drawCallback": function () {
         $('.btnEditUcesnik').on('click', function (event) {
@@ -63,6 +63,9 @@ export class UcesnikDatatableComponent implements OnInit {
         $('.btnRemoveUcesnik').on('click', function (event) {
           that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_korisnik_wrapper .col-md-6:eq(0)');

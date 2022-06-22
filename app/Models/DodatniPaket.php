@@ -13,6 +13,7 @@ class DodatniPaket extends Model
         'naziv',
         'opis',
         'iznos_rsd',
-        'iznos_eur'
+        'iznos_eur',
+        'kamp_id'
     ];
 }

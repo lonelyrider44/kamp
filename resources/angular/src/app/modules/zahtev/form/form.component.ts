@@ -9,6 +9,7 @@ import { Kamp } from 'app/modules/kamp/kamp';
 import { KampService } from 'app/modules/kamp/kamp.service';
 import { Roditelj } from 'app/modules/roditelj/roditelj';
 import { RoditeljService } from 'app/modules/roditelj/roditelj.service';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { RouterExtService } from 'app/modules/shared/router-ext.service';
 import { Smena } from 'app/modules/smena/smena';
 import { SmenaService } from 'app/modules/smena/smena.service';
@@ -155,11 +156,4 @@ export class FormComponent implements OnInit {
     }
   }
 
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
 }

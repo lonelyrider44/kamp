@@ -11,10 +11,11 @@ class Kamp extends Model
 
     protected $fillable = [
         'lokacija_id', 'naziv', 'broj_prijava', 'smestaj',
-        'cena_smene', 'cena_smene_rsd', 'cena_smene_eur', 'status_id'
+        'cena_smene', 'cena_smene_rsd', 'cena_smene_eur', 'status_id',
+        'depozit_rsd','depozit_eur'
         // 'datum_od','datum_do'
     ];
-    protected $with = ['smene', 'aktivne_smene','dodatni_paketi', 'organizovani_prevoz', 'lokacija'];
+    // protected $with = ['smene', 'aktivne_smene','dodatni_paketi', 'organizovani_prevoz', 'lokacija'];
 
     // protected $casts = [
     //     'datum_od' => 'date',
@@ -53,6 +54,9 @@ class Kamp extends Model
     public function organizovani_prevoz()
     {
         return $this->hasMany(\App\Models\OrganizovaniPrevoz::class, 'kamp_id', 'id');
+    }
+    public function prijave(){
+        return $this->hasMany(\App\Models\Prijava::class);
     }
     public function scopeAktivni($query, $datum = null)
     {

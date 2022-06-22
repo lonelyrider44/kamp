@@ -21,6 +21,7 @@
                             "src/favicon.ico"
                         ],
                         "styles": [
+                            "src/styles.css",
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
                             "src/assets/scss/material-dashboard.scss",
@@ -46,7 +47,8 @@
                             "node_modules/datatables.net-buttons-bs5/js/buttons.bootstrap5.min.js",
                             "node_modules/datatables.net-buttons/js/buttons.html5.min.js",
                             "node_modules/datatables.net-buttons/js/buttons.print.min.js",
-                            "node_modules/datatables.net-buttons/js/buttons.colVis.min.js"
+                            "node_modules/datatables.net-buttons/js/buttons.colVis.min.js",
+                            "node_modules/chart.js/dist/chart.min.js"
                         ],
                         "allowedCommonJsDependencies": [
                             "rxjs/add/operator/filter",

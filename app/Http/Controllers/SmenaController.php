@@ -83,7 +83,12 @@ class SmenaController extends Controller
      */
     public function show(Smena $smena)
     {
-        //
+        try{
+            $smena->load('kamp');
+            return response()->json($smena);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**
@@ -94,7 +99,12 @@ class SmenaController extends Controller
      */
     public function edit(Smena $smena)
     {
-        //
+        try{
+            $smena = \App\Models\Smena::find($smena);
+            return response()->json($smena);
+        }catch(\Exception $e){
+            return response()->json($e->getMessage(), 500);
+        }
     }
 
     /**

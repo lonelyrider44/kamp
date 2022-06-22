@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PrijavaService } from '../prijava.service';
 
@@ -10,20 +10,30 @@ import { PrijavaService } from '../prijava.service';
 export class PrijavaDatatableComponent implements OnInit {
   @ViewChild('dataTablePrijava') table;
   dataTable: any;
+  @Input() kamp_id;
+  @Input() smena_id;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private prijavaService: PrijavaService) { }
 
   ngOnInit(): void {
+    this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
+    this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
   }
 
+  ngOnChanges(changes: SimpleChanges){
+    if(this.dataTable){
+      this.dataTable.DataTable().ajax.reload();
+    }
+  }
+  
   ngAfterViewInit() {
     const that = this;
     this.dataTable = $(this.table.nativeElement);
     this.dataTable.DataTable({
       "ajax": (dataTablesParameters: any, callback) => {
 
-        dataTablesParameters.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
-        dataTablesParameters.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
+        dataTablesParameters.kamp_id = this.kamp_id
+        dataTablesParameters.smena_id = this.smena_id
         this.prijavaService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,
@@ -64,7 +74,7 @@ export class PrijavaDatatableComponent implements OnInit {
         // { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
         // { title: 'Dečaci', data: 'broj_muskih_ucesnika', name: 'broj_muskih_ucesnika' },
         // { title: 'Devojčice', data: 'broj_zenskih_ucesnika', name: 'broj_zenskih_ucesnika' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "120px", className: "dt-center" },
       ],
       initComplete: function (settings, json) {
         // console.log('init complete');
@@ -81,6 +91,9 @@ export class PrijavaDatatableComponent implements OnInit {
         $('.btnRemovePrijava').on('click', function (event) {
           that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}/brisanje`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_prijava_wrapper .col-md-6:eq(0)');

@@ -50,7 +50,7 @@ export class AdministratorDatatableComponent implements OnInit {
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
         { title: 'Email', data: 'email', name: 'email' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
       "drawCallback": function () {
         $('.btnEditAdministrator').on('click', function (event) {
@@ -59,6 +59,9 @@ export class AdministratorDatatableComponent implements OnInit {
         $('.btnDeleteAdministrator').on('click', function (event) {
           that.router.navigateByUrl(`admin/korisnik/administrator/${$(this).data('id')}/brisanje`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_administrator_wrapper .col-md-6:eq(0)');

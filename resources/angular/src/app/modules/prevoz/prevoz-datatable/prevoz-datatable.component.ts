@@ -69,7 +69,7 @@ export class PrevozDatatableComponent implements OnInit {
         { title: 'Roditelj', data: 'roditelj', name: 'roditeljs.ime' },
         { title: 'Prevoz', data: 'prevoz', name: 'tip_prevozas.naziv' },
         { title: 'Organizovani prevoz', data: 'organizovani_prevoz', name: 'ucesniks.ime' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "10%" , className: "dt-center"},
       ],
       initComplete: function (settings, json) {
         // console.log('init complete');
@@ -83,6 +83,9 @@ export class PrevozDatatableComponent implements OnInit {
         $('.btnRemoveOprema').on('click', function (event) {
           that.router.navigateByUrl(`/oprema/brisanje/${$(this).data('id')}`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_oprema_wrapper .col-md-6:eq(0)');

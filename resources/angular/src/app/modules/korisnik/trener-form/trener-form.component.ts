@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from 
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { RouterExtService } from 'app/modules/shared/router-ext.service';
 import { Velicina } from 'app/modules/velicina/velicina';
 import { VelicinaService } from 'app/modules/velicina/velicina.service';
@@ -118,11 +119,4 @@ export class TrenerFormComponent implements OnInit {
     }
   }
 
-}
-
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const isSubmitted = form && form.submitted;
-    return (control && control.invalid);
-  }
 }

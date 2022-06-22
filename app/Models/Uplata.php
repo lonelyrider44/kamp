@@ -10,12 +10,15 @@ class Uplata extends Model
     use HasFactory;
 
     protected $fillable = [
+        'prijava_id',
         'kamp_id',
         'smena_id',
         'ucesnik_id',
+        // 'status_uplate_id',
         'datum_uplate',
         'iznos_rsd',
         'iznos_eur',
+        'depozit'
     ];
 
     public function kamp()

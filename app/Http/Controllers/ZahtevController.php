@@ -24,7 +24,13 @@ class ZahtevController extends Controller
         )
             ->join('status_zahtevas', 'status_zahtevas.id', 'zahtevs.status_id')
             ->join('roditeljs', 'roditeljs.id', 'zahtevs.roditelj_id')
-            ->leftJoin('ucesniks', 'ucesniks.id', 'zahtevs.ucesnik_id'))
+            ->leftJoin('ucesniks', 'ucesniks.id', 'zahtevs.ucesnik_id')
+            ->when(!empty($request->kamp_id), function($query)use($request){
+                return $query->where('zahtevs.kamp_id', $request->kamp_id);
+            })
+            ->when(!empty($request->smena_id), function($query)use($request){
+                return $query->where('zahtevs.smena_id', $request->smena_id);
+            }))
             ->addColumn('roditelj', 'zahtev.partials.dt_roditelj')
             ->addColumn('ucesnik', 'zahtev.partials.dt_ucesnik')
             ->addColumn('action', 'zahtev.partials.dt_actions')

@@ -61,10 +61,10 @@ export class SmenaDatatableComponent implements OnInit {
         // { title: 'Period', data: 'period', name: 'period' },
         { title: 'Cena', data: 'cena', name: 'cena' },
         // { title: 'Broj prijava', data: 'broj_prijava', name: 'broj_prijava' },
-        { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
-        { title: 'Dečaci', data: 'broj_muskih_ucesnika', name: 'broj_muskih_ucesnika' },
-        { title: 'Devojčice', data: 'broj_zenskih_ucesnika', name: 'broj_zenskih_ucesnika' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "120px" },
+        { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika', className: "dt-center" },
+        { title: 'Dečaci', data: 'broj_muskih_ucesnika', name: 'broj_muskih_ucesnika', className: "dt-center" },
+        { title: 'Devojčice', data: 'broj_zenskih_ucesnika', name: 'broj_zenskih_ucesnika', className: "dt-center" },
+        { title: 'Akcije', data: 'action', name: 'action', width: "120px", className: "dt-center" },
       ],
       initComplete: function (settings, json) {
         // console.log('init complete');
@@ -81,6 +81,9 @@ export class SmenaDatatableComponent implements OnInit {
         $('.btnRemoveSmena').on('click', function (event) {
           that.router.navigateByUrl(`/admin/smena/brisanje/${$(this).data('id')}`)
         })
+      },
+      "language" : {
+        url: "//cdn.datatables.net/plug-ins/1.12.1/i18n/sr-SP.json"
       }
     })
       .buttons().container().appendTo('#datatable_smena_wrapper .col-md-6:eq(0)');

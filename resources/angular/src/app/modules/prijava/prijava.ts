@@ -36,26 +36,37 @@ export interface Prijava {
     sorc: any,
     duks: any,
     trenerka: any,
-    
+
     napomena_smestaj: any,
     napomena_hrana: any,
     napomena_alergije: any,
     napomena_zdravstveni_problemi: any,
-    
-    prevoz: any,
+
+    tip_prevoza_id: any,
     organizovani_prevoz: any,
     saglasnost_politika_privatnosti: boolean,
     saglasnost_obrada_podataka: boolean,
     saglasnost_ucesce_na_kampu: boolean,
     saglasnost_donatorski_ugovor: boolean,
     saglasnost_pravila_kampa: boolean,
-    
+
+    ukupno_smene_rsd?:number,
+    ukupno_smene_eur?:number,
+    ukupno_dodatni_paketi_rsd?:number,
+    ukupno_dodatni_paketi_eur?:number,
+    ukupno_rsd?:any,
+    ukupno_eur?:any,
     depozit_rsd?: any,
     depozit_eur?: any,
     
     kamp?: Kamp,
     smene?: Smena[],
-    dodatni_paketi?: DodatniPaket[]
+    dodatni_paketi?: DodatniPaket[],
+
+
+    donosi_depozit_u_kamp?:boolean,
+    opstina?: boolean,
+    gratis?: boolean,
 }
 
 export function newPrijava(): Prijava {
@@ -95,13 +106,16 @@ export function newPrijava(): Prijava {
         napomena_alergije: '',
         napomena_zdravstveni_problemi: '',
 
-        prevoz: null,
+        tip_prevoza_id: null,
         organizovani_prevoz: null,
         saglasnost_politika_privatnosti: false,
         saglasnost_obrada_podataka: false,
         saglasnost_ucesce_na_kampu: false,
         saglasnost_donatorski_ugovor: false,
         saglasnost_pravila_kampa: false,
+
+        gratis: false,
+        opstina: false
     };
 }
 export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
@@ -142,7 +156,7 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
         napomena_alergije: [prijava.napomena_alergije],
         napomena_zdravstveni_problemi: [prijava.napomena_zdravstveni_problemi],
 
-        prevoz: [prijava.prevoz],
+        tip_prevoza_id: [prijava.tip_prevoza_id],
         organizovani_prevoz: [prijava.organizovani_prevoz],
         saglasnost_politika_privatnosti: [prijava.saglasnost_politika_privatnosti],
         saglasnost_obrada_podataka: [prijava.saglasnost_obrada_podataka],
@@ -156,18 +170,18 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
         status_id: [''],
         trener_id: [''],
 
+        donosi_depozit_u_kamp: [''],
+        gratis: [''],
+        opstina: [''],
+
         depozit_rsd: [''],
         smene_rsd: [''],
         dodatni_paketi_rsd: [''],
-        gratis_rsd: [''],
-        opstina_rsd: [''],
         ukupno_rsd: [''],
 
         depozit_eur: [''],
         smene_eur: [''],
         dodatni_paketi_eur: [''],
-        gratis_eur: [''],
-        opstina_eur: [''],
         ukupno_eur: [''],
     })
 }

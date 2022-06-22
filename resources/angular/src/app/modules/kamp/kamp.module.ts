@@ -11,7 +11,10 @@ import { CustomDateAdapter } from '../material/custom-date-adapter';
 import { DetailsBasicComponent } from './details-basic/details-basic.component';
 import { DetailsLayoutComponentComponent } from './details-layout-component/details-layout-component.component';
 import { KampDatatableComponent } from './kamp-datatable/kamp-datatable.component';
-import { PrijavaComponent } from './prijava/prijava.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ZahtevModule } from '../zahtev/zahtev.module';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 @NgModule({
@@ -21,14 +24,17 @@ import { PrijavaComponent } from './prijava/prijava.component';
     DetailsBasicComponent,
     DetailsLayoutComponentComponent,
     KampDatatableComponent,
-    PrijavaComponent
+    DashboardComponent,
   ],
   imports: [
     CommonModule,
     KampRoutingModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule,
+    ZahtevModule,
+    NgxMatSelectSearchModule
   ],
   providers:[
     { provide: DateAdapter, useClass: CustomDateAdapter }
