@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UcesnikDtComponent } from './ucesnik-dt/ucesnik-dt.component';
 import { UcesnikDatatableComponent } from './ucesnik-datatable/ucesnik-datatable.component';
 import { UcesnikLayoutComponent } from './ucesnik-layout/ucesnik-layout.component';
+import { OsnovniPodaciComponent } from './osnovni-podaci/osnovni-podaci.component';
+import { DodatniPodaciComponent } from './dodatni-podaci/dodatni-podaci.component';
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { UcesnikLayoutComponent } from './ucesnik-layout/ucesnik-layout.componen
     DetailsComponent,
     UcesnikDtComponent,
     UcesnikDatatableComponent,
-    UcesnikLayoutComponent
+    UcesnikLayoutComponent,
+    OsnovniPodaciComponent,
+    DodatniPodaciComponent
   ],
   imports: [
     CommonModule,

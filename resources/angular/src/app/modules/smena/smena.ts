@@ -1,5 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Kamp } from "../kamp/kamp";
+import { PrijavaSmene } from "../prijava/prijava-smene";
 
 export interface Smena {
     id: any
@@ -11,6 +12,7 @@ export interface Smena {
     cena: any,
 
     kamp?: Kamp
+    prijave?: PrijavaSmene[]
 }
 
 export function newSmena(): Smena{

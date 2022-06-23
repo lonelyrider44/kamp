@@ -12,12 +12,14 @@ export class PrijavaDatatableComponent implements OnInit {
   dataTable: any;
   @Input() kamp_id;
   @Input() smena_id;
+  @Input() ucesnik_id;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private prijavaService: PrijavaService) { }
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
     this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
+    this.ucesnik_id = this.activatedRoute.snapshot.parent.params?.ucesnikId
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -34,6 +36,8 @@ export class PrijavaDatatableComponent implements OnInit {
 
         dataTablesParameters.kamp_id = this.kamp_id
         dataTablesParameters.smena_id = this.smena_id
+        dataTablesParameters.ucesnik_id = this.ucesnik_id
+
         this.prijavaService.datatable(dataTablesParameters).subscribe((data: any) => {
           callback({
             recordsTotal: data.recordsTotal,
@@ -67,6 +71,7 @@ export class PrijavaDatatableComponent implements OnInit {
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
         { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
         { title: 'Smena', data: 'smena', name: 'smenas.naziv' },
+        { title: 'Ukupno smena', data: 'ukupno_smena', className: "dt-right"},
         // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
         // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
         // { title: 'Period', data: 'period', name: 'period' },

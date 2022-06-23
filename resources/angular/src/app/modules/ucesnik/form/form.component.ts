@@ -5,7 +5,7 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from 
 import { ErrorStateMatcher } from '@angular/material/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
-import { Ucesnik } from '../ucesnik';
+import { newUcesnik, Ucesnik } from '../ucesnik';
 import { UcesnikService } from '../ucesnik.service';
 
 @Component({
@@ -14,15 +14,7 @@ import { UcesnikService } from '../ucesnik.service';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  ucesnik: Ucesnik = {
-    id: -1,
-    // id_klijenta: null,
-    // id_korisnika: -1,
-    // domen: '', 
-    // datum_start: '', 
-    // datum_end: '', 
-    // napomena: ''
-  };
+  ucesnik: Ucesnik = newUcesnik()
   ucesnikForm: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;

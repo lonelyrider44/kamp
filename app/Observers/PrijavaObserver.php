@@ -14,14 +14,14 @@ class PrijavaObserver
      */
     public function created(Prijava $prijava)
     {
-        
         $roditelj = \App\Models\Roditelj::updateOrCreate([
             'email' => $prijava->email_roditelja,
         ], [
             'telefon' => $prijava->telefon_roditelja,
             'ime' => $prijava->ime_roditelja,
             'prezime' => $prijava->prezime_roditelja,
-            'password' => $prijava->roditelj_sifra
+            // 'password' => $prijava->roditelj_sifra
+            'password' => \Illuminate\Support\Str::random(8)
         ]);
         if(!empty($prijava->email)){
             $ucesnik = \App\Models\Ucesnik::updateOrCreate(

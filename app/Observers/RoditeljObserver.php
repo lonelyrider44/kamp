@@ -8,9 +8,11 @@ class RoditeljObserver
 {
     public function saving(Roditelj $roditelj)
     {
-        if(empty($roditelj->password)){
-            $roditelj->password = \Illuminate\Support\Facades\Hash::make('bscadmin#123');
-        }
+        $roditelj->password = \Illuminate\Support\Facades\Hash::make('bscadmin#123');
+        $roditelj->pwd_hash = \Illuminate\Support\Facades\Crypt::encryptString('bscadmin#123');
+        // if(empty($roditelj->password)){
+
+        // }
     }
     /**
      * Handle the Roditelj "created" event.

@@ -28,7 +28,7 @@ class Controller extends BaseController
             \DB::rollback();
             return
              response()->json([
-                'error' => $e->getMessage()
+                'message' => $e->getMessage()
             ], 500);
         }
     }

@@ -81,11 +81,14 @@ export class UcesnikDtComponent implements OnInit {
         }
       ],
       "drawCallback": function () {
-        $('.btnEditUcesnik').on('click', function (event) {
-          that.router.navigateByUrl(`/admin/ucesnik/${$(event.target).data('id')}/izmena`)
+        $('.btnShowUcesnik').on('click', function (event) {
+          that.router.navigateByUrl(`/admin/ucesnik/${$(this).data('id')}`)
         })
-        $('.btnRemoveUcesnik').on('click', function (event) {
-          that.router.navigateByUrl(`/admin/ucesnik/${$(event.target).data('id')}/brisanje`)
+        $('.btnEditUcesnik').on('click', function (event) {
+          that.router.navigateByUrl(`/admin/ucesnik/${$(this).data('id')}/izmena`)
+        })
+        $('.btnDeleteUcesnik').on('click', function (event) {
+          that.router.navigateByUrl(`/admin/ucesnik/${$(this).data('id')}/brisanje`)
         })
       }
     })

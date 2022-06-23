@@ -19,6 +19,7 @@ class CreatePrijavasTable extends Migration
             $table->foreignId('ucesnik_id')->nullable()->constrained('ucesniks');
             $table->foreignId('roditelj_id')->nullable()->constrained('roditeljs');
             $table->foreignId('status_id')->default(1)->constrained('prijava_statuses');
+            $table->foreignId('trener_id')->nullable()->constrained('treners');
 
             $table->string('ime_roditelja');
             $table->string('prezime_roditelja');
@@ -70,7 +71,7 @@ class CreatePrijavasTable extends Migration
             
             $table->boolean('gratis')->default(false);
             $table->boolean('opstina')->default(false);
-            $table->unsignedInteger('status_depozita')->default(1);
+            // $table->unsignedInteger('status_depozita')->default(1);
             $table->boolean('donosi_depozit_u_kamp')->default(false);
 
             $table->decimal('depozit_rsd', 11, 2)->nullable();

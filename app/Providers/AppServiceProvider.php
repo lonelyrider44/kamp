@@ -24,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         \App\Models\Prijava::observe(\App\Observers\PrijavaObserver::class);
+        // \App\Models\Roditelj::observe(\App\Observers\RoditeljObserver::class);
     }
 }

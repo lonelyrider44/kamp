@@ -13,6 +13,7 @@ class Prijava extends Model
         'ucesnik_id',
         'roditelj_id',
         'status_id',
+        'trener_id',
 
         'ime_roditelja',
         'prezime_roditelja',
@@ -52,6 +53,9 @@ class Prijava extends Model
 
         // 'prevoz',
         'tip_prevoza_id',
+        'organizovani_prevoz',
+
+        'broj_sobe',
 
         'saglasnost_politika_privatnosti',
         'saglasnost_obrada_podataka',

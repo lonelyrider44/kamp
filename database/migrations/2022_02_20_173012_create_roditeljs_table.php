@@ -20,6 +20,7 @@ class CreateRoditeljsTable extends Migration
             $table->string('ime');
             $table->string('prezime');
             $table->string('password');
+            $table->string('pwd_hash')->nullable();
 
             $table->timestamps();
         });

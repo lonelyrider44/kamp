@@ -44,6 +44,9 @@ export interface Prijava {
 
     tip_prevoza_id: any,
     organizovani_prevoz: any,
+
+    broj_sobe: any,
+
     saglasnost_politika_privatnosti: boolean,
     saglasnost_obrada_podataka: boolean,
     saglasnost_ucesce_na_kampu: boolean,
@@ -108,6 +111,9 @@ export function newPrijava(): Prijava {
 
         tip_prevoza_id: null,
         organizovani_prevoz: null,
+
+        broj_sobe: null,
+        
         saglasnost_politika_privatnosti: false,
         saglasnost_obrada_podataka: false,
         saglasnost_ucesce_na_kampu: false,
@@ -158,6 +164,8 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
 
         tip_prevoza_id: [prijava.tip_prevoza_id],
         organizovani_prevoz: [prijava.organizovani_prevoz],
+
+        broj_sobe: [''],
         saglasnost_politika_privatnosti: [prijava.saglasnost_politika_privatnosti],
         saglasnost_obrada_podataka: [prijava.saglasnost_obrada_podataka],
         saglasnost_ucesce_na_kampu: [prijava.saglasnost_ucesce_na_kampu],

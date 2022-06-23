@@ -1,0 +1,135 @@
+<form [formGroup]="ucesnikForm" (ngSubmit)="submitForm()" (keyup.enter)="submitForm()" novalidate>
+    <h3>Podaci o roditelju</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Ime roditelja" formControlName="ime_roditelja" [ngModel]="ucesnik.ime_roditelja" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('ime_roditelja')?.errors?.serverError">
+                    {{ ucesnikForm.get("ime_roditelja") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Prezime roditelja" formControlName="prezime_roditelja" [ngModel]="ucesnik.prezime_roditelja" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('prezime_roditelja')?.errors?.serverError">
+                    {{ ucesnikForm.get( "prezime_roditelja" )?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email roditelja" formControlName="email_roditelja" [ngModel]="ucesnik.email_roditelja" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('email_roditelja')?.errors?.serverError">
+                    {{ ucesnikForm.get( "email_roditelja" )?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Telefon roditelja" formControlName="telefon_roditelja" [ngModel]="ucesnik.telefon_roditelja" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('telefon_roditelja')?.errors?.serverError">
+                    {{ ucesnikForm.get( "telefon_roditelja" )?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <h3>Podaci o detetu</h3>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Ime" formControlName="ime" [ngModel]="ucesnik.ime" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('ime')?.errors?.serverError">
+                    {{ ucesnikForm.get("ime")?.errors ?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Prezime" formControlName="prezime" [ngModel]="ucesnik.prezime" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('prezime')?.errors?.serverError">
+                    {{ ucesnikForm.get("prezime") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Email" formControlName="email" [ngModel]="ucesnik.email" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('email')?.errors?.serverError">
+                    {{ ucesnikForm.get("email")?.errors ?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="ucesnik.telefon" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('telefon')?.errors?.serverError">
+                    {{ ucesnikForm.get("telefon") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="JMBG ili broj pasoša" formControlName="jmbg_pasos" [ngModel]="ucesnik.jmbg_pasos" [errorStateMatcher]="matcher" (keyup)="jmbg_parse()" />
+                <mat-error *ngIf="ucesnikForm.get('jmbg_pasos')?.errors?.serverError">
+                    {{ ucesnikForm.get("jmbg_pasos") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Datum rođenja" formControlName="datum_rodjenja" [ngModel]="ucesnik.datum_rodjenja" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('datum_rodjenja')?.errors?.serverError">
+                    {{ ucesnikForm.get( "datum_rodjenja" )?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <!-- <input matInput placeholder="Pol" formControlName="pol" [errorStateMatcher]="matcher"> -->
+                <mat-select placeholder="Pol" formControlName="pol_id" [ngModel]="ucesnik.pol_id" [errorStateMatcher]="matcher">
+                    <mat-option *ngFor="let p of pol" [value]="p.id">{{ p.naziv }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="ucesnikForm.get('pol_id')?.errors?.serverError">
+                    {{ ucesnikForm.get("pol_id") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Adresa" formControlName="adresa" [ngModel]="ucesnik.adresa" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('adresa')?.errors?.serverError">
+                    {{ ucesnikForm.get("adresa") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Mesto" formControlName="mesto" [ngModel]="ucesnik.mesto" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('mesto')?.errors?.serverError">
+                    {{ ucesnikForm.get("mesto")?.errors ?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Država" formControlName="drzava" [ngModel]="ucesnik.drzava" [errorStateMatcher]="matcher" />
+                <mat-error *ngIf="ucesnikForm.get('drzava')?.errors?.serverError">
+                    {{ ucesnikForm.get("drzava") ?.errors?.serverError }}
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <button mat-raised-button type="button" class="btn" (click)="submitForm()">Potvrdi</button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</form>

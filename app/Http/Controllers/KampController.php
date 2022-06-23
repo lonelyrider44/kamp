@@ -75,24 +75,15 @@ class KampController extends Controller
      */
     public function store(StoreKampRequest $request)
     {
-        try {
-            \DB::beginTransaction();
+        return $this->exec_safe(function()use($request){
+
             $kamp = \App\Models\Kamp::create($request->all());
-
             $kamp->smene()->createMany($request->smene);
-
             $kamp->dodatni_paketi()->createMany($request->dodatni_paketi);
-
             $kamp->organizovani_prevoz()->createMany($request->organizovani_prevoz);
 
-            \DB::commit();
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
-        // return response()->json($request->all(),500);
+            $hotel = \App\Models\Hotel::updateOrCreate(['naziv' => $kamp->smestaj],[]);
+        });
     }
 
     /**
@@ -330,8 +321,8 @@ class KampController extends Controller
         $stats['otkazane_smene'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('status_id', 2)->count();
         $stats['nije_se_pojavilo'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('status_id', 3)->count();
         $stats['donosi_depozit_u_kamp'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('donosi_depozit_u_kamp', true)->count();
-        $stats['donosi_u_kamp'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('status_depozita', 2)->count();
-        $stats['uplatilo'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('status_depozita', 3)->count();
+        // $stats['donosi_u_kamp'] = \App\Models\Prijava::where('kamp_id', $kamp->id)->where('status_depozita', 2)->count();
+        $stats['uplatilo'] = \App\Models\Uplata::where('kamp_id', $kamp->id)->count();
 
         return response()->json($stats);
     }

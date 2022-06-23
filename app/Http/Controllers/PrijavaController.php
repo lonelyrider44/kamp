@@ -10,11 +10,20 @@ use Illuminate\Http\Request;
 class PrijavaController extends Controller
 {
     public function datatable(Request $request){
-        return datatables()->of(\App\Models\Prijava::select(
+        $prijave_sub = \App\Models\Prijava::select('prijavas.ucesnik_id',\DB::raw('COUNT(prijava_smenas.smena_id) as ukupno_smena'))
+            ->join('prijava_smenas','prijava_smenas.prijava_id', 'prijavas.id')
+            ->when(!empty($request->kamp_id), function($query)use($request){
+                return $query->where('prijavas.kamp_id',$request->kamp_id);
+            })
+            ->groupBy('prijavas.ucesnik_id')->toBase();
+        $prijava_smena_sub = \App\Models\Prijava::select(
             'prijava_smenas.id',
+            'prijava_smenas.prijava_id',
             \DB::raw('CONCAT(prijavas.prezime," ",prijavas.ime) as ucesnik'),
-            \DB::raw('GROUP_CONCAT(smenas.naziv) as smena'),
+            \DB::raw('smenas.naziv as smena'),
+            // \DB::raw('GROUP_CONCAT(smenas.naziv) as smena'),
             'kamps.naziv as kamp',
+            'ps.ukupno_smena'
             // 'smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena',
             //     'kamps.naziv as kamp',
             //     \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
@@ -24,6 +33,9 @@ class PrijavaController extends Controller
             ->join('kamps','kamps.id','prijavas.kamp_id')
             ->join('prijava_smenas','prijava_smenas.prijava_id','prijavas.id')
             ->join('smenas', 'smenas.id','prijava_smenas.smena_id')
+            ->joinSub($prijave_sub,'ps', function($join){
+                $join->on('ps.ucesnik_id','prijavas.ucesnik_id');
+            })
             // ->leftJoin('ucesnik_kampas','ucesnik_kampas.smena_id','smenas.id')
             // ->leftJoin('ucesniks', 'ucesniks.id','ucesnik_kampas.ucesnik_id')
             ->when(!empty($request->kamp_id), function($query)use($request){
@@ -32,9 +44,13 @@ class PrijavaController extends Controller
             ->when(!empty($request->smena_id), function ($query) use ($request) {
                 return $query->where('smenas.id', $request->smena_id);
             })
-            ->groupBy('prijavas.ucesnik_id')
+            ->when(!empty($request->ucesnik_id), function ($query) use ($request) {
+                return $query->where('prijavas.ucesnik_id', $request->ucesnik_id);
+            })
+            // ->groupBy('prijavas.ucesnik_id')
             // ->groupBy('smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena','kamps.naziv')
-            ->toBase())
+            ->toBase();
+        return datatables()->of($prijava_smena_sub)
             ->addColumn('action','prijava.partials.dt_actions')
             // ->addColumn('period','smena.partials.dt_period')
             ->with('kamp_id', $request->kamp_id)
@@ -86,7 +102,10 @@ class PrijavaController extends Controller
      */
     public function show(Prijava $prijava)
     {
-        $prijava->kamp->load(['smene','aktivne_smene','dodatni_paketi']);
+        $prijava->kamp->load(['smene','aktivne_smene','dodatni_paketi','organizovani_prevoz']);
+        $prijava->kamp->smene->each(function($smena){
+            $smena->load(['prijave']);
+        });
         return $prijava;
     }
 
@@ -129,5 +148,17 @@ class PrijavaController extends Controller
     public function destroy(Prijava $prijava)
     {
         //
+    }
+    public function cimeri(\App\Models\Prijava $prijava, $broj_sobe){
+        return response()->json(
+            \App\Models\Prijava::where('ucesnik_id', '!=',$prijava->ucesnik_id)
+                ->where('kamp_id',$prijava->kamp_id)
+                ->where('broj_sobe', $broj_sobe)
+                ->toBase()->get()
+        );
+    }
+
+    public function statusi(){
+        return response()->json(\App\Models\PrijavaStatus::all());
     }
 }

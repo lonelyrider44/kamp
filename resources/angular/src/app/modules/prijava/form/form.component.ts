@@ -20,6 +20,7 @@ import { Velicina } from 'app/modules/velicina/velicina';
 import { VelicinaService } from 'app/modules/velicina/velicina.service';
 import { filter, pairwise } from 'rxjs/operators';
 import { newPrijava, Prijava, prijavaFormGroup } from '../prijava';
+import { PrijavaStatus } from '../prijava-status';
 import { PrijavaService } from '../prijava.service';
 
 @Component({
@@ -41,6 +42,8 @@ export class FormComponent implements OnInit {
   action_delete: boolean = false;
   prijava_success: boolean = false;
   nema_kampa: boolean = false;
+  cimeri: Prijava[] = [];
+  statusi: PrijavaStatus[] = [];
 
   matcher = new MyErrorStateMatcher();
 
@@ -58,7 +61,13 @@ export class FormComponent implements OnInit {
     private _location: Location,
     private _snackBar: MatSnackBar
   ) {
+    this.prijavaService.statusi().subscribe(res => this.statusi = res)
     this.prijavaForm = prijavaFormGroup(this.fb, this.prijava);
+    this.broj_sobe.valueChanges.subscribe(res => {
+      // console.log(res)
+      if(this.prijava.id && res)
+      this.prijavaService.cimeri(this.prijava.id, res).subscribe(res => this.cimeri = res)
+    })
   }
 
   ngOnInit(): void {
@@ -145,6 +154,7 @@ export class FormComponent implements OnInit {
                 id: smena.id,
                 datum_od: smena.datum_od,
                 datum_do: smena.datum_do,
+                broj_prijava: smena.prijave.length,
                 izabrana: this.prijava.smene.find( s => s.id==smena.id)
               }));
             // console.log(smena); 
@@ -218,5 +228,8 @@ export class FormComponent implements OnInit {
   get ukupno_eur(){
     if(this.prijava.gratis) return (0).toFixed(2);
     return (+this.prijava.ukupno_smene_eur + +this.prijava.ukupno_dodatni_paketi_eur).toFixed(2);
+  }
+  get broj_sobe(){
+    return this.prijavaForm.get('broj_sobe');
   }
 }

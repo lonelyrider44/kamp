@@ -22,6 +22,14 @@ class Smena extends Model
     public function kamp(){
         return $this->belongsTo(\App\Models\Kamp::class,'kamp_id');
     }
+    public function prijave(){
+        return $this->hasMany(\App\Models\PrijavaSmena::class, 'smena_id')
+            ->whereIn('prijava_smenas.prijava_id', function($query){
+                $query->select('prijavas.id')
+                ->from('prijavas')
+                ->where('prijavas.status_id',1);
+            });
+    }
     public function scopeAktivne($query, $datum = null){
         if(empty($datum)){
             $datum = now();

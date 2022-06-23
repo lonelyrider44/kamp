@@ -35,6 +35,8 @@ Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::get('kamp/{kamp}/dashboard_stats',[\App\Http\Controllers\KampController::class,'dashboard_stats']);
     Route::get('smena/{smena}/ucesnici',[\App\Http\Controllers\SmenaController::class,'ucesnici']);
     Route::apiResource('prijava', \App\Http\Controllers\PrijavaController::class)->except(['store']);
+    Route::post('prijava/statusi', [\App\Http\Controllers\PrijavaController::class,'statusi']);
+    Route::post('prijava/{prijava}/cimeri/{broj_sobe}', [\App\Http\Controllers\PrijavaController::class,'cimeri']);
     Route::apiResource('smena', \App\Http\Controllers\SmenaController::class);
     Route::apiResource('ucesnik', \App\Http\Controllers\UcesnikController::class);
     Route::apiResource('lokacija', \App\Http\Controllers\MestoController::class);

@@ -21,6 +21,7 @@ class Roditelj extends Authenticatable implements JWTSubject
     public function setPasswordAttribute($value){
         if(!empty($value)){
             $this->attributes['password'] = \Illuminate\Support\Facades\Hash::make($value);
+            $this->attributes['pwd_hash'] = \Illuminate\Support\Facades\Crypt::encryptString($value);
         }
     }
 
