@@ -21,6 +21,14 @@ class SeedUser extends Migration
             'ime' => 'Dejan',
             'telefon' => '064480349'
         ]);
+        \App\Models\User::create([
+            'name' => 'Administrator',
+            'email' => 'vg_admin@gmail.com ',
+            'password' => 'vgkamp#123',
+            'prezime' => 'Admin',
+            'ime' => 'Admin',
+            'telefon' => ''
+        ]);
 
     }
 

@@ -398,7 +398,15 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-
+                <h3>Pregled</h3>
+                <div class="row">
+                    <div class="offset-md-10 col-md-2">
+                        <mat-slide-toggle #pregled_obavljen [(ngModel)]="prijava.pregled_obavljen" formControlName="pregled_obavljen">Pregled obavljen</mat-slide-toggle>
+                    </div>
+                </div>
+                <div class="row" *ngIf="pregled_obavljen.checked">
+                    red za parametre
+                </div>
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button mat-raised-button type="button" class="btn" (click)="submitForm()">Potvrdi</button>

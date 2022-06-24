@@ -70,6 +70,7 @@ export interface Prijava {
     donosi_depozit_u_kamp?:boolean,
     opstina?: boolean,
     gratis?: boolean,
+    pregled_obavljen?: boolean
 }
 
 export function newPrijava(): Prijava {
@@ -121,7 +122,8 @@ export function newPrijava(): Prijava {
         saglasnost_pravila_kampa: false,
 
         gratis: false,
-        opstina: false
+        opstina: false,
+        pregled_obavljen: false
     };
 }
 export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
@@ -181,6 +183,7 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
         donosi_depozit_u_kamp: [''],
         gratis: [''],
         opstina: [''],
+        pregled_obavljen: [''],
 
         depozit_rsd: [''],
         smene_rsd: [''],

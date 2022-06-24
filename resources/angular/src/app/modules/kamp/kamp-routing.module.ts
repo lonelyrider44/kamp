@@ -13,6 +13,7 @@ import { DodatniPaketDatatableComponent } from '../dodatni-paket/dodatni-paket-d
 import { HotelDatatableComponent } from '../hotel/hotel-datatable/hotel-datatable.component';
 import { PrevozDatatableComponent } from '../prevoz/prevoz-datatable/prevoz-datatable.component';
 import { ZahtevDatatableComponent } from '../zahtev/zahtev-datatable/zahtev-datatable.component';
+import { GuestFormComponent } from '../prijava/guest-form/guest-form.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },
@@ -75,6 +76,10 @@ const routes: Routes = [
       path: 'zahtev',
       component: ZahtevDatatableComponent
       // loadChildren: () => import('../../modules/kamp/kamp.module').then(m => m.KampModule)
+    },
+    {
+      path: 'prijava',
+      component: GuestFormComponent
     }
   ],
   },

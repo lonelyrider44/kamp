@@ -10,7 +10,7 @@ class TrenerController extends Controller
 {
     public function datatable()
     {
-        return datatables()->of(\App\Models\Trener::all())
+        return datatables()->of(\App\Models\Trener::select('treners.*',\DB::raw('CONCAT(prezime," ",ime) as trener'))->toBase())
             ->addColumn('action', 'trener.partials.dt_actions')
             ->make(true);
     }

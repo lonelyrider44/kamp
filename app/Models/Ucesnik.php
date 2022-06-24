@@ -31,9 +31,9 @@ class Ucesnik extends Model implements JWTSubject
             'roditelj_id'
 
     ];
-    protected $dates = [
-        'datum_rodjenja'
-    ];
+    // protected $dates = [
+    //     'datum_rodjenja'
+    // ];
 
     public function ucesnik_kampova(){
         return $this->hasMany(\App\Models\UcesnikKampa::class,'ucesnik_id','id');

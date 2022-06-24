@@ -49,7 +49,7 @@ class CreatePrijavasTable extends Migration
             $table->foreignId('majica')->constrained('velicinas');
             $table->foreignId('sorc')->constrained('velicinas');
             $table->foreignId('duks')->constrained('velicinas');
-            $table->foreignId('trenerka')->nullable()->constrained('velicinas');
+            // $table->foreignId('trenerka')->nullable()->constrained('velicinas');
 
             $table->text('napomena_alergije')->nullable();
             $table->text('napomena_zdravstveni_problemi')->nullable();
@@ -72,7 +72,9 @@ class CreatePrijavasTable extends Migration
             $table->boolean('gratis')->default(false);
             $table->boolean('opstina')->default(false);
             // $table->unsignedInteger('status_depozita')->default(1);
+            $table->text('depozit_napomena')->nullable();
             $table->boolean('donosi_depozit_u_kamp')->default(false);
+            $table->boolean('pregled_obavljen')->default(false);
 
             $table->decimal('depozit_rsd', 11, 2)->nullable();
             $table->decimal('ukupno_smene_rsd', 11, 2)->nullable();

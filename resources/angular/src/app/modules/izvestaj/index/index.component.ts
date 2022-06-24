@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Kamp } from 'app/modules/kamp/kamp';
+import { KampService } from 'app/modules/kamp/kamp.service';
+import { Trener } from 'app/modules/korisnik/trener';
+import { TrenerService } from 'app/modules/korisnik/trener.service';
+import { Smena } from 'app/modules/smena/smena';
 import { IzvestajService } from '../izvestaj.service';
 
 @Component({
@@ -9,64 +14,24 @@ import { IzvestajService } from '../izvestaj.service';
 })
 export class IndexComponent implements OnInit {
 
-  @ViewChild('dataTableIzvestaj') table;
-  dataTable: any;
-  constructor(private router: Router, private izvestajService: IzvestajService) { }
+  kampovi: Kamp[] = [];
+  smene: Smena[] = [];
+  treneri: Trener[] = [];
+  kamp_id: number = null;
+  smena_id: number = null;
+  trener_id: number = null;
 
+  constructor(private router: Router, private kampService: KampService, private trenerService: TrenerService) { 
+    // this.kampovi$ = this.kampService.all();
+    this.kampService.all().subscribe(res => {
+      this.kampovi = res;
+    })
+    this.trenerService.all().subscribe(res => this.treneri = res);
+  }
+  kamp_selected($event){
+    this.smene = this.kampovi.find(k => k.id==this.kamp_id).smene;
+    // this.smene$ = this.smenaService.all();
+  }  
   ngOnInit(): void {
   }
-
-  ngAfterViewInit() {
-    const that = this;
-    this.dataTable = $(this.table.nativeElement);
-    this.dataTable.DataTable({
-      "ajax": (dataTablesParameters: any, callback) => {
-        this.izvestajService.datatable(dataTablesParameters).subscribe((data: any) => {
-          callback({
-            recordsTotal: data.recordsTotal,
-            recordsFiltered: data.recordsFiltered,
-            data: data.data
-          });
-        });
-      },
-      "responsive": true,
-      // "lengthChange": false, 
-      "autoWidth": false,
-      "buttons": {
-        "buttons": [{
-          "text": '<i class="fas fa-plus"></i>',
-          "action": function (e, dt, node, config) {
-            that.router.navigateByUrl(`/korisnici/create`)
-          },
-          "className": "btn btn-primary"
-        } ],
-        dom: {
-          button: {
-            className: 'btn'
-          }
-        }
-      },
-
-      // "dom": 'Blfrtip',
-      "columns": [
-        { title: 'ID', data: 'id', name: 'id' },
-        { title: 'Naziv', data: 'naziv', name: 'naziv' },
-        { title: 'Godina', data: 'godina', name: 'godina' },
-        { title: 'Lokacija', data: 'lokacija_id', name: 'lokacija_id' },
-        { title: 'Cena', data: 'cena', name: 'cena' },
-        { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
-      ],
-      "drawCallback": function () {
-        $('.btnEditKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/update/${$(event.target).data('id')}`)
-        })
-        $('.btnRemoveKorisnik').on('click', function (event) {
-          that.router.navigateByUrl(`/korisnici/delete/${$(event.target).data('id')}`)
-        })
-      }
-    })
-      .buttons().container().appendTo('#datatable_korisnik_wrapper .col-md-6:eq(0)');
-    // })
-  }
-
 }

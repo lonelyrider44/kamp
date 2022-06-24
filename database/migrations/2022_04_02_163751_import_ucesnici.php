@@ -13,7 +13,7 @@ class ImportUcesnici extends Migration
      */
     public function up()
     {
-        if (Schema::hasTable('ucesnici')) {
+        if (\Illuminate\Support\Facades\Schema::hasTable('ucesnici')) {
             \DB::beginTransaction();
             \DB::table('smenas')->delete();
             \DB::table('kamps')->delete();

@@ -49,8 +49,18 @@ export class TrenerDatatableComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
+        { title: 'Trener', data: 'trener', name: 'trener' },
+        { title: 'Koordinator', data: 'koordinator', name: 'koordinator' },
         { title: 'Email', data: 'email', name: 'email' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
+      ],
+      "columnDefs": [
+        {
+          targets: [2],
+          render: function(data, type, row, meta){
+            return data ? "DA" : "NE"
+          }
+        }
       ],
       "drawCallback": function () {
         $('.btnEditTrener').on('click', function (event) {

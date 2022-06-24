@@ -44,7 +44,7 @@ class Prijava extends Model
         'majica',
         'sorc',
         'duks',
-        'trenerka',
+        // 'trenerka',
 
         'napomena_smestaj',
         'napomena_hrana',
@@ -64,8 +64,10 @@ class Prijava extends Model
         'saglasnost_pravila_kampa',
 
         'donosi_depozit_u_kamp',
+        'depozit_napomena',
         'opstina',
         'gratis',
+        'pregled_obavljen',
 
         'depozit_rsd',
         'depozit_eur',

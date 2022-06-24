@@ -63,22 +63,34 @@ export class UcesnikDtComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
-        { title: 'Adresa', data: 'puna_adresa', name: 'puna_adresa' },
+        // { title: 'Adresa', data: 'puna_adresa', name: 'puna_adresa' },
         { title: 'Roditelj', data: 'roditelj', name: 'roditelj' },
+        { title: 'Datum rođenja', data: 'datum_rodjenja'},
+        { title: 'Smene', data: 'smene'},
+        { title: 'Oprema', data: 'oprema'},
         { title: 'Broj kampova', data: 'broj_kampova', name: 'broj_kampova', className: "dt-center" },
         { title: 'Broj smena', data: 'broj_smena', className: "dt-center" },
+        { title: 'Pregled obavljen', data: 'pregled_obavljen', className: "dt-center" },
         { title: 'Depozit', data: 'depozit', className: "dt-right" },
         { title: 'Ukupno za uplatu', data: 'ukupno', className: "dt-right" },
-        { title: 'Uplate', data: 'uplate', className: "dt-right" },
+        { title: 'Preostalo', data: 'preostalo', className: "dt-right" },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" , className: "dt-center"},
       ],
-      "columnDefs":[{
-          targets: [3],
+      "columnDefs":[
+        // {
+        //   targets: [3],
+        //   visible: !that.activatedRoute.snapshot.parent.params?.kampId
+        // },
+      {
+          targets: [5,6],
           visible: !that.activatedRoute.snapshot.parent.params?.kampId
         },{
-          targets: [5,6,7],
-          visible: !!that.activatedRoute.snapshot.parent.params?.kampId
+          targets: [7],
+          render: function(data, type, row, meta){
+            return data?"DA":"NE";
+          }
         }
+
       ],
       "drawCallback": function () {
         $('.btnShowUcesnik').on('click', function (event) {

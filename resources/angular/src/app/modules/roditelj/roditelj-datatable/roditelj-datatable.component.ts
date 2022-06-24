@@ -53,7 +53,7 @@ export class RoditeljDatatableComponent implements OnInit {
         { title: 'Ime', data: 'ime', name: 'ime' },
         { title: 'Email', data: 'email', name: 'email' },
         { title: 'Telefon', data: 'telefon', name: 'telefon' },
-        { title: 'Broj dece', data: 'broj_ucesnika', name: 'broj_ucesnika' },
+        { title: 'Broj dece', data: 'broj_ucesnika', name: 'broj_ucesnika', className: 'dt-right' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
       "drawCallback": function () {

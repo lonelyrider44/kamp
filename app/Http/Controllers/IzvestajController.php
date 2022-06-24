@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ucesnik;
-use App\Http\Requests\StoreUcesnikRequest;
-use App\Http\Requests\UpdateUcesnikRequest;
+use Illuminate\Http\Request;
 
-class UcesnikController extends Controller
+class IzvestajController extends Controller
 {
-    public function datatable(\Illuminate\Http\Request $request)
-    {
+    public function datatable(\Illuminate\Http\Request $request){
         return datatables()->of(\App\Models\Ucesnik::select(
             'ucesniks.id',
             'ucesniks.ime',
@@ -58,6 +55,9 @@ class UcesnikController extends Controller
                 });
                 // return $query->where('smenas.id', $request->smena_id);
             })
+            ->when(!empty($request->trener_id), function ($query) use ($request) {
+                return $query->where('prijavas.trener_id', $request->trener_id);
+            })
             ->groupBy('ucesniks.id')
             ->toBase()->get())
             ->addColumn('action', 'ucesnik.partials.dt_actions')
@@ -71,80 +71,5 @@ class UcesnikController extends Controller
             ->addColumn('oprema', 'ucesnik.partials.dt_oprema')
             ->rawColumns(['action', 'ucesnik', 'puna_adresa', 'roditelj','uplate','ukupno','depozit','oprema'])
             ->make(true);
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \App\Http\Requests\StoreUcesnikRequest  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreUcesnikRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ucesnik  $ucesnik
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ucesnik $ucesnik)
-    {
-        return response()->json($ucesnik);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Ucesnik  $ucesnik
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ucesnik $ucesnik)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateUcesnikRequest  $request
-     * @param  \App\Models\Ucesnik  $ucesnik
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateUcesnikRequest $request, Ucesnik $ucesnik)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Ucesnik  $ucesnik
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ucesnik $ucesnik)
-    {
-        //
     }
 }

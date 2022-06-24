@@ -205,7 +205,7 @@ class KampController extends Controller
     public function aktivni2()
     {
         return response()->json(\App\Models\Kamp::aktivni()->get()->each(function($kamp){
-            $kamp->load(['aktivne_smene','dodatni_paketi']);
+            $kamp->load(['aktivne_smene','dodatni_paketi','organizovani_prevoz']);
         }));
     }
     public function statusi()

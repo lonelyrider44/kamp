@@ -34,6 +34,6 @@ class Smena extends Model
         if(empty($datum)){
             $datum = now();
         }
-        return $query->whereDate('datum_od','<=', $datum)->whereDate('datum_do','>=',$datum);
+        return $query->whereDate('datum_od','>=', $datum)->orWhereDate('datum_do','>=',$datum);
     }
 }

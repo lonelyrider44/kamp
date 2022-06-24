@@ -88,7 +88,6 @@
         </div>
         <div class="col-md-4">
             <mat-form-field class="example-full-width">
-                <!-- <input matInput placeholder="Pol" formControlName="pol" [errorStateMatcher]="matcher"> -->
                 <mat-select placeholder="Pol" formControlName="pol_id" [ngModel]="ucesnik.pol_id" [errorStateMatcher]="matcher">
                     <mat-option *ngFor="let p of pol" [value]="p.id">{{ p.naziv }}</mat-option>
                 </mat-select>

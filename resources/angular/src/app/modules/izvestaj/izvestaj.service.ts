@@ -16,21 +16,21 @@ export class IzvestajService {
   constructor(private httpClient: HttpClient) { }
 
   datatable(dtParams:any): Observable<Izvestaj[]> {
-    return this.httpClient.post<Izvestaj[]>(`${environment.api_url}/datatable/hotel`,dtParams)
+    return this.httpClient.post<Izvestaj[]>(`${environment.api_url}/datatable/izvestaj`,dtParams)
   }
   all(): Observable<Izvestaj[]> {
-    return this.httpClient.get<Izvestaj[]>(`${environment.api_url}/hotel`);
+    return this.httpClient.get<Izvestaj[]>(`${environment.api_url}/izvestaj`);
   }
   find(id:any): Observable<Izvestaj> {
-    return this.httpClient.get<Izvestaj>(`${environment.api_url}/hotel/${id}`)
+    return this.httpClient.get<Izvestaj>(`${environment.api_url}/izvestaj/${id}`)
   }
   store(hotel): Observable<Izvestaj> {
-    return this.httpClient.post<Izvestaj>(`${environment.api_url}/hotel`, JSON.stringify(hotel), this.httpOptions)
+    return this.httpClient.post<Izvestaj>(`${environment.api_url}/izvestaj`, JSON.stringify(hotel), this.httpOptions)
   }
   update(id:any, hotel): Observable<Izvestaj> {
-    return this.httpClient.put<Izvestaj>(`${environment.api_url}/hotel/id`, JSON.stringify(hotel), this.httpOptions)
+    return this.httpClient.put<Izvestaj>(`${environment.api_url}/izvestaj/id`, JSON.stringify(hotel), this.httpOptions)
   }
   delete(id:any){
-    return this.httpClient.delete<Izvestaj>(`${environment.api_url}/hotel/${id}`, this.httpOptions)
+    return this.httpClient.delete<Izvestaj>(`${environment.api_url}/izvestaj/${id}`, this.httpOptions)
   }
 }

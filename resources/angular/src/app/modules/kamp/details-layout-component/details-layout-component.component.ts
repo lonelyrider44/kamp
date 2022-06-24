@@ -20,6 +20,7 @@ export const ROUTES: RouteInfo[] = [
   { path: 'smestaj', title: 'Smeštaj',  icon:'manage_accounts', class: '' },
   { path: 'prevoz', title: 'Prevoz',  icon:'manage_accounts', class: '' },
   { path: 'zahtev', title: 'Zahtevi',  icon:'manage_accounts', class: '' },
+  // { path: 'prijava', title: 'Nova prijava',  icon:'manage_accounts', class: '' },
 ];
 @Component({
   selector: 'app-details-layout-component',

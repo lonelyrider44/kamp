@@ -10,7 +10,7 @@ import { PolService } from 'app/modules/pol/pol.service';
 import { JMBG } from 'app/modules/shared/jmbg';
 import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { RouterExtService } from 'app/modules/shared/router-ext.service';
-import { Ucesnik } from '../ucesnik';
+import { newUcesnik, Ucesnik, ucesnikFormGroup } from '../ucesnik';
 import { UcesnikService } from '../ucesnik.service';
 
 @Component({
@@ -43,6 +43,8 @@ export class OsnovniPodaciComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.ucesnik = newUcesnik();
+    this.ucesnikForm = ucesnikFormGroup(this.fb);
     this.polService.all().subscribe(res => this.pol = res );
     this.loadFromUrl();
   }
@@ -100,9 +102,9 @@ export class OsnovniPodaciComponent implements OnInit {
     this.action_delete = this.activatedRoute.snapshot.url.map((value: UrlSegment, index: number, array: UrlSegment[]) => {
       return value.path;
     }).includes('brisanje');
-    // console.log(this.activatedRoute.snapshot.params?.prijavaId)
-    if (this.activatedRoute.snapshot.params?.prijavaId) {
-      this.ucesnikService.find(this.activatedRoute.snapshot.params?.prijavaId).subscribe(res => {
+    console.log(this.activatedRoute.snapshot.parent.params?.ucesnikId)
+    if (this.activatedRoute.snapshot.parent.params?.ucesnikId) {
+      this.ucesnikService.find(this.activatedRoute.snapshot.parent.params?.ucesnikId).subscribe(res => {
         // console.log(res)
         this.ucesnik = res
       })

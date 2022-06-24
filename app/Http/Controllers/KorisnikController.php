@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 class KorisnikController extends Controller
 {
     public function datatable(){
-        return datatables()->of(User::toBase())
+        return datatables()->of(User::select('users.*',\DB::raw('CONCAT(prezime," ",ime) as korisnik')
+        )->toBase())
             ->addColumn('action','korisnik.partials.dt_actions')
             ->rawColumns(['action'])
             ->make(true);

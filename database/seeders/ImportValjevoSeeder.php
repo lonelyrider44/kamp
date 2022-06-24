@@ -1,45 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Database\Seeders;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Database\Seeder;
 
-class Controller extends BaseController
+class ImportValjevoSeeder extends Seeder
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
-    public function angular(){
-        return view('angular');
-    }
-
-    public function exec_safe($f, $message = null)
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
-        try {
-            \DB::beginTransaction();
-            $f();
-            \DB::commit();
-            return response()->json([
-                'message' => $message ?? "Operacija uspešna"
-            ]);
-        } catch (\Exception $e) {
-            \DB::rollback();
-            return
-             response()->json([
-                'message' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function import_valjevo(){
-        if (\Illuminate\Support\Facades\Schema::hasTable('valjevo2022ukupno')) {
-
+        if (\Illuminate\Support\Facades\Schema::hasTable('ucesnici')) {
             \DB::beginTransaction();
             \DB::table('smenas')->delete();
             \DB::table('kamps')->delete();
-            // dd('stop');
             $kamp = \App\Models\Kamp::create([
                 'naziv' => 'Letnji kamp Valjevo 2022',
                 'datum_od' => '2022-01-01',
@@ -84,7 +61,7 @@ class Controller extends BaseController
                 'datum_do' => '2022-07-30',
                 'kamp_id' => $kamp->id
             ]);
-            $sesta_smena = \App\Models\Smena::create([
+            $peta_smena = \App\Models\Smena::create([
                 'naziv' => 'VI smena',
                 'datum_od' => '2022-07-30',
                 'datum_do' => '2022-08-06',
@@ -136,43 +113,27 @@ class Controller extends BaseController
             $kamp->organizovani_prevoz()->save(new \App\Models\OrganizovaniPrevoz(['naziv' => 'Beograd-Valjevo', 'cena_rsd'=>800, 'cena_eur'=>7]));
             $kamp->organizovani_prevoz()->save(new \App\Models\OrganizovaniPrevoz(['naziv' => 'Valjevo-Beograd', 'cena_rsd'=>800, 'cena_eur'=>7]));
 
-            // dd('stop');
-            $ucesnici = \DB::table('valjevo2022ukupno')->get()
-            ->map(function ($ucesnik) use ($kamp, $prva_smena, $druga_smena,$treca_smena, $cetvrta_smena, $peta_smena,$sesta_smena) {
-                // dd('stop');
+            $ucesnici = \DB::table('valjevo2022ukupno')->get()->map(function ($ucesnik) use ($kamp, $prva_smena, $druga_smena,$treca_smena, $cetvrta_smena, $peta_smena) {
                 $ucesnik->ime_prezime = explode(' ', $ucesnik->ime_prezime);
-                $ucesnik_ime = (count($ucesnik->ime_prezime) > 0) ? $ucesnik->ime_prezime[0] : '';
-                $ucesnik_prezime = (count($ucesnik->ime_prezime) > 1) ? $ucesnik->ime_prezime[1] : '';
                 if(count($ucesnik->ime_prezime)>2){
-                    $ucesnik_prezime .= " {$ucesnik->ime_prezime[2]}";
                     // dd($ucesnik->ime_prezime);
 
-                    // throw new \Exception($ucesnik->ime_prezime);
+                    throw new \Exception($ucesnik->ime_prezime);
                 }
                     
+                $ucesnik_ime = (count($ucesnik->ime_prezime) > 0) ? $ucesnik->ime_prezime[0] : '';
+                $ucesnik_prezime = (count($ucesnik->ime_prezime) > 1) ? $ucesnik->ime_prezime[1] : '';
                 $ucesnik->ime_prezime_roditelj = explode(' ', $ucesnik->ime_prezime_roditelj);
+                if(count($ucesnik->ime_prezime_roditelj)>2) dd($ucesnik->ime_prezime_roditelj);
                 $roditelj_ime = (count($ucesnik->ime_prezime_roditelj) > 0) ? $ucesnik->ime_prezime_roditelj[0] : '';
                 $roditelj_prezime = (count($ucesnik->ime_prezime_roditelj) > 1) ? $ucesnik->ime_prezime_roditelj[1] : '';
-                if(count($ucesnik->ime_prezime_roditelj)>2) $roditelj_prezime .= " {$ucesnik->ime_prezime_roditelj[2]}";
-
-                if(\Str::contains($ucesnik->datum_rodjenja,'/')){
-                    $ucesnik->datum_rodjenja = explode('/', $ucesnik->datum_rodjenja);
-                }elseif(\Str::contains($ucesnik->datum_rodjenja,'-')){
-                    $ucesnik->datum_rodjenja = explode('-', $ucesnik->datum_rodjenja);
-                }else{
-                    dd("Datum rodjenja",$ucesnik);
-                }
-                if(count($ucesnik->datum_rodjenja)!=3){
-
-                    dd($ucesnik->datum_rodjenja);
-
-                }
+                $ucesnik->datum_rodjenja = explode('/', $ucesnik->datum_rodjenja);
                 if(strlen($ucesnik->datum_rodjenja[0])==4){
                     $ucesnik->datum_rodjenja = "{$ucesnik->datum_rodjenja[0]}-{$ucesnik->datum_rodjenja[1]}-{$ucesnik->datum_rodjenja[2]}";
                 }elseif(strlen($ucesnik->datum_rodjenja[2])==4){
                     $ucesnik->datum_rodjenja = "{$ucesnik->datum_rodjenja[2]}-{$ucesnik->datum_rodjenja[1]}-{$ucesnik->datum_rodjenja[0]}";
                 }else{
-                    dd("Datum rodjenja", $ucesnik->datum_rodjenja);
+                    dd($ucesnik->datum_rodjenja);
                 }
                 $smena_id = null;
                 if($prva_smena->naziv==$ucesnik->smena) $smena_id = $prva_smena->id;
@@ -180,29 +141,18 @@ class Controller extends BaseController
                 if($treca_smena->naziv==$ucesnik->smena) $smena_id = $treca_smena->id;
                 if($cetvrta_smena->naziv==$ucesnik->smena) $smena_id = $cetvrta_smena->id;
                 if($peta_smena->naziv==$ucesnik->smena) $smena_id = $peta_smena->id;
-                if($sesta_smena->naziv==$ucesnik->smena) $smena_id = $sesta_smena->id;
 
-                if(empty($smena_id)) dd("Smena",$ucesnik->smena);
-
-                $ucesnik->telefon_roditelj= \Str::replace('Err:509','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('3.82E+11','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('3.82E+10','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('3.81638E+11','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('#N/A','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('#ERROR!','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('3.81641E+11','', $ucesnik->telefon_roditelj);
-                $ucesnik->telefon_roditelj= \Str::replace('3.88E+10','', $ucesnik->telefon_roditelj);
+                if(empty($smena_id)) dd($ucesnik->smena);
                 return [
                     'ime' => $ucesnik_ime,
                     'prezime' => $ucesnik_prezime,
                     'ime_roditelja' => $roditelj_ime,
                     'prezime_roditelja' => $roditelj_prezime,
-                    'email_roditelja' => $ucesnik->email_roditelj,
-                    'telefon_roditelja' => !empty($ucesnik->telefon_roditelj)?$ucesnik->telefon_roditelj: null,
+                    'email_roditelja' => $ucesnik->email_roditelja,
+                    'telefon_roditelja' => $ucesnik->telefon_roditelja,
                     'datum_rodjenja' => $ucesnik->datum_rodjenja,
-                    'jmbg_pasos' => $ucesnik->jmbg_pasos,
+                    'jmbg_pasos' => $ucesnik->jmbg,
                     'depozit' => $ucesnik->depozit,
-                    'depozit_napomena' => $ucesnik->depozit,
                     'pol_id' => ($ucesnik->pol == 'Muški') ? 1 : 2,
                     'adresa' => $ucesnik->adresa,
                     'grad' => $ucesnik->grad,
@@ -213,21 +163,21 @@ class Controller extends BaseController
                     'sorc' => \App\Models\Velicina::where('naziv',$ucesnik->sorc)->first()->id,
                     'duks' => \App\Models\Velicina::where('naziv',$ucesnik->duks)->first()->id,
                     // 'trenerka' => \App\Models\Velicina::where('naziv',$ucesnik->sorc)->first()->id,
-                    // 'prijava' => $ucesnik->prijava,
+                    'prijava' => $ucesnik->prijava,
                     'klub' => $ucesnik->klub,
-                    'iskustvo' => $ucesnik->koliko_dugo_trenira,
+                    'iskustvo' => $ucesnik->iskustvo,
                     'pozicija' => $ucesnik->pozicija,
-                    // 'koliko_dugo_trenira' => $ucesnik->koliko_dugo_trenira,
                     'smena' => $ucesnik->smena,
+                    'alergija_polen' => $ucesnik->alergija_polen,
                     'zdravstveni_problem' => $ucesnik->zdravstveni_problem,
-                    'tip_prevoza_id' => \Str::contains($ucesnik->prevoz, 'Samostalno')?1:2,
-                    'organizovani_prevoz' => !\Str::contains($ucesnik->prevoz, 'Samostalno')?$kamp->organizovani_prevoz->first()->id:null,
-                    // 'pet_treninga' => $ucesnik->pet_treninga,
-                    'napomena_hrana' => $ucesnik->napomene_ishrana,
+                    'tip_prevoza_id' => ($ucesnik->prevoz=='Samostalno')?1:2,
+                    'organizovani_prevoz' => ($ucesnik->prevoz!='Samostalno')?\App\Models\OrganizovaniPrevoz::where('naziv',$ucesnik->prevoz)->first()->id:null,
+                    'pet_treninga' => $ucesnik->pet_treninga,
+                    'napomena_hrana' => $ucesnik->napomena_hrana,
                     'napomena_smestaj' => $ucesnik->napomena_smestaj,
-                    // 'interna_napomena' => $ucesnik->interna_napomena,
+                    'interna_napomena' => $ucesnik->interna_napomena,
                     'kamp_id' => $kamp->id,
-                    'smena_id' => $smena_id,
+                    'smena_id' => ($ucesnik->smena == "I smena") ? $prva_smena->id : $druga_smena->id,
                     'saglasnost_politika_privatnosti' => true,
                     'saglasnost_obrada_podataka' => true,
                     'saglasnost_ucesce_na_kampu' => true,
@@ -235,7 +185,9 @@ class Controller extends BaseController
                     'saglasnost_pravila_kampa' => true,
 
                     'napomena_zdravstveni_problemi' => $ucesnik->zdravstveni_problem,
-                    'napomena_alergije' => $ucesnik->alergije,
+                    'napomena_alergije' => $ucesnik->alergija_polen,
+
+                    'smena_id' => ($ucesnik->smena=="I smena")?$prva_smena->id:$druga_smena->id
                 ];
             })->each(function ($ucesnik, $key) {
                 $prijava = \App\Models\Prijava::create($ucesnik);

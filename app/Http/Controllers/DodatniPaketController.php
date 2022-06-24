@@ -26,6 +26,7 @@ class DodatniPaketController extends Controller
             // ->addColumn('broj_smena', '0')
             // ->addColumn('cena', 'kamp.partials.dt_cena')
             ->addColumn('action', 'dodatni_paket.partials.dt_actions')
+            ->addColumn('cena', 'dodatni_paket.partials.dt_cena')
             // ->addColumn('period', 'kamp.partials.dt_period')
             ->rawColumns(['period', 'action', 'cena'])
             ->make(true);

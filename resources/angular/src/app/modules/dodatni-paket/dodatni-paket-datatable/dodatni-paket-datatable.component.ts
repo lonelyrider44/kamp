@@ -54,7 +54,8 @@ export class DodatniPaketDatatableComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'Paket', data: 'naziv', name: 'naziv' },
-        { title: 'Cena', data: 'iznos_eur', name: 'dodatni_pakets.iznos_eur' },
+        { title: 'Opis', data: 'opis', name: 'opis' },
+        { title: 'Cena', data: 'cena', name: 'cena', className: 'dt-right' },
         // { title: 'Smena', data: 'smena', name: 'smenas.naziv' },
         // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
         // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },

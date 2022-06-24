@@ -65,8 +65,8 @@ Route::prefix('template')->middleware([])->group(function(){
     Route::view('login','template.login');
 });
 
+Route::get('/import_valjevo',[\App\Http\Controllers\Controller::class,'import_valjevo']);
 Route::get('/{any?}', [\App\Http\Controllers\Controller::class,'angular'])->where('any','^(?!api).*');
-
 
 // Route::redirect('/','/prijava');
 // Auth::routes();

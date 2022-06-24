@@ -12,9 +12,22 @@
                         <p class="card-category"> </p>
                     </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table #dataTableIzvestaj id="datatable_izvestaj" class="table table-bordered table-striped table-sm"></table>
-                        </div>
+                        <mat-form-field class="pull-right col-md-3">
+                            <mat-select #smena [(ngModel)]="trener_id" placeholder="Izaberite trenera">
+                                <mat-option *ngFor="let trener of treneri" [value]="trener.id">{{trener.prezime}} {{trener.ime}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pull-right col-md-3">
+                            <mat-select #smena [(ngModel)]="smena_id" placeholder="Izaberite smenu">
+                                <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pull-right col-md-3">
+                            <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+                                <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <app-izvestaj-datatable [kamp_id]="kamp_id" [smena_id]="smena_id" [trener_id]="trener_id"></app-izvestaj-datatable>
                     </div>
                 </div>
             </div>

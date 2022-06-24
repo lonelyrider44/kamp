@@ -49,6 +49,7 @@ export class AdministratorDatatableComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'ID', data: 'id', name: 'id' },
+        { title: 'Korisnik', data: 'korisnik', name: 'korisnik' },
         { title: 'Email', data: 'email', name: 'email' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%", className: "dt-center" },
       ],
