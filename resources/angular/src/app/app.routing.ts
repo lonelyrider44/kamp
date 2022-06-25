@@ -17,13 +17,13 @@ import { GuestFormComponent } from './modules/prijava/guest-form/guest-form.comp
 const routes: Routes =[
   {
     path: '',
-    redirectTo: 'prijava',
+    // redirectTo: 'prijava',
     pathMatch: 'full',
-  },
-  {
-    path: 'prijava',
     component: GuestFormComponent
   },
+  // {
+  //   path: 'prijava',
+  // },
   {
     path: '',
     children: [{

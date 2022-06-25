@@ -22,6 +22,14 @@ class SeedUser extends Migration
             'telefon' => '064480349'
         ]);
         \App\Models\User::create([
+            'name' => 'Nina Nikolić',
+            'email' => 'nina.zadrin992@gmail.com ',
+            'password' => 'pickos#123',
+            'prezime' => 'Nikolić',
+            'ime' => 'Nina',
+            'telefon' => '062435340'
+        ]);
+        \App\Models\User::create([
             'name' => 'Administrator',
             'email' => 'vg_admin@gmail.com ',
             'password' => 'vgkamp#123',

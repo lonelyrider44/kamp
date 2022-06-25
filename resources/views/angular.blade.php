@@ -235,7 +235,7 @@
       </svg>
         </div>
     </app-root>
-<script src="/assets/angular/runtime.2834488464ffec8d.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.43e0929a30a8fdb2.js" defer=""></script><script src="/assets/angular/main.85a6404147a61d88.js" type="module"></script></body>
+<script src="/assets/angular/runtime.2834488464ffec8d.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.43e0929a30a8fdb2.js" defer=""></script><script src="/assets/angular/main.6a0e4fc6ea19b1e5.js" type="module"></script></body>
 
 
 </html>
