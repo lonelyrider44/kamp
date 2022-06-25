@@ -185,28 +185,33 @@
                                             <h5>Dodatni paketi</h5>
                                         </div>
                                     </div>
-                                    <div class="row border-bottom" *ngFor="
-                                            let dodatni_paket of dodatni_paketi.controls;
-                                            let i = index
-                                        " [formGroupName]="i">
+                                    <div class="row border-bottom" *ngFor="let dodatni_paket of dodatni_paketi.controls;let i = index" [formGroupName]="i">
                                         <mat-form-field class="col-md-7">
                                             <!-- <mat-label>Naziv</mat-label> -->
                                             <input matInput placeholder="Naziv" formControlName="naziv" [value]="" />
                                         </mat-form-field>
-                                        <mat-form-field class="col-md-2">
-                                            <!-- <mat-label>Naziv</mat-label> -->
-                                            <input matInput placeholder="" formControlName="iznos_rsd" [value]="" />
-                                            <span matSuffix>RSD</span>
-                                        </mat-form-field>
-                                        <mat-form-field class="col-md-2">
-                                            <!-- <mat-label>Naziv</mat-label> -->
-                                            <input matInput placeholder="" formControlName="iznos_eur" [value]="" />
-                                            <mat-icon matSuffix>euro_symbol</mat-icon>
-                                        </mat-form-field>
-                                        <mat-form-field class="col-md-10">
-                                            <!-- <mat-label>Naziv</mat-label> -->
-                                            <textarea matInput placeholder="Opis" formControlName="opis"></textarea>
-                                        </mat-form-field>
+                                        <div class="col-md-10">
+                                            <div class="row">
+                                                <mat-form-field class="col-md-12">
+                                                    <!-- <mat-label>Naziv</mat-label> -->
+                                                    <textarea matInput placeholder="Opis" formControlName="opis"></textarea>
+                                                </mat-form-field>
+
+                                            </div>
+                                            <div class="row">
+                                                <mat-form-field class="offset-md-8 col-md-2">
+                                                    <!-- <mat-label>Naziv</mat-label> -->
+                                                    <input matInput placeholder="" formControlName="iznos_rsd" [value]="" />
+                                                    <span matSuffix>RSD</span>
+                                                </mat-form-field>
+                                                <mat-form-field class="col-md-2">
+                                                    <!-- <mat-label>Naziv</mat-label> -->
+                                                    <input matInput placeholder="" formControlName="iznos_eur" [value]="" />
+                                                    <mat-icon matSuffix>euro_symbol</mat-icon>
+                                                </mat-form-field>
+
+                                            </div>
+                                        </div>
                                         <div class="col-md-2 d-flex justify-content-center">
                                             <button mat-mini-fab type="button" color="secondary" class="pull-right btnPlus btn-secondary" (click)="remove_dodatni_paket(i)">
                                                 <mat-icon>delete</mat-icon>

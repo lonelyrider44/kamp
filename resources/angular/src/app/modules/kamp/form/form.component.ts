@@ -101,6 +101,10 @@ export class FormComponent extends Form implements OnInit {
         // console.log(res);
         this.kamp = res
 
+        console.log(this.kamp.lokacija.naziv)
+        // this.filtriranaMesta = this.mestoService.autocomplete(this.kamp.lokacija.naziv)
+        this.mestoService.autocomplete(this.kamp.lokacija.naziv).subscribe(res => this.filteredBanks.next(res))
+
         this.kamp.smene.forEach(smena => {
           this.add_smena(null, smena.id, smena.naziv, smena.datum_od, smena.datum_do);
         })
@@ -173,6 +177,7 @@ export class FormComponent extends Form implements OnInit {
 
   protected filterBanks() {
     let search = this.mestoFilterCtrl.value;
+    
     this.filtriranaMesta = this.mestoService.autocomplete(search)
 
     this.mestoService.autocomplete(search).subscribe(res => this.filteredBanks.next(res))

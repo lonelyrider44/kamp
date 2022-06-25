@@ -27,5 +27,8 @@ class DatabaseSeeder extends Seeder
 
         Schema::enableForeignKeyConstraints();
         $this->call(DodatniPaketsTableSeeder::class);
+        $this->call(SmenasTableSeeder::class);
+        $this->call(RoditeljsTableSeeder::class);
+        $this->call(UcesniksTableSeeder::class);
     }
 }

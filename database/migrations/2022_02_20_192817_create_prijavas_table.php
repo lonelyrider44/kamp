@@ -33,7 +33,7 @@ class CreatePrijavasTable extends Migration
 
             $table->foreignId('pol_id')->contrained('pols');
             $table->date('datum_rodjenja');
-            $table->string('jmbg_pasos');
+            $table->string('jmbg_pasos')->nullable();
             // $table->string('pasos')->nullable();
 
             $table->string('adresa');

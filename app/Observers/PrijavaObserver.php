@@ -23,17 +23,25 @@ class PrijavaObserver
             // 'password' => $prijava->roditelj_sifra
             'password' => \Illuminate\Support\Str::random(8)
         ]);
-        if(!empty($prijava->email)){
-            $ucesnik = \App\Models\Ucesnik::updateOrCreate(
-                ['email' => $prijava->email],
-                $prijava->toArray() + ['roditelj_id' => $roditelj->id]
-            );
-        }else{
-            $ucesnik = \App\Models\Ucesnik::updateOrCreate(
-                ['jmbg_pasos' => $prijava->jmbg_pasos],
-                $prijava->toArray() + ['roditelj_id' => $roditelj->id]
-            );
-        }
+
+        $ucesnik_key = [];
+        if(!empty($prijava->email)) $ucesnik_key['email'] = $prijava->email;
+        if(!empty($prijava->jmbg_pasos)) $ucesnik_key['jmbg_pasos'] = $prijava->jmbg_pasos;
+        $ucesnik = \App\Models\Ucesnik::updateOrCreate($ucesnik_key,
+            $prijava->toArray() + ['roditelj_id' => $roditelj->id]
+        );
+        // if(!empty($prijava->email) && !empty($prijava->jmbg_pasos)){
+        // }elseif(empty($prijava->email) && !empty($prijava->jmbg_pasos)){
+        //     $ucesnik = \App\Models\Ucesnik::updateOrCreate(
+        //         ['jmbg_pasos' => $prijava->jmbg_pasos],
+        //         $prijava->toArray() + ['roditelj_id' => $roditelj->id]
+        //     );
+        // }elseif(!empty($prijava->email) && empty($prijava->jmbg_pasos)){
+        //     $ucesnik = \App\Models\Ucesnik::updateOrCreate(
+        //         ['email' => $prijava->email],
+        //         $prijava->toArray() + ['roditelj_id' => $roditelj->id]
+        //     );
+        // }
         if(\App\Models\Prijava::where('ucesnik_id', $ucesnik->id)->where('status_id',4)->count()>0){
             throw new \Exception('Imate zabranu prijave!');
         }

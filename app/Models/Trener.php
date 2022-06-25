@@ -17,7 +17,8 @@ class Trener extends Model
         'telefon',
         'password',
         'majica', 'sorc', 'duks', 'trenerka',
-        'koordinator'
+        'koordinator',
+        'pol_id','komada','oprema_napomena'
     ];
 
     public function setPasswordAttribute($value){

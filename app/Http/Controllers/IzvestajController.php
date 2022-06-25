@@ -60,7 +60,7 @@ class IzvestajController extends Controller
             })
             ->groupBy('ucesniks.id')
             ->toBase()->get())
-            ->addColumn('action', 'ucesnik.partials.dt_actions')
+            ->addColumn('action', 'izvestaj.partials.dt_actions')
             ->addColumn('ucesnik', 'ucesnik.partials.dt_ucesnik')
             ->addColumn('puna_adresa', 'ucesnik.partials.dt_puna_adresa')
             ->addColumn('roditelj', 'ucesnik.partials.dt_roditelj')

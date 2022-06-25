@@ -31,7 +31,7 @@ class CreateUcesniksTable extends Migration
 
             $table->string('prezime_roditelja');
             $table->string('ime_roditelja');
-            $table->string('telefon_roditelja');
+            $table->string('telefon_roditelja')->nullable();
             $table->string('email_roditelja');
 
             $table->foreignId('roditelj_id')->nullable()->constrained('roditeljs');

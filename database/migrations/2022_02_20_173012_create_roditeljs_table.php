@@ -16,7 +16,7 @@ class CreateRoditeljsTable extends Migration
         Schema::create('roditeljs', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique()->nullable();
-            $table->string('telefon')->unique()->nullable();
+            $table->string('telefon')->nullable();
             $table->string('ime');
             $table->string('prezime');
             $table->string('password');

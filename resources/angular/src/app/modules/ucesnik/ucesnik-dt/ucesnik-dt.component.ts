@@ -67,6 +67,7 @@ export class UcesnikDtComponent implements OnInit {
         { title: 'Roditelj', data: 'roditelj', name: 'roditelj' },
         { title: 'Datum rođenja', data: 'datum_rodjenja'},
         { title: 'Smene', data: 'smene'},
+        { title: 'Dodatni paketi', data: 'dodatni_paketi'},
         { title: 'Oprema', data: 'oprema'},
         { title: 'Broj kampova', data: 'broj_kampova', name: 'broj_kampova', className: "dt-center" },
         { title: 'Broj smena', data: 'broj_smena', className: "dt-center" },
@@ -82,10 +83,10 @@ export class UcesnikDtComponent implements OnInit {
         //   visible: !that.activatedRoute.snapshot.parent.params?.kampId
         // },
       {
-          targets: [5,6],
+          targets: [6,7],
           visible: !that.activatedRoute.snapshot.parent.params?.kampId
         },{
-          targets: [7],
+          targets: [8],
           render: function(data, type, row, meta){
             return data?"DA":"NE";
           }

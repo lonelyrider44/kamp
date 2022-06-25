@@ -33,7 +33,8 @@ class UcesnikController extends Controller
             'prijavas.pregled_obavljen',
             \DB::raw('COUNT(DISTINCT prijavas.kamp_id) as broj_kampova'),
             \DB::raw('COUNT(prijava_smenas.smena_id) as broj_smena'),
-            \DB::raw('GROUP_CONCAT(smenas.naziv) as smene'),
+            \DB::raw('GROUP_CONCAT(DISTINCT smenas.naziv) as smene'),
+            \DB::raw('GROUP_CONCAT(DISTINCT dodatni_pakets.naziv) as dodatni_paketi'),
             \DB::raw('SUM(uplatas.iznos_rsd) as uplate_rsd'),
             \DB::raw('SUM(uplatas.iznos_eur) as uplate_eur'),
             'v_m.naziv as vel_majica',
@@ -42,7 +43,9 @@ class UcesnikController extends Controller
         )
             ->join('prijavas', 'prijavas.ucesnik_id', 'ucesniks.id')
             ->join('prijava_smenas','prijava_smenas.prijava_id','prijavas.id')
+            ->leftJoin('prijava_paketis','prijava_paketis.prijava_id','prijavas.id')
             ->leftJoin('smenas','smenas.id','prijava_smenas.smena_id')
+            ->leftJoin('dodatni_pakets','dodatni_pakets.id','prijava_paketis.dodatni_paket_id')
             ->leftJoin('uplatas','uplatas.ucesnik_id', 'ucesniks.id')
             ->join('velicinas as v_m','v_m.id','prijavas.majica')
             ->join('velicinas as v_s','v_s.id','prijavas.sorc')

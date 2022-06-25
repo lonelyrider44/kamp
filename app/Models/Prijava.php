@@ -122,6 +122,7 @@ class Prijava extends Model
     }
     public function updateCena()
     {
+        $this->load(['smene','dodatni_paketi']);
         $ukupno_smene_rsd = $this->kamp->cena_smene_rsd * $this->smene->count();
         $ukupno_smene_eur = $this->kamp->cena_smene_eur * $this->smene->count();
         $ukupno_dodatni_paketi_rsd = 0;

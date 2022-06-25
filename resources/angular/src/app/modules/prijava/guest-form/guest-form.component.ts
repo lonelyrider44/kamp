@@ -72,6 +72,7 @@ export class GuestFormComponent implements OnInit {
     this.prijavaForm.get('kamp_id')?.valueChanges.subscribe( x => {
       this.kamp = this.kampovi.find(k => k.id = x)
       if(this.kamp){
+        this.smene.clear();
         this.kamp.aktivne_smene.forEach(smena => {
           this.smene.push(
             this.fb.group({
@@ -83,6 +84,7 @@ export class GuestFormComponent implements OnInit {
             }));
           // console.log(smena); 
         })
+        this.dodatni_paketi.clear();
         this.kamp.dodatni_paketi.forEach(dt => {
           this.dodatni_paketi.push(
             this.fb.group({

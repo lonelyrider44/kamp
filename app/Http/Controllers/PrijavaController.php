@@ -17,13 +17,13 @@ class PrijavaController extends Controller
             })
             ->groupBy('prijavas.ucesnik_id')->toBase();
         $prijava_smena_sub = \App\Models\Prijava::select(
-            'prijava_smenas.id',
-            'prijava_smenas.prijava_id',
+            'prijavas.id',
+            // 'prijava_smenas.prijava_id',
             \DB::raw('CONCAT(prijavas.prezime," ",prijavas.ime) as ucesnik'),
-            \DB::raw('smenas.naziv as smena'),
-            // \DB::raw('GROUP_CONCAT(smenas.naziv) as smena'),
+            // \DB::raw('smenas.naziv as smena'),
+            \DB::raw('GROUP_CONCAT(smenas.naziv) as smena'),
             'kamps.naziv as kamp',
-            'ps.ukupno_smena'
+            // 'ps.ukupno_smena'
             // 'smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena',
             //     'kamps.naziv as kamp',
             //     \DB::raw('COUNT(ucesnik_kampas.id) as broj_ucesnika'),
@@ -47,7 +47,7 @@ class PrijavaController extends Controller
             ->when(!empty($request->ucesnik_id), function ($query) use ($request) {
                 return $query->where('prijavas.ucesnik_id', $request->ucesnik_id);
             })
-            // ->groupBy('prijavas.ucesnik_id')
+            ->groupBy('prijavas.ucesnik_id')
             // ->groupBy('smenas.id','smenas.naziv','smenas.datum_od','smenas.datum_do','smenas.cena','kamps.naziv')
             ->toBase();
         return datatables()->of($prijava_smena_sub)

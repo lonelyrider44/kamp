@@ -71,7 +71,7 @@ export class PrijavaDatatableComponent implements OnInit {
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
         { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
         { title: 'Smena', data: 'smena', name: 'smenas.naziv' },
-        { title: 'Ukupno smena', data: 'ukupno_smena', className: "dt-right"},
+        // { title: 'Ukupno smena', data: 'ukupno_smena', className: "dt-right"},
         // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
         // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
         // { title: 'Period', data: 'period', name: 'period' },
