@@ -1,14 +1,13 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SmenaService } from 'app/modules/smena/smena.service';
 import { OpremaService } from '../oprema.service';
 
 @Component({
-  selector: 'app-oprema-datatable',
-  templateUrl: './oprema-datatable.component.html',
-  styleUrls: ['./oprema-datatable.component.scss']
+  selector: 'app-oprema-index-treneri-datatable',
+  templateUrl: './oprema-index-treneri-datatable.component.html',
+  styleUrls: ['./oprema-index-treneri-datatable.component.scss']
 })
-export class OpremaDatatableComponent implements OnInit {
+export class OpremaIndexTreneriDatatableComponent implements OnInit {
   @ViewChild('dataTableOprema') table;
   dataTable: any;
   @Input() kamp_id;
@@ -107,4 +106,5 @@ export class OpremaDatatableComponent implements OnInit {
       .buttons().container().appendTo('#datatable_oprema_wrapper .col-md-6:eq(0)');
     // })
   }
+
 }

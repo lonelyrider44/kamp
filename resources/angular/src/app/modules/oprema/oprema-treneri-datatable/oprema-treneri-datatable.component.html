@@ -1,0 +1,51 @@
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select [(ngModel)]="sorc" placeholder="Sorc" (selectionChange)="reload_datatable()">
+        <mat-option *ngFor="let velicina of velicine" [value]="velicina.id">{{velicina.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="sorc" matSuffix mat-icon-button aria-label="Clear" (click)="sorc=undefined; $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+        </button>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select [(ngModel)]="duks" placeholder="Duks" (selectionChange)="reload_datatable()">
+        <mat-option *ngFor="let velicina of velicine" [value]="velicina.id">{{velicina.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="duks" matSuffix mat-icon-button aria-label="Clear" (click)="duks=undefined; $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+        </button>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select [(ngModel)]="majica" placeholder="Majica" (selectionChange)="reload_datatable()">
+        <mat-option *ngFor="let velicina of velicine" [value]="velicina.id">{{velicina.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="majica" matSuffix mat-icon-button aria-label="Clear" (click)="majica=undefined; $event.stopPropagation()">
+  <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select [(ngModel)]="pol_id" placeholder="Izaberite pol" (selectionChange)="reload_datatable()">
+        <mat-option *ngFor="let pol of polovi" [value]="pol.id">{{pol.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="pol_id" matSuffix mat-icon-button aria-label="Clear" (click)="pol_id=undefined; $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+        </button>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select #smena [(ngModel)]="smena_id" placeholder="Izaberite smenu" (selectionChange)="reload_datatable()">
+        <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="smena_id" matSuffix mat-icon-button aria-label="Clear" (click)="smena_id=undefined; $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+        </button>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-2">
+    <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+        <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+    </mat-select>
+    <button mat-button *ngIf="kamp_id" matSuffix mat-icon-button aria-label="Clear" (click)="kamp_id=undefined; $event.stopPropagation()">
+        <mat-icon>close</mat-icon>
+        </button>
+</mat-form-field>
+<div class="table-responsive">
+    <table #dataTableOpremaTreneri id="datatable_oprema_treneri" class="table table-bordered table-striped table-sm"></table>
+</div>

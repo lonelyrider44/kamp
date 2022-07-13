@@ -37,7 +37,7 @@
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/materialicons/v130/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/materialicons/v134/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2) format('woff2');
 }
 /* cyrillic-ext */
 @font-face {
@@ -235,7 +235,7 @@
       </svg>
         </div>
     </app-root>
-<script src="/assets/angular/runtime.2834488464ffec8d.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.43e0929a30a8fdb2.js" defer=""></script><script src="/assets/angular/main.6a0e4fc6ea19b1e5.js" type="module"></script></body>
+<script src="/assets/angular/runtime.a32ab9cc18c3c8f7.js" type="module"></script><script src="/assets/angular/polyfills.74a16d6a00ed014e.js" type="module"></script><script src="/assets/angular/scripts.8a9253d161069d4d.js" defer=""></script><script src="/assets/angular/main.eed8731551ded5b4.js" type="module"></script></body>
 
 
 </html>

@@ -1,0 +1,13 @@
+<mat-form-field appearance="standard" class="pull-right col-md-3">
+    <mat-select #smena [(ngModel)]="smena_id" placeholder="Izaberite smenu" (selectionChange)="smena_selected($event)">
+        <mat-option *ngFor="let smena of smene" [value]="smena.id">{{smena.naziv}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<mat-form-field appearance="standard" class="pull-right col-md-3">
+    <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+        <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+    </mat-select>
+</mat-form-field>
+<div class="table-responsive">
+    <table #dataTableOprema id="datatable_oprema" class="table table-bordered table-striped table-sm"></table>
+</div>

@@ -1,20 +1,43 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Kamp } from 'app/modules/kamp/kamp';
+import { KampService } from 'app/modules/kamp/kamp.service';
+import { Smena } from 'app/modules/smena/smena';
 import { SmenaService } from 'app/modules/smena/smena.service';
 import { OpremaService } from '../oprema.service';
 
 @Component({
-  selector: 'app-oprema-datatable',
-  templateUrl: './oprema-datatable.component.html',
-  styleUrls: ['./oprema-datatable.component.scss']
+  selector: 'app-oprema-index-ucesnici-datatable',
+  templateUrl: './oprema-index-ucesnici-datatable.component.html',
+  styleUrls: ['./oprema-index-ucesnici-datatable.component.scss']
 })
-export class OpremaDatatableComponent implements OnInit {
+export class OpremaIndexUcesniciDatatableComponent implements OnInit {
   @ViewChild('dataTableOprema') table;
   dataTable: any;
-  @Input() kamp_id;
-  @Input() smena_id;
+  // @Input() kamp_id;
+  // @Input() smena_id;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private opremaService: OpremaService) { }
+  kamp_id: number = null;
+  kampovi: Kamp[] = [];
+  smene: Smena[] = [];
+  smena_id: number = null;
+
+  // constructor(private router: Router, private activatedRoute: ActivatedRoute, private opremaService: OpremaService) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private opremaService: OpremaService, private kampService: KampService, private smenaService: SmenaService) { 
+    // this.kampovi$ = this.kampService.all();
+    this.kampService.all().subscribe(res => {
+      this.kampovi = res;
+    })
+  }
+  kamp_selected($event){
+    this.smene = this.kampovi.find(k => k.id==this.kamp_id).smene;
+    // this.smene$ = this.smenaService.all();
+  }
+  smena_selected($event){
+    if(this.dataTable){
+      this.dataTable.DataTable().ajax.reload();
+    }
+  }
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
@@ -65,34 +88,21 @@ export class OpremaDatatableComponent implements OnInit {
 
       // "dom": 'Blfrtip',
       "columns": [
-        // 'velicinas.naziv', 
-        //         'majice_m','majice_z',
-        //         'duksevi_m','duksevi_z',
-        //         'sorcevi_m','sorcevi_z'
-        { title: 'Veličina', data: 'naziv', name: 'velicinas.naziv' },
-        { title: 'Majice (dečaci)', data: 'majice_m', name: 'majice_m' },
-        { title: 'Majice (devojčice)', data: 'majice_z', name: 'majice_z' },
-        { title: 'Duksevi (dečaci)', data: 'duksevi_m', name: 'duksevi_m' },
-        { title: 'Duksevi (devojčice)', data: 'duksevi_z', name: 'duksevi_z' },
-        { title: 'Šorcevi (dečaci)', data: 'sorcevi_m', name: 'sorcevi_m' },
-        { title: 'Šorcevi (devojčice)', data: 'sorcevi_z', name: 'sorcevi_z' },
-        // { title: 'Učesnik', data: 'ime', name: 'ucesniks.ime' },
-        // { title: 'Veličina majice', data: 'velicina_majice', name: 'v_m.naziv' },
-        // { title: 'Veličina šorca', data: 'velicina_sorca', name: 'v_s.naziv' },
-        // { title: 'Veličina duksa', data: 'velicina_duksa', name: 'v_d.naziv' },
-        // { title: 'Datum od', data: 'datum_od', name: 'datum_od' },
-        // { title: 'Datum do', data: 'datum_do', name: 'datum_do' },
-        // { title: 'Period', data: 'period', name: 'period' },
-        // { title: 'Cena', data: 'cena', name: 'cena' },
-        // { title: 'Broj učesnika', data: 'broj_ucesnika', name: 'broj_ucesnika' },
+        { title: 'Veličina', data: 'naziv', name: 'velicinas.naziv', className: 'dt-center' },
+        { title: 'Pol', data: 'pol', name: 'pols.naziv', className: 'dt-center' },
+        { title: 'Majice', data: 'majice_broj', className: 'dt-right'},
+        { title: 'Duksevi', data: 'duksevi_broj', className: 'dt-right' },
+        { title: 'Šorcevi', data: 'sorcevi_broj', className: 'dt-right' },
         { title: 'Akcije', data: 'action', name: 'action', width: "10%" , className: "dt-center"},
       ],
       initComplete: function (settings, json) {
-        // console.log('init complete');
-        // console.log(json)
         that.dataTable.DataTable().columns(0).visible(json.kamp_id==null);
       },
       "drawCallback": function () {
+        $('.btnShowSpisak').on('click', function(){
+          event.preventDefault();
+          that.router.navigateByUrl(`admin/oprema/ucesnici/${that.kamp_id}/${that.smena_id}/${$(this).data('pol_id')}/${$(this).data('velicina_id')}`)
+        })
         $('.btnShowOprema').on('click', function (event) {
           that.router.navigateByUrl(`admin/oprema/${that.smena_id}/${$(this).data('id')}`)
         })

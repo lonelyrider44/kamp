@@ -49,6 +49,8 @@ Route::middleware(['assign.guard','jwt.auth'])->group(function () {
     Route::apiResource('zahtev',\App\Http\Controllers\ZahtevController::class);
     Route::post('zahtev/statusi',[\App\Http\Controllers\ZahtevController::class,'statusi']);
     Route::put('zahtev/{zahtev}/odgovor',[\App\Http\Controllers\ZahtevController::class,'odgovor']);
+
+    Route::post('/oprema/statistika',[\App\Http\Controllers\OpremaController::class,'statistika']);
     
     
     Route::post('me', [\App\Http\Controllers\AuthController::class, 'me']);

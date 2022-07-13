@@ -1,0 +1,235 @@
+<div class="row">
+    <mat-form-field appearance="standard" class="col-md-3">
+        <mat-select #kamp [(ngModel)]="kamp_id" placeholder="Izaberite kamp" (selectionChange)="kamp_selected($event)">
+            <mat-option *ngFor="let kamp of kampovi" [value]="kamp.id">{{kamp.naziv}}</mat-option>
+        </mat-select>
+        <button mat-button *ngIf="kamp_id" matSuffix mat-icon-button aria-label="Clear" (click)="kamp_id=undefined; $event.stopPropagation(); kamp_selected($event)">
+            <mat-icon>close</mat-icon>
+            </button>
+    </mat-form-field>
+</div>
+<h3 class="text-center" *ngIf="!!data?.devojcice">DEVOJČICE</h3>
+<div class="row" *ngIf="!!data?.devojcice">
+    <div class="col-md-4">
+        <h5 class="text-center">Majice</h5>
+        <table class="table table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine" scope="col">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th scope="row" class="text-nowrap">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_majice_devojcice}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_majice_devojcice}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h5 class="text-center">Šorcevi</h5>
+        <table class="table table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th class="text-nowrap" scope="row">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_sorceva_devojcice}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_sorceva_devojcice}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <h5 class="text-center">Duksevi</h5>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th class="text-nowrap" scope="row">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_dukseva_devojcice}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_dukseva_devojcice}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+
+<h3 class="text-center" *ngIf="!!data?.devojcice">DEČACI</h3>
+<div class="row" *ngIf="!!data?.devojcice">
+    <div class="col-md-4">
+        <h5 class="text-center">Majice</h5>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th class="text-nowrap" scope="row">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_majice_decaci}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_majice_decaci}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="col-md-4">
+        <h5 class="text-center">Šorcevi</h5>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th class="text-nowrap" scope="row">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_sorceva_decaci}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_sorceva_decaci}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <h5 class="text-center">Duksevi</h5>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let d of data?.devojcice?.velicine">{{d?.naziv}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let s of data?.devojcice?.smene">
+                    <th class="text-nowrap" scope="row">{{s?.naziv}}</th>
+                    <td class="text-right" *ngFor="let sv of s?.velicine">{{sv.ukupno_dukseva_decaci}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th scope="row">Ukupno:</th>
+                    <td class="text-right" *ngFor="let d of data?.devojcice?.velicine">{{d?.ukupno_dukseva_decaci}}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+
+<div class="divSmena" *ngFor="let s of data?.smene">
+    <h3 class="text-center">{{s.naziv}}</h3>
+    <div class="row">
+        <div class="col-md-4">
+            <h5 class="text-center">Majice</h5>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let v of s?.velicine">{{v?.naziv}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of s?.polovi">
+                        <th scope="row">{{p?.naziv}}</th>
+                        <td class="text-right" *ngFor="let sv of p?.velicine">{{sv.ukupno_majice_pol}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row">Ukupno:</th>
+                        <td class="text-right" *ngFor="let sv of s?.velicine">{{sv?.ukupno_majice}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="col-md-4">
+            <h5 class="text-center">Šorcevi</h5>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let v of s?.velicine">{{v?.naziv}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of s?.polovi">
+                        <th scope="row">{{p?.naziv}}</th>
+                        <td class="text-right" *ngFor="let sv of p?.velicine">{{sv.ukupno_sorceva_pol}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row">Ukupno:</th>
+                        <td class="text-right" *ngFor="let sv of s?.velicine">{{sv?.ukupno_sorceva}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h5 class="text-center">Duksevi</h5>
+            <table class="table">
+                <thead class="table-light">
+                    <tr>
+                        <th></th>
+                        <th *ngFor="let v of s?.velicine">{{v?.naziv}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of s?.polovi">
+                        <th scope="row">{{p?.naziv}}</th>
+                        <td class="text-right" *ngFor="let sv of p?.velicine">{{sv.ukupno_dukseva_pol}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th scope="row">Ukupno:</th>
+                        <td class="text-right" *ngFor="let sv of s?.velicine">{{sv?.ukupno_dukseva}}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

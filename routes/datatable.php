@@ -26,6 +26,8 @@ Route::middleware(['jwt.auth','jwt.role:admin'])->group(function () {
     Route::post('uplata', [\App\Http\Controllers\UplataController::class,'datatable']);
     Route::post('prevoz', [\App\Http\Controllers\PrevozController::class,'datatable']);
     Route::post('oprema', [\App\Http\Controllers\OpremaController::class,'datatable']);
+    Route::post('oprema/ucesnici', [\App\Http\Controllers\OpremaController::class,'datatable_ucesnici']);
+    Route::post('oprema/treneri', [\App\Http\Controllers\OpremaController::class,'datatable_treneri']);
     Route::post('hotel', [\App\Http\Controllers\HotelController::class,'datatable']);
     Route::post('izvestaj', [\App\Http\Controllers\IzvestajController::class,'datatable']);
     Route::post('zahtev', [\App\Http\Controllers\ZahtevController::class,'datatable']);
