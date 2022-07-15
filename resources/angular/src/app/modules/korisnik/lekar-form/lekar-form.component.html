@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-md-8">
+
+                <form [formGroup]="lekarForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-info">
+                                    <h4 class="card-title">Lekar</h4>
+                                    <p class="card-category" *ngIf="action_create">
+                                        Novi unos
+                                    </p>
+                                    <p class="card-category" *ngIf="action_update">
+                                        Izmena
+                                    </p>
+                                    <p class="card-category" *ngIf="action_delete">
+                                        Brisanje
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Ime" formControlName="ime" [ngModel]="lekar.ime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('ime')?.errors?.serverError">
+                                                {{ lekarForm.get("ime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Prezime" formControlName="prezime" [ngModel]="lekar.prezime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('prezime')?.errors?.serverError">
+                                                {{ lekarForm.get("prezime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Email" formControlName="email" [ngModel]="lekar.email" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('email')?.errors?.serverError">
+                                                {{ lekarForm.get("email")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="lekar.telefon" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('telefon')?.errors?.serverError">
+                                                {{ lekarForm.get("telefon")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input type="password" matInput placeholder="Lozinka" formControlName="password" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('password')?.errors?.serverError">
+                                                {{ lekarForm.get("password")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input type="password" matInput placeholder="Potvrdi lozinku" formControlName="password_confirmation" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="lekarForm.get('password_confirmation')?.errors?.serverError">
+                                                {{ lekarForm.get("password_confirmation")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                                        Potvrdi
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

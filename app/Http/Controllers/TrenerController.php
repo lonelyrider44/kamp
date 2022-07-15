@@ -42,9 +42,9 @@ class TrenerController extends Controller
      */
     public function store(StoreTrenerRequest $request)
     {
-        $this->exec_safe(function () use ($request) {
-            $trener = \App\Models\Trener::create($request->all());
-        });
+        $trener = \App\Models\Trener::create($request->all());
+        // $this->exec_safe(function () use ($request) {
+        // });
     }
 
     /**

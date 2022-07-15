@@ -33,16 +33,25 @@
                                                 {{ trenerForm.get("prezime")?.errors?.serverError }}
                                             </mat-error>
                                         </mat-form-field>
-                                        <mat-form-field class="example-full-width col-md-6">
+                                        <mat-form-field class="example-full-width col-md-4">
                                             <input matInput placeholder="Email" formControlName="email" [ngModel]="trener.email" [readonly]="action_delete" [errorStateMatcher]="matcher" />
                                             <mat-error *ngIf="trenerForm.get('email')?.errors?.serverError">
                                                 {{ trenerForm.get("email")?.errors?.serverError }}
                                             </mat-error>
                                         </mat-form-field>
-                                        <mat-form-field class="example-full-width col-md-6">
+                                        <mat-form-field class="example-full-width col-md-4">
                                             <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="trener.telefon" [readonly]="action_delete" [errorStateMatcher]="matcher" />
                                             <mat-error *ngIf="trenerForm.get('telefon')?.errors?.serverError">
                                                 {{ trenerForm.get("telefon")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-4">
+                                            <!-- <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="trener.telefon" [readonly]="action_delete" [errorStateMatcher]="matcher" /> -->
+                                            <mat-select placeholder="Pol" formControlName="pol_id" [ngModel]="trener.pol_id" [disabled]="action_delete" [errorStateMatcher]="matcher">
+                                                <mat-option *ngFor="let p of pol" [value]="p.id">{{ p.naziv }}</mat-option>
+                                            </mat-select>
+                                            <mat-error *ngIf="trenerForm.get('pol_id')?.errors?.serverError">
+                                                {{ trenerForm.get("pol_id")?.errors?.serverError }}
                                             </mat-error>
                                         </mat-form-field>
                                         <mat-form-field class="example-full-width col-md-6">

@@ -57,6 +57,30 @@ return [
             'driver' => 'jwt',
             'provider' => 'ucesnici'
         ],
+        'trener' => [
+            'driver' => 'jwt',
+            'provider' => 'treneri'
+        ],
+        'prevoznik' => [
+            'driver' => 'jwt',
+            'provider' => 'prevoznici'
+        ],
+        'lekar' => [
+            'driver' => 'jwt',
+            'provider' => 'lekari'
+        ],
+        'fizioterapeut' => [
+            'driver' => 'jwt',
+            'provider' => 'fizioterapeuti'
+        ],
+        'oprema' => [
+            'driver' => 'jwt',
+            'provider' => 'oprema-useri'
+        ],
+        'hotel' => [
+            'driver' => 'jwt',
+            'provider' => 'hotel-useri'
+        ],
     ],
 
     /*
@@ -89,7 +113,30 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Ucesnik::class,
         ],
-
+        'treneri' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Trener::class,
+        ],
+        'prevoznici' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Prevoznik::class,
+        ],
+        'lekari' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Lekar::class,
+        ],
+        'fizioterapeuti' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Fizioterapeut::class,
+        ],
+        'oprema-useri' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\OpremaUser::class,
+        ],
+        'hotel-useri' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\HotelUser::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

@@ -13,6 +13,16 @@ import { AdministratorDatatableComponent } from './administrator-datatable/admin
 import { TrenerDatatableComponent } from './trener-datatable/trener-datatable.component';
 import { AdministratorFormComponent } from './administrator-form/administrator-form.component';
 import { TrenerFormComponent } from './trener-form/trener-form.component';
+import { LekarDatatableComponent } from './lekar-datatable/lekar-datatable.component';
+import { FizioterapeutDatatableComponent } from './fizioterapeut-datatable/fizioterapeut-datatable.component';
+import { PrevoznikDatatableComponent } from './prevoznik-datatable/prevoznik-datatable.component';
+import { OpremaUserDatatableComponent } from './oprema-user-datatable/oprema-user-datatable.component';
+import { HotelUserDatatableComponent } from './hotel-user-datatable/hotel-user-datatable.component';
+import { LekarFormComponent } from './lekar-form/lekar-form.component';
+import { FizioterapeutFormComponent } from './fizioterapeut-form/fizioterapeut-form.component';
+import { PrevoznikFormComponent } from './prevoznik-form/prevoznik-form.component';
+import { OpremaUserFormComponent } from './oprema-user-form/oprema-user-form.component';
+import { HotelUserFormComponent } from './hotel-user-form/hotel-user-form.component';
 
 
 @NgModule({
@@ -25,7 +35,17 @@ import { TrenerFormComponent } from './trener-form/trener-form.component';
     AdministratorDatatableComponent,
     TrenerDatatableComponent,
     AdministratorFormComponent,
-    TrenerFormComponent
+    TrenerFormComponent,
+    LekarDatatableComponent,
+    FizioterapeutDatatableComponent,
+    PrevoznikDatatableComponent,
+    OpremaUserDatatableComponent,
+    HotelUserDatatableComponent,
+    LekarFormComponent,
+    FizioterapeutFormComponent,
+    PrevoznikFormComponent,
+    OpremaUserFormComponent,
+    HotelUserFormComponent
   ],
   imports: [
     CommonModule,

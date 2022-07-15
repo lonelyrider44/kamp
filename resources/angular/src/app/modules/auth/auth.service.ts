@@ -38,10 +38,14 @@ export class AuthService {
     // console.log(data.access_token);
     this.user = data.user;
     localStorage.setItem('auth_token', data.access_token);
+    localStorage.setItem('user_type', this?.user?.user_type);
   }
 
   getToken() {
     return localStorage.getItem('auth_token');
+  }
+  getUserType() {
+    return localStorage.getItem('user_type');
   }
   getUser() {
     // console.log('Get user');

@@ -30,6 +30,12 @@ import { ParentLayoutComponent } from './layouts/parent-layout/parent-layout.com
 import { UcesnikLayoutComponent } from './layouts/ucesnik-layout/ucesnik-layout.component';
 import { ZahtevModule } from './modules/zahtev/zahtev.module';
 import { UcesnikModule } from './modules/ucesnik/ucesnik.module';
+import { TrenerLayoutComponent } from './layouts/trener-layout/trener-layout.component';
+import { LekarLayoutComponent } from './layouts/lekar-layout/lekar-layout.component';
+import { PrevoznikLayoutComponent } from './layouts/prevoznik-layout/prevoznik-layout.component';
+import { HotelLayoutComponent } from './layouts/hotel-layout/hotel-layout.component';
+import { FizioterapeutLayoutComponent } from './layouts/fizioterapeut-layout/fizioterapeut-layout.component';
+import { OpremaLayoutComponent } from './layouts/oprema-layout/oprema-layout.component';
 
 
 @NgModule({
@@ -55,6 +61,12 @@ import { UcesnikModule } from './modules/ucesnik/ucesnik.module';
     CustomDateFormat1Directive,
     ParentLayoutComponent,
     UcesnikLayoutComponent,
+    TrenerLayoutComponent,
+    LekarLayoutComponent,
+    PrevoznikLayoutComponent,
+    HotelLayoutComponent,
+    FizioterapeutLayoutComponent,
+    OpremaLayoutComponent,
 
   ],
   providers: [],

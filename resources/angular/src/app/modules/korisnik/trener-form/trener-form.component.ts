@@ -5,6 +5,8 @@ import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm } from 
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { Pol } from 'app/modules/pol/pol';
+import { PolService } from 'app/modules/pol/pol.service';
 import { MyErrorStateMatcher } from 'app/modules/shared/my-error-state-matcher';
 import { RouterExtService } from 'app/modules/shared/router-ext.service';
 import { Velicina } from 'app/modules/velicina/velicina';
@@ -27,6 +29,7 @@ export class TrenerFormComponent implements OnInit {
   trenerForm: FormGroup;
 
   velicine: Velicina[] = [];
+  pol: Pol[] = [];
   action_create: boolean = false;
   action_update: boolean = false;
   action_delete: boolean = false;
@@ -38,6 +41,7 @@ export class TrenerFormComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     public trenerService: TrenerService,
     public velicinaService: VelicinaService,
+    public polService: PolService,
     private _location: Location,
     private _snackBar: MatSnackBar
   ) {
@@ -47,6 +51,7 @@ export class TrenerFormComponent implements OnInit {
   ngOnInit(): void { 
     this.loadFromUrl();
     this.velicinaService.all().subscribe(res => this.velicine = res)
+    this.polService.all().subscribe(res => this.pol = res)
   }
 
   store() {

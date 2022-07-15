@@ -1,0 +1,74 @@
+<div class="main-content">
+    <div class="container">
+        <div class="row">
+            <div class="offset-md-2 col-md-8">
+
+                <form [formGroup]="opremaUserForm" (ngSubmit)="submitForm()" novalidate>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header card-header-info">
+                                    <h4 class="card-title">Oprema admin</h4>
+                                    <p class="card-category" *ngIf="action_create">
+                                        Novi unos
+                                    </p>
+                                    <p class="card-category" *ngIf="action_update">
+                                        Izmena
+                                    </p>
+                                    <p class="card-category" *ngIf="action_delete">
+                                        Brisanje
+                                    </p>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Ime" formControlName="ime" [ngModel]="oprema_user.ime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('ime')?.errors?.serverError">
+                                                {{ opremaUserForm.get("ime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Prezime" formControlName="prezime" [ngModel]="oprema_user.prezime" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('prezime')?.errors?.serverError">
+                                                {{ opremaUserForm.get("prezime")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Email" formControlName="email" [ngModel]="oprema_user.email" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('email')?.errors?.serverError">
+                                                {{ opremaUserForm.get("email")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input matInput placeholder="Telefon" formControlName="telefon" [ngModel]="oprema_user.telefon" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('telefon')?.errors?.serverError">
+                                                {{ opremaUserForm.get("telefon")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input type="password" matInput placeholder="Lozinka" formControlName="password" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('password')?.errors?.serverError">
+                                                {{ opremaUserForm.get("password")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                        <mat-form-field class="example-full-width col-md-6">
+                                            <input type="password" matInput placeholder="Potvrdi lozinku" formControlName="password_confirmation" [readonly]="action_delete" [errorStateMatcher]="matcher" />
+                                            <mat-error *ngIf="opremaUserForm.get('password_confirmation')?.errors?.serverError">
+                                                {{ opremaUserForm.get("password_confirmation")?.errors?.serverError }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <button mat-raised-button type="button" class="btn btn-danger pull-right" (click)="submitForm()">
+                                        Potvrdi
+                                    </button>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

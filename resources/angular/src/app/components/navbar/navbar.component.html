@@ -52,7 +52,7 @@
                         </p>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarAccountDropdownMenuLink">
-                        <a class="dropdown-item">{{ user.name }}</a>
+                        <a class="dropdown-item">{{ user.prezime }} {{user.ime}}</a>
                         <a class="dropdown-item" (click)="logout()" style="cursor: pointer">Logout</a>
                     </div>
                 </li>

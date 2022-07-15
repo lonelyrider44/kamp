@@ -34,26 +34,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
     this.spinner.show();
     this.authService.signin().subscribe(
       (result) => {
         this.authService.handleData(result);
+
         let user = this.authService.getUser();
-        // console.log(user.user_type);
-        if(user.user_type=="admin"){
-          this.router.navigate(['/admin/dashboard']);
-        }
-        if(user.user_type=="roditelj"){
-          this.router.navigate(['/roditelj']);
-        }
-        if(user.user_type=="ucesnik"){
-          this.router.navigate(['/ucesnik']);
-        }
-        
-        // this.spinner.hide();
-        // if(result.user_type=='admin'){
-        // }
+
+        this.redirect_after_login(user);
+        this.spinner.hide();
       },
       (error) => {
         this.spinner.hide();
@@ -63,15 +53,7 @@ export class LoginComponent implements OnInit {
         // this.loginInvalid = true;
 
       }
-    );
-    
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd)
-  ).subscribe((event: NavigationEnd) => {
-    // console.log(this.currentUrl);
-     this.previousUrl = this.currentUrl;
-     this.currentUrl = event.url;
-  });
+    ); 
   }
 
   submitForm():void{
@@ -80,19 +62,8 @@ export class LoginComponent implements OnInit {
       (result) => {
         this.authService.handleData(result);
         let user = this.authService.getUser();
-        // console.log(user.user_type);
-        if(user.user_type=="admin"){
-          this.router.navigate(['/admin/kamp']);
-        }
-        if(user.user_type=="roditelj"){
-          this.router.navigate(['/roditelj']);
-        }
-        if(user.user_type=="ucesnik"){
-          this.router.navigate(['/ucesnik']);
-        }
 
-        // if(result.user_type=='admin'){
-        // }
+        this.redirect_after_login(user);
       },
       (error) => {
         // this.authState.setAuthState(false);
@@ -104,4 +75,25 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  redirect_after_login(user: any){
+    console.log(user.user_type);
+    if(user.user_type=="admin"){
+      this.router.navigate(['/admin/kamp']);
+    }
+    if(user.user_type=="roditelj"){
+      this.router.navigate(['/roditelj']);
+    }
+    if(user.user_type=="ucesnik"){
+      this.router.navigate(['/ucesnik']);
+    }
+    if(user.user_type=="trener"){
+      this.router.navigate(['/trener']);
+    }
+    if(user.user_type=="lekar"){
+      this.router.navigate(['/lekar']);
+    }
+    if(user.user_type=="oprema"){
+      this.router.navigate(['/oprema']);
+    }
+  }
 }

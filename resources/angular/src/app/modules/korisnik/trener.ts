@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 
 export interface Trener {
     id?: number,
+    pol_id?: number,
     ime: string,
     prezime: string,
     email: string,
@@ -38,6 +39,7 @@ export function trenerFormGroup(fb: FormBuilder, trener: Trener): FormGroup {
         sorc: [''],
         duks: [''],
         trenerka: [''],
-        koordinator: ['']
+        koordinator: [''],
+        pol_id: ['']
     })
 }

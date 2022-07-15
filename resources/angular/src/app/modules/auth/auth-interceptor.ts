@@ -26,10 +26,16 @@ export class AuthInterceptor implements HttpInterceptor {
         // this.spinner.show();
         this.loading.start();
         const accessToken = this.authService.getToken();
+        const user_type = this.authService.getUserType() ?? "";
+        // const user_type = "";
+        // const guard = "";
+        // if(user){
+        //     guard = user
+        // }
         req = req.clone({
             setHeaders: {
                 Authorization: "Bearer " + accessToken,
-                // guard: 'roditelj'
+                guard: user_type
             }
         });
         return next.handle(req).pipe(

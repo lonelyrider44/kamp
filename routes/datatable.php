@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['jwt.auth','jwt.role:admin'])->group(function () {
+// Route::middleware(['jwt.auth','jwt.role:admin'])->group(function () {
+Route::middleware(['jwt.auth'])->group(function () {
     Route::post('kamp', [\App\Http\Controllers\KampController::class,'datatable']);
     Route::post('dodatni-paket', [\App\Http\Controllers\DodatniPaketController::class,'datatable']);
     Route::post('prijava', [\App\Http\Controllers\PrijavaController::class,'datatable']);
@@ -23,6 +24,11 @@ Route::middleware(['jwt.auth','jwt.role:admin'])->group(function () {
     Route::post('roditelj', [\App\Http\Controllers\RoditeljController::class,'datatable']);
     Route::post('korisnik', [\App\Http\Controllers\KorisnikController::class,'datatable']);
     Route::post('trener', [\App\Http\Controllers\TrenerController::class,'datatable']);
+    Route::post('lekar', [\App\Http\Controllers\LekarController::class,'datatable']);
+    Route::post('fizioterapeut', [\App\Http\Controllers\FizioterapeutController::class,'datatable']);
+    Route::post('prevoznik', [\App\Http\Controllers\PrevoznikController::class,'datatable']);
+    Route::post('oprema-user', [\App\Http\Controllers\OpremaUserController::class,'datatable']);
+    Route::post('hotel-user', [\App\Http\Controllers\HotelUserController::class,'datatable']);
     Route::post('uplata', [\App\Http\Controllers\UplataController::class,'datatable']);
     Route::post('prevoz', [\App\Http\Controllers\PrevozController::class,'datatable']);
     Route::post('oprema', [\App\Http\Controllers\OpremaController::class,'datatable']);

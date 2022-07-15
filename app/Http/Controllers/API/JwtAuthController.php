@@ -22,8 +22,12 @@ class JwtAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
+    public function guards(){
+        return ['admin', 'roditelj', 'ucesnik','trener','lekar','fizioterapeut', 'oprema', 'hotel'];
+    }
     public function login()
     {
+        $guards = $this->guards();
         if (!empty(auth()->user())) {
             return $this->respondWithToken(
                 str_replace('Bearer ', '', request()->header('Authorization')),
@@ -31,9 +35,17 @@ class JwtAuthController extends Controller
             );
         }
 
+        // foreach($guards as $guard){
+        //     if (!empty(auth($guard)->user())) {
+        //         return $this->respondWithToken(
+        //             str_replace('Bearer ', '', request()->header('Authorization')),
+        //             auth($guard)->user()
+        //         );
+        //     }
+        // }
+        
+        
         $credentials = request(['email', 'password']);
-
-        $guards = ['admin', 'roditelj', 'ucesnik'];
 
 
         foreach ($guards as $guard) {
@@ -71,6 +83,12 @@ class JwtAuthController extends Controller
     public function logout()
     {
         auth()->logout();
+        // $guards = $this->guards();
+        // foreach($guards as $guard){
+        //     if(auth($guard)->user()){
+        //         auth($guard)->logout();
+        //     }
+        // }
 
         return response()->json(['message' => 'Successfully logged out']);
     }
