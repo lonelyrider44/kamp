@@ -22,8 +22,9 @@ class JwtAuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function guards(){
-        return ['admin', 'roditelj', 'ucesnik','trener','lekar','fizioterapeut', 'oprema', 'hotel'];
+    public function guards()
+    {
+        return ['admin', 'roditelj', 'ucesnik', 'trener', 'lekar', 'fizioterapeut', 'oprema', 'hotel', 'prevoznik'];
     }
     public function login()
     {
@@ -43,8 +44,8 @@ class JwtAuthController extends Controller
         //         );
         //     }
         // }
-        
-        
+
+
         $credentials = request(['email', 'password']);
 
 

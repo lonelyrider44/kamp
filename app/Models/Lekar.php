@@ -44,4 +44,8 @@ class Lekar extends Authenticatable implements JWTSubject
      {
          return ['role' => 'lekar','user_type' => 'lekar'];
      }
+
+     public function pregledi(){
+        return $this->hasMany(\App\Models\PrijavaPregled::class);
+     }
 }

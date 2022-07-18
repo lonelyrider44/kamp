@@ -29,6 +29,7 @@ Route::apiResource('fizioterapeut', \App\Http\Controllers\FizioterapeutControlle
 Route::apiResource('prevoznik', \App\Http\Controllers\PrevoznikController::class);
 Route::apiResource('oprema-user', \App\Http\Controllers\OpremaUserController::class);
 Route::apiResource('hotel-user', \App\Http\Controllers\HotelUserController::class);
+Route::apiResource('lekarski-pregled', \App\Http\Controllers\LekarskiPregledController::class);
 
 Route::post('/mesto/autocomplete', [App\Http\Controllers\MestoController::class,'autocomplete']);
 // Route::post('refresh', [\App\Http\Controllers\AuthController::class, 'refresh']);

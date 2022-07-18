@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { DodatniPaket } from "../dodatni-paket/dodatni-paket";
 import { Kamp } from "../kamp/kamp";
 import { Smena } from "../smena/smena";
+import { PrijavaPregled } from "./prijava-pregled";
 
 export interface Prijava {
     id?: any,
@@ -65,6 +66,7 @@ export interface Prijava {
     kamp?: Kamp,
     smene?: Smena[],
     dodatni_paketi?: DodatniPaket[],
+    pregled?: PrijavaPregled,
 
 
     donosi_depozit_u_kamp?:boolean,
@@ -176,6 +178,7 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
 
         smene: fb.array([]),
         dodatni_paketi: fb.array([]),
+        parametri_pregleda: fb.array([]),
 
         status_id: [''],
         trener_id: [''],
@@ -194,5 +197,12 @@ export function prijavaFormGroup(fb: FormBuilder, prijava: Prijava): FormGroup {
         smene_eur: [''],
         dodatni_paketi_eur: [''],
         ukupno_eur: [''],
+
+        lekar_id: [''],
+        datum_pregleda: [''],
+        napomena: [''],
+
+
+
     })
 }

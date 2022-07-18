@@ -1,0 +1,196 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="offset-md-1 col-md-10">
+                <div class="card">
+                    <div class="card-header card-header-info">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <h4 class="card-title">
+                                    Prijava #{{prijava.id}} za kamp: {{ prijava?.kamp?.naziv }}
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- <p class="card-category"></p> -->
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="prijavaPregledForm" (ngSubmit)="submitForm()" (keyup.enter)="submitForm()" novalidate>
+                            <h3>Podaci o detetu</h3>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Ime" formControlName="ime" [ngModel]="prijava.ime" [errorStateMatcher]="matcher" [disabled]="true" />
+                                        <mat-error *ngIf="prijavaPregledForm.get('ime')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("ime")?.errors ?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Prezime" formControlName="prezime" [ngModel]="prijava.prezime" [errorStateMatcher]="matcher" [disabled]="true" />
+                                        <mat-error *ngIf="prijavaPregledForm.get('prezime')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("prezime") ?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Pol" formControlName="pol_id" [ngModel]="prijava?.pol_id" [errorStateMatcher]="matcher">
+                                            <mat-option *ngFor="let p of pol" [value]="p.id">{{ p.naziv }}</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Visina" formControlName="visina" [ngModel]="prijava?.visina" [errorStateMatcher]="matcher" />
+                                        <mat-error *ngIf="prijavaPregledForm.get('visina')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("visina") ?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-2">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput placeholder="Težina" formControlName="tezina" [ngModel]="prijava?.tezina" [errorStateMatcher]="matcher" />
+                                        <mat-error *ngIf="prijavaPregledForm.get('tezina')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("tezina") ?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Alergije" #alergije formControlName="alergije" [ngModel]="!!prijava.alergije" [errorStateMatcher]="matcher">
+                                            <mat-option [value]="false">NE</mat-option>
+                                            <mat-option [value]="true">DA</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaPregledForm.get('alergije')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("alergije") ?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+
+                                    <mat-form-field class="example-full-width" *ngIf="alergije.value">
+                                        <textarea formControlName="napomena_alergije" [ngModel]="prijava.napomena_alergije" matInput placeholder="Navedite alergije" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaPregledForm.get('napomena_alergije')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get( "napomena_alergije" )?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-select placeholder="Zdravstveni problemi" #zdravstveni_problemi formControlName="zdravstveni_problem" [ngModel]="
+                                                !!prijava.zdravstveni_problem
+                                            " [errorStateMatcher]="matcher">
+                                            <mat-option [value]="false">NE</mat-option>
+                                            <mat-option [value]="true">DA</mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="prijavaPregledForm.get('zdravstveni_problem')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get( "zdravstveni_problem" )?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field class="example-full-width" *ngIf="zdravstveni_problemi.value">
+                                        <textarea formControlName="napomena_zdravstveni_problemi" [ngModel]="prijava.napomena_zdravstveni_problemi" matInput placeholder="Navedite zdravstvene probleme" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaPregledForm.get('napomena_zdravstveni_problemi')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get( "napomena_zdravstveni_problemi" )?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" formArrayName="smene">
+                                    <h3>Smene</h3>
+                                    <div class="row" *ngFor="let smena of smene.controls; let i = index" [formGroupName]="i">
+                                        <div class="col-md-12">
+                                            <mat-checkbox formControlName="izabrana" [errorStateMatcher]="matcher" (change)="chkSmenaChange($event)" [disabled]="true">
+                                                {{ smena.value.naziv }} <br>
+                                                <small>{{ smena.value.datum_od | date: "dd.MM.YYYY." }} - {{ smena.value.datum_do | date: "dd.MM.YYYY." }}</small>
+                                            </mat-checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h3>Dodatni paketi</h3>
+                                    <div formArrayName="dodatni_paketi">
+                                        <div class="col-md-12" *ngFor="let dp of dodatni_paketi.controls; let i = index" [formGroupName]="i">
+                                            <mat-checkbox formControlName="izabran" [errorStateMatcher]="matcher" [disabled]="true">{{ dp.value.naziv }} ({{ dp.value.iznos_eur | number: "1.0-0" }}eur)
+                                            </mat-checkbox>
+                                            <p>{{ dp.value.opis }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Pregled</h3>
+                            <div class="row">
+                                <div class="offset-md-10 col-md-2">
+                                    <mat-slide-toggle #pregled_obavljen [(ngModel)]="prijava.pregled_obavljen" formControlName="pregled_obavljen">Pregled obavljen</mat-slide-toggle>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="pregled_obavljen.checked">
+                                <mat-form-field class="example-full-width col-md-2">
+                                    <input type="hidden" formControlName="lekar_id" [ngModel]="lekar?.id">
+                                    <input matInput placeholder="Lekar" [errorStateMatcher]="matcher" [disabled]="true" [value]="lekar?.prezime + ' ' + lekar?.ime" />
+                                    <mat-error *ngIf="prijavaPregledForm.get('lekar_id')?.errors?.serverError">
+                                        {{ prijavaPregledForm.get("lekar_id") ?.errors?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="example-full-width offset-md-8 col-md-2">
+                                    <input matInput placeholder="Datum pregleda" formControlName="datum_pregleda" [ngModel]="prijava?.pregled?.datum_pregleda" [errorStateMatcher]="matcher" />
+                                    <mat-error *ngIf="prijavaPregledForm.get('datum_pregleda')?.errors?.serverError">
+                                        {{ prijavaPregledForm.get("datum_pregleda") ?.errors?.serverError }}
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="row" *ngIf="pregled_obavljen.checked">
+                                <div class="col-md-6">
+                                    <div formArrayName="parametri_pregleda">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h5 class="border-bottom">Parametri</h5>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngFor="let parametar of parametri_pregleda.controls;let i = index" [formGroupName]="i">
+                                            <mat-form-field class="col-md-5">
+                                                <!-- <mat-label>Naziv</mat-label> -->
+                                                <input matInput placeholder="Naziv" formControlName="naziv" />
+                                            </mat-form-field>
+                                            <mat-form-field class="col-md-5">
+                                                <!-- <mat-label>Naziv</mat-label> -->
+                                                <input matInput placeholder="Vrednost" formControlName="vrednost" />
+                                            </mat-form-field>
+                                            <div class="col-md-2 d-flex justify-content-center">
+                                                <button mat-mini-fab type="button" color="secondary" class="pull-right btnPlus btn-secondary" (click)="remove_parametar(i)">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="offset-md-10 col-md-2 d-flex justify-content-center">
+                                                <button mat-mini-fab type="button" class="pull-right btnPlus" (click)="add_parametar()">
+                                                    <mat-icon>add</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput placeholder="Napomena" formControlName="napomena" [ngModel]="prijava?.pregled?.napomena" [errorStateMatcher]="matcher"></textarea>
+                                        <mat-error *ngIf="prijavaPregledForm.get('napomena')?.errors?.serverError">
+                                            {{ prijavaPregledForm.get("napomena") ?.errors?.serverError }}
+                                        </mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button mat-raised-button type="button" class="btn" (click)="submitForm()">Potvrdi</button>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

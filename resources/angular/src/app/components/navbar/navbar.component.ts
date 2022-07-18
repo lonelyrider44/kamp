@@ -22,7 +22,14 @@ export class NavbarComponent implements OnInit {
         private authService: AuthService) {
         this.location = location;
         this.sidebarVisible = false;
+
         this.user = this.authService.getUser();
+        if(!this.user){
+            this.authService.signin().subscribe(res => {
+                this.authService.handleData(res);
+                this.user = this.authService.getUser();
+            })
+        }
     }
 
     ngOnInit() {

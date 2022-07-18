@@ -11,6 +11,7 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
 
+  public loaded = false;
   private issuer = {}
   private user: Korisnik = null;
 
@@ -102,6 +103,7 @@ export class AuthService {
 
   // Login
   signin(user: Korisnik = null): Observable<any> {
+    this.loaded = true;
     // console.log('Signing in...')
     return this.http.post<any>(environment.api_url + '/login', user);
     // .pipe(

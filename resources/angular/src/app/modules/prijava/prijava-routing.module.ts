@@ -6,7 +6,9 @@ import { IndexComponent } from './index/index.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: IndexComponent },
   { path: 'unos', pathMatch: 'full', component: FormComponent },
-  { path: ':kampId',  pathMatch: 'full',component: FormComponent},
+  { path: ':prijavaId/izmena', component: FormComponent },
+  { path: ':prijavaId/brisanje', component: FormComponent }
+  // { path: ':kampId',  pathMatch: 'full',component: FormComponent},
   // {
   //   path: ':kampId',
   //   component: DetailsLayoutComponentComponent,
@@ -50,8 +52,6 @@ const routes: Routes = [
   //   }
   // ],
   // },
-  { path: ':prijavaId/izmena', component: FormComponent },
-  { path: ':prijavaId/brisanje', component: FormComponent }
 ];
 
 @NgModule({

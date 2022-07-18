@@ -8,6 +8,8 @@ import { ActivatedRoute, NavigationEnd, Router, RoutesRecognized, UrlSegment } f
 import { AuthService } from 'app/modules/auth/auth.service';
 import { Kamp, newKamp } from 'app/modules/kamp/kamp';
 import { KampService } from 'app/modules/kamp/kamp.service';
+import { Korisnik } from 'app/modules/korisnik/korisnik';
+import { Lekar } from 'app/modules/korisnik/lekar';
 import { Trener } from 'app/modules/korisnik/trener';
 import { OrganizovaniPrevoz } from 'app/modules/organizovani-prevoz/organizovani-prevoz';
 import { Pol } from 'app/modules/pol/pol';
@@ -31,6 +33,7 @@ import { PrijavaService } from '../prijava.service';
 export class FormComponent implements OnInit {
   prijava: Prijava = newPrijava();
   kamp: Kamp;
+  lekar: Korisnik;
   kampovi: [];
   velicine: Velicina[] = [];
   organizovani_prevoz: OrganizovaniPrevoz[] = [];
@@ -74,6 +77,9 @@ export class FormComponent implements OnInit {
     this.velicinaService.all().subscribe(res => this.velicine = res);
     this.polService.all().subscribe(res => this.pol = res );
     this.trenerService.all().subscribe( res => this.treneri = res );
+
+    let user = this.authService.getUser();
+    this.lekar = (user.user_type=="lekar")?user: null;
     // console.log('this form')
     this.loadFromUrl();
   }
@@ -170,6 +176,14 @@ export class FormComponent implements OnInit {
               }));
             // console.log(smena); 
           })
+          this.prijava?.pregled?.parametri.forEach(pp => {
+            this.parametri_pregleda.push(
+              this.fb.group({
+                naziv: pp.naziv,
+                vrednost: pp.vrednost,
+              }));
+            // console.log(smena); 
+          })
         }
       })
     }
@@ -188,12 +202,20 @@ export class FormComponent implements OnInit {
     }
   }
 
-  get smene(){
-    return this.prijavaForm.get('smene') as FormArray;
+  get smene(){ return this.prijavaForm.get('smene') as FormArray; }
+
+  get dodatni_paketi(){ return this.prijavaForm.get('dodatni_paketi') as FormArray; }
+
+  get parametri_pregleda() { return this.prijavaForm.get('parametri_pregleda') as FormArray; }
+
+  add_parametar(index: any = null, id = null, naziv = null, vrednost = null) {
+    this.parametri_pregleda.push(this.fb.group({
+      id: id,
+      naziv: naziv,
+      vrednost: vrednost
+    }))
   }
-  get dodatni_paketi(){
-    return this.prijavaForm.get('dodatni_paketi') as FormArray;
-  }
+  remove_parametar(index) { this.parametri_pregleda.removeAt(index); }
 
   chkSmenaChange($event){
     console.log($event);

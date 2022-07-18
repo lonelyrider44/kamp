@@ -40,19 +40,19 @@ export const COACH_ROUTES: RouteInfo[] = [
   { path: '/trener/ucesnici', title: 'Učesnici',  icon: 'dashboard', class: '' },
 ];
 export const LEKAR_ROUTES: RouteInfo[] = [
-  { path: '/lekar/ucesnici', title: 'Učesnici',  icon: 'dashboard', class: '' },
+  { path: '/lekar/pregled', title: 'Pregledi učesnika',  icon: 'dashboard', class: '' },
 ];
 export const FIZIOTERAPEUT_ROUTES: RouteInfo[] = [
   { path: '/fizioterapeut/ucesnici', title: 'Učesnici',  icon: 'dashboard', class: '' },
 ];
 export const PREVOZNIK_ROUTES: RouteInfo[] = [
-  { path: '/prevoznik/ucesnici', title: 'Učesnici',  icon: 'dashboard', class: '' },
+  { path: '/prevoznik/prevoz', title: 'Učesnici',  icon: 'dashboard', class: '' },
 ];
 export const OPREMA_ROUTES: RouteInfo[] = [
   { path: '/oprema/oprema', title: 'Oprema',  icon: 'dashboard', class: '' },
 ];
 export const HOTEL_ROUTES: RouteInfo[] = [
-  { path: '/hotel-user/ucesnici', title: 'Učesnici',  icon: 'dashboard', class: '' },
+  { path: '/hotel/hotel', title: 'Učesnici',  icon: 'dashboard', class: '' },
 ];
 
 @Component({

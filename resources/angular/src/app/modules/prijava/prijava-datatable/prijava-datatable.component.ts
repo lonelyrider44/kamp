@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'app/modules/auth/auth.service';
+import { Korisnik } from 'app/modules/korisnik/korisnik';
 import { PrijavaService } from '../prijava.service';
 
 @Component({
@@ -10,16 +12,22 @@ import { PrijavaService } from '../prijava.service';
 export class PrijavaDatatableComponent implements OnInit {
   @ViewChild('dataTablePrijava') table;
   dataTable: any;
+  user:Korisnik;
   @Input() kamp_id;
   @Input() smena_id;
   @Input() ucesnik_id;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private prijavaService: PrijavaService) { }
+  constructor(
+    private router: Router, 
+    private activatedRoute: ActivatedRoute, 
+    private prijavaService: PrijavaService,
+    private authService: AuthService) { }
 
   ngOnInit(): void {
     this.kamp_id = this.activatedRoute.snapshot.parent.params?.kampId
     this.smena_id = this.activatedRoute.snapshot.parent.params?.smenaId
     this.ucesnik_id = this.activatedRoute.snapshot.parent.params?.ucesnikId
+    this.user = this.authService.getUser();
   }
 
   ngOnChanges(changes: SimpleChanges){
@@ -69,6 +77,7 @@ export class PrijavaDatatableComponent implements OnInit {
       // "dom": 'Blfrtip',
       "columns": [
         { title: 'Učesnik', data: 'ucesnik', name: 'ucesnik' },
+        { title: 'Godište', data: 'godiste', name: 'godiste', className: 'dt-center'},
         { title: 'Kamp', data: 'kamp', name: 'kamps.naziv' },
         { title: 'Smena', data: 'smena', name: 'smenas.naziv' },
         // { title: 'Ukupno smena', data: 'ukupno_smena', className: "dt-right"},
@@ -88,13 +97,14 @@ export class PrijavaDatatableComponent implements OnInit {
       },
       "drawCallback": function () {
         $('.btnShowPrijava').on('click', function (event) {
-          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}`)
+
+          that.router.navigateByUrl(`/${that.user?.user_type}/prijava/${$(this).data('id')}`)
         })
         $('.btnEditPrijava').on('click', function (event) {
-          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}/izmena`)
+          that.router.navigateByUrl(`/${that.user?.user_type}/prijava/${$(this).data('id')}/izmena`)
         })
         $('.btnRemovePrijava').on('click', function (event) {
-          that.router.navigateByUrl(`/admin/prijava/${$(this).data('id')}/brisanje`)
+          that.router.navigateByUrl(`/${that.user?.user_type}/prijava/${$(this).data('id')}/brisanje`)
         })
       },
       "language" : {

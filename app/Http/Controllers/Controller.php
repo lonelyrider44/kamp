@@ -21,11 +21,15 @@ class Controller extends BaseController
     {
         try {
             \DB::beginTransaction();
-            $f();
+            $json_response = $f();
             \DB::commit();
-            return response()->json([
-                'message' => $message ?? "Operacija uspešna"
-            ]);
+            if(!empty($json_response)){
+                return response()->json($json_response,500);
+            }else{
+                return response()->json([
+                    'message' => $message ?? "Operacija uspešna"
+                ]);
+            }
         } catch (\Exception $e) {
             \DB::rollback();
             return

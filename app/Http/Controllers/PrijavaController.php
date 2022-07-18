@@ -18,6 +18,7 @@ class PrijavaController extends Controller
             ->groupBy('prijavas.ucesnik_id')->toBase();
         $prijava_smena_sub = \App\Models\Prijava::select(
             'prijavas.id',
+            \DB::raw('YEAR(prijavas.datum_rodjenja) as godiste'),
             // 'prijava_smenas.prijava_id',
             \DB::raw('CONCAT(prijavas.prezime," ",prijavas.ime) as ucesnik'),
             // \DB::raw('smenas.naziv as smena'),
@@ -87,9 +88,15 @@ class PrijavaController extends Controller
     {
         return $this->exec_safe(function()use($request){
             $prijava = \App\Models\Prijava::create($request->all());
+            $prijava->saglasnost()->save(new PrijavaSaglasnost($request->all()));
             $prijava->smene()->sync($request->smene);
             $prijava->dodatni_paketi()->sync($request->dodatni_paketi);            
             $prijava->updateCena();
+
+            if(!empty($request->pregled_obavljen) && !empty($request->lekar_id)){
+                $pregled = $prijava->pregled()->save(new PrijavaPregledController($request->all()));
+                $pregled->parametri->sync($request->parametri_pregleda);
+            }
             return response()->json($prijava);
         });
     }
@@ -106,6 +113,7 @@ class PrijavaController extends Controller
         $prijava->kamp->smene->each(function($smena){
             $smena->load(['prijave']);
         });
+        $prijava->load(['pregled.parametri']);
         return $prijava;
     }
 

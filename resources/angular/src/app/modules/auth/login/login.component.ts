@@ -95,5 +95,11 @@ export class LoginComponent implements OnInit {
     if(user.user_type=="oprema"){
       this.router.navigate(['/oprema']);
     }
+    if(user.user_type=="prevoznik"){
+      this.router.navigate(['/prevoznik']);
+    }
+    if(user.user_type=="hotel"){
+      this.router.navigate(['/hotel']);
+    }
   }
 }

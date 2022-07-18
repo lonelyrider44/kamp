@@ -57,11 +57,11 @@ class Prijava extends Model
 
         'broj_sobe',
 
-        'saglasnost_politika_privatnosti',
-        'saglasnost_obrada_podataka',
-        'saglasnost_ucesce_na_kampu',
-        'saglasnost_donatorski_ugovor',
-        'saglasnost_pravila_kampa',
+        // 'saglasnost_politika_privatnosti',
+        // 'saglasnost_obrada_podataka',
+        // 'saglasnost_ucesce_na_kampu',
+        // 'saglasnost_donatorski_ugovor',
+        // 'saglasnost_pravila_kampa',
 
         'donosi_depozit_u_kamp',
         'depozit_napomena',
@@ -115,6 +115,12 @@ class Prijava extends Model
     public function kamp()
     {
         return $this->belongsTo(\App\Models\Kamp::class, 'kamp_id');
+    }
+    public function saglasnost(){
+        return $this->hasOne(\App\Models\PrijavaSaglasnost::class);
+    }
+    public function pregled(){
+        return $this->hasOne(\App\Models\PrijavaPregled::class);
     }
     public function setGradAttribute($value)
     {

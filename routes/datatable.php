@@ -37,4 +37,5 @@ Route::middleware(['jwt.auth'])->group(function () {
     Route::post('hotel', [\App\Http\Controllers\HotelController::class,'datatable']);
     Route::post('izvestaj', [\App\Http\Controllers\IzvestajController::class,'datatable']);
     Route::post('zahtev', [\App\Http\Controllers\ZahtevController::class,'datatable']);
+    Route::post('lekarski-pregled', [\App\Http\Controllers\LekarskiPregledController::class,'datatable']);
 });
